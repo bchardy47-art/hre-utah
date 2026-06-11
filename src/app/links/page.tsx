@@ -7,6 +7,7 @@ import {
   Home,
   Wrench,
   Sprout,
+  Crosshair,
   ClipboardList,
   Globe,
   MapPin,
@@ -59,6 +60,12 @@ const primaryLinks: LinkItem[] = [
     label: 'Greener Grass Summer Mix',
     href: '/greener-grass',
     icon: Sprout,
+    style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
+  },
+  {
+    label: 'Kill Lawn Weeds Fast',
+    href: '/kill-lawn-weeds',
+    icon: Crosshair,
     style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
   },
   {
