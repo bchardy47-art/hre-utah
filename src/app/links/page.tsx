@@ -10,6 +10,7 @@ import {
   Globe,
   MapPin,
   CheckCircle,
+  ExternalLink,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -27,7 +28,7 @@ type LinkItem = {
   style: string
 }
 
-const primaryLinks: LinkItem[] = [
+const topLinks: LinkItem[] = [
   {
     label: 'Call Brian',
     href: 'tel:8013800445',
@@ -54,6 +55,9 @@ const primaryLinks: LinkItem[] = [
     icon: Wrench,
     style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
   },
+]
+
+const bottomLinks: LinkItem[] = [
   {
     label: 'Request a Quote',
     href: '/contact',
@@ -70,6 +74,50 @@ const primaryLinks: LinkItem[] = [
   },
 ]
 
+type Product = {
+  label: string
+  href: string
+  image: string
+}
+
+const products: Product[] = [
+  {
+    label: '21-0-0 Ammonium Sulfate',
+    href: 'https://amzn.to/46Aiosp',
+    image: '/images/links/products/ammonium-sulfate.jpg',
+  },
+  {
+    label: '0-0-50 Potash',
+    href: 'https://amzn.to/4kWiGNK',
+    image: '/images/links/products/potash.jpg',
+  },
+  {
+    label: 'Feature Iron',
+    href: 'https://amzn.to/44KPg07',
+    image: '/images/links/products/feature-iron.jpg',
+  },
+  {
+    label: 'Sea Kelp',
+    href: 'https://amzn.to/4mfzu3o',
+    image: '/images/links/products/sea-kelp.jpg',
+  },
+  {
+    label: 'Green Envy',
+    href: 'https://amzn.to/4o4Wx2r',
+    image: '/images/links/products/green-envy.jpg',
+  },
+  {
+    label: 'PH Meter',
+    href: 'https://amzn.to/452sTSz',
+    image: '/images/links/products/ph-meter.jpg',
+  },
+  {
+    label: 'PH Up & Down',
+    href: 'https://amzn.to/413S8TJ',
+    image: '/images/links/products/ph-up-down.jpg',
+  },
+]
+
 const serviceCards = [
   'Buying a home',
   'Selling a home',
@@ -78,6 +126,26 @@ const serviceCards = [
   'First-time buyer help',
   'Utah County / Salt Lake County',
 ]
+
+function renderLink(link: LinkItem) {
+  const Icon = link.icon
+  const cls = `flex items-center justify-center gap-3 w-full py-4 px-5 rounded-xl font-semibold text-[15px] transition-all duration-200 active:scale-[0.97] ${link.style}`
+  const content = (
+    <>
+      <Icon size={18} />
+      {link.label}
+    </>
+  )
+  return link.href.startsWith('/') ? (
+    <Link key={link.label} href={link.href} className={cls}>
+      {content}
+    </Link>
+  ) : (
+    <a key={link.label} href={link.href} className={cls}>
+      {content}
+    </a>
+  )
+}
 
 export default function LinksPage() {
   return (
@@ -106,28 +174,69 @@ export default function LinksPage() {
           </p>
         </div>
 
-        {/* Primary Buttons */}
-        <div className="space-y-3 mb-12">
-          {primaryLinks.map((link) => {
-            const Icon = link.icon
-            const cls = `flex items-center justify-center gap-3 w-full py-4 px-5 rounded-xl font-semibold text-[15px] transition-all duration-200 active:scale-[0.97] ${link.style}`
-            const content = (
-              <>
-                <Icon size={18} />
-                {link.label}
-              </>
-            )
+        {/* Top primary buttons (Call, Text, Real Estate, Handyman) */}
+        <div className="space-y-3 mb-8">
+          {topLinks.map(renderLink)}
+        </div>
 
-            return link.href.startsWith('/') ? (
-              <Link key={link.label} href={link.href} className={cls}>
-                {content}
-              </Link>
-            ) : (
-              <a key={link.label} href={link.href} className={cls}>
-                {content}
-              </a>
-            )
-          })}
+        {/* Greener Grass Summer Mix — promoted products */}
+        <section aria-labelledby="greener-grass-heading" className="mb-8">
+          <div className="text-center mb-4">
+            <h2
+              id="greener-grass-heading"
+              className="text-base font-bold text-white"
+            >
+              Greener Grass Summer Mix
+            </h2>
+            <p className="text-slate-400 text-xs mt-1 leading-snug">
+              Products I use/recommend for a greener lawn setup.
+            </p>
+          </div>
+
+          <p className="text-[11px] leading-snug text-slate-400 bg-navy-800/50 border border-navy-700/50 rounded-md px-3 py-2 mb-3 text-center">
+            As an Amazon Associate I earn from qualifying purchases.
+          </p>
+
+          <ul className="space-y-2.5">
+            {products.map((product) => (
+              <li key={product.label}>
+                <a
+                  href={product.href}
+                  target="_blank"
+                  rel="nofollow sponsored noopener noreferrer"
+                  className="group flex items-center gap-3 w-full p-2.5 rounded-xl bg-navy-800/70 hover:bg-navy-700/70 border border-navy-600/60 hover:border-amber-500/40 transition-all duration-200 active:scale-[0.98]"
+                >
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-white p-1.5 ring-1 ring-navy-600/60">
+                    <Image
+                      src={product.image}
+                      alt={product.label}
+                      fill
+                      sizes="64px"
+                      className="object-contain p-1"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[14px] font-semibold text-white leading-tight truncate">
+                      {product.label}
+                    </p>
+                    <p className="text-[11px] text-amber-400/90 mt-0.5">
+                      Amazon
+                    </p>
+                  </div>
+                  <ExternalLink
+                    size={15}
+                    className="text-slate-400 group-hover:text-amber-400 flex-shrink-0 transition-colors"
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Bottom buttons (Request a Quote, Visit Full Website) */}
+        <div className="space-y-3 mb-12">
+          {bottomLinks.map(renderLink)}
         </div>
 
         {/* What do you need? */}
