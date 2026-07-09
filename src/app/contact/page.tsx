@@ -1,183 +1,165 @@
-import type { Metadata } from 'next'
-import { Phone, Mail, MapPin, MessageSquare, Clock, CheckCircle } from 'lucide-react'
-import ContactForm from '@/components/ContactForm'
+import type { Metadata } from "next";
+import CtaBand from "@/components/CtaBand";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: 'Contact Brian Hardy — Utah Realtor + Handyman',
+  title: "Contact — Let's Talk. Real Answers. Real Fast. | Hardy Real Estate",
   description:
-    'Call, text, or message Brian Hardy. Utah County and Salt Lake County real estate and handyman services. (801) 380-0445.',
-  alternates: { canonical: 'https://hre-utah.com/contact' },
-}
+    "Contact Brian Hardy — text or call (801) 380-0445 for Utah real estate and handyman help. Fast, clear answers with no runaround.",
+};
 
-const serviceAreas = [
-  'Saratoga Springs',
-  'Eagle Mountain',
-  'Lehi',
-  'American Fork',
-  'Pleasant Grove',
-  'Provo',
-  'Orem',
-  'Springville',
-  'Spanish Fork',
-  'Sandy',
-  'Draper',
-  'South Jordan',
-  'Riverton',
-  'Herriman',
-  'West Jordan',
-  'Salt Lake City',
-]
+const Arrow = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
 
-export default function ContactPage() {
+export default function Contact() {
   return (
     <>
       {/* HERO */}
-      <section className="bg-hero-gradient text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-20">
-          <div className="max-w-xl">
-            <span className="inline-block text-amber-400 font-semibold text-sm tracking-widest uppercase mb-4">
-              Get in Touch
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4">
-              Let&rsquo;s Talk
-            </h1>
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Call or text Brian directly — no gatekeepers, no call centers, no waiting on a
-              callback from someone who doesn&rsquo;t know your situation.
-            </p>
+      <section className="hero hero--page" data-screen-label="Contact">
+        <div className="scene scene--desk">
+          <img className="slot" src="/images/hero-contact.jpg" alt="Desk / office" />
+        </div>
+        <div className="hero-overlay" />
+        <div className="container hero-inner">
+          <h1 className="h-xl">
+            Let's Talk.<br />Real Answers.<br />
+            <span className="accent">Real Fast.</span>
+          </h1>
+          <p className="lead">
+            Have a question, a project, or ready to make a move? We're here to help — with
+            straight answers and no runaround.
+          </p>
+        </div>
+      </section>
+
+      {/* CONTACT METHODS */}
+      <section className="section" style={{ paddingTop: 56 }}>
+        <div className="container">
+          <div className="contact3">
+            <div className="cmethod">
+              <div className="cm-ico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z" /><path d="M8.5 12h.01M12 12h.01M15.5 12h.01" /></svg></div>
+              <div className="cm-label">Text Brian</div>
+              <div className="cm-value">(801) 380-0445</div>
+              <p>Fastest way to get in touch.</p>
+              <a className="learn" href="sms:8013800445">Text Now <Arrow /></a>
+            </div>
+            <div className="cmethod">
+              <div className="cm-ico"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" /></svg></div>
+              <div className="cm-label">Call Brian</div>
+              <div className="cm-value">(801) 380-0445</div>
+              <p>Let's talk through your goals.</p>
+              <a className="learn" href="tel:8013800445">Call Now <Arrow /></a>
+            </div>
+            <div className="cmethod">
+              <div className="cm-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg></div>
+              <div className="cm-label">Email Us</div>
+              <div className="cm-value sm">HardyHomesUtah@gmail.com</div>
+              <p>We'll respond as quickly as we can.</p>
+              <a className="learn" href="mailto:HardyHomesUtah@gmail.com">Send Email <Arrow /></a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* MAIN CONTACT SECTION */}
-      <section className="section-light">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-            {/* Left: contact info */}
-            <div className="lg:col-span-2 space-y-6">
-              <div>
-                <h2 className="text-xl font-bold text-navy-800 mb-5">Contact Brian</h2>
-                <div className="space-y-4">
-                  {/* Phone */}
-                  <a
-                    href="tel:+18013800445"
-                    className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-amber-300 hover:bg-amber-50 transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-200 transition-colors">
-                      <Phone size={18} className="text-amber-600" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-navy-800 text-sm">Call or Text</div>
-                      <div className="text-amber-600 font-bold text-lg">(801) 380-0445</div>
-                      <div className="text-slate-500 text-xs">Best way to reach Brian</div>
-                    </div>
-                  </a>
-
-                  {/* SMS */}
-                  <a
-                    href="sms:+18013800445"
-                    className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-navy-300 hover:bg-navy-50 transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-navy-100 flex items-center justify-center flex-shrink-0 group-hover:bg-navy-200 transition-colors">
-                      <MessageSquare size={18} className="text-navy-600" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-navy-800 text-sm">Text Message</div>
-                      <div className="text-navy-700 font-semibold">(801) 380-0445</div>
-                      <div className="text-slate-500 text-xs">Tap to open your message app</div>
-                    </div>
-                  </a>
-
-                  {/* Email */}
-                  <a
-                    href="mailto:Hardyhomesutah@gmail.com"
-                    className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-200 transition-colors">
-                      <Mail size={18} className="text-slate-600" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-navy-800 text-sm">Email</div>
-                      <div className="text-slate-700 font-medium text-sm break-all">
-                        Hardyhomesutah@gmail.com
-                      </div>
-                      <div className="text-slate-500 text-xs">Usually responds within a few hours</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              {/* Response time */}
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
-                <Clock size={18} className="text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-green-800 text-sm">Fast Response</p>
-                  <p className="text-green-700 text-xs mt-0.5">
-                    Brian typically responds to calls, texts, and emails within a few hours.
-                    For urgent repairs, call directly.
-                  </p>
-                </div>
-              </div>
-
-              {/* Business info */}
-              <div className="bg-navy-50 border border-navy-100 rounded-xl p-4 space-y-2">
-                <div className="font-semibold text-navy-800 text-sm mb-3">Business Details</div>
-                <div className="flex items-start gap-2 text-sm text-navy-700">
-                  <CheckCircle size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  Hardy Real Estate
-                </div>
-                <div className="flex items-start gap-2 text-sm text-navy-700">
-                  <CheckCircle size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  Boardwalk Realty and Property Management
-                </div>
-                <div className="flex items-start gap-2 text-sm text-navy-700">
-                  <CheckCircle size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  Licensed Utah Realtor
-                </div>
-                <div className="flex items-start gap-2 text-sm text-navy-700">
-                  <MapPin size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  Based in Saratoga Springs, UT
-                </div>
-              </div>
+      {/* FORM + BUSINESS DETAILS */}
+      <section className="section tight" id="message">
+        <div className="container">
+          <div className="contact-split">
+            <div className="card form-card">
+              <h3>Send Us a Message</h3>
+              <div className="form-sub">Tell us a little about your needs and how we can help.</div>
+              <ContactForm />
             </div>
 
-            {/* Right: form */}
-            <div className="lg:col-span-3">
-              <h2 className="text-xl font-bold text-navy-800 mb-5">Send a Message</h2>
-              <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6">
-                <ContactForm />
+            <div className="card biz-card">
+              <h3>Business Details</h3>
+              <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg></span><span>Hardy Real Estate<small>Boardwalk Realty &amp; Property Management</small><small>Saratoga Springs, UT</small></span></div>
+              <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg></span><span>HardyHomesUtah@gmail.com</span></div>
+              <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" /></svg></span><span>(801) 380-0445</span></div>
+              <div className="biz-line" style={{ marginBottom: 4 }}><span className="biz-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="m8 12 2.5 2.5L16 9" /></svg></span><span>Licensed Utah REALTOR®</span></div>
+              <div className="biz-hours">
+                <h4>Office Hours</h4>
+                <div className="hrow"><b>Monday – Friday</b><span>8:00 AM – 6:00 PM</span></div>
+                <div className="hrow"><b>Saturday</b><span>9:00 AM – 3:00 PM</span></div>
+                <div className="hrow"><b>Sunday</b><span>By Appointment</span></div>
+                <div className="after">After-hours by appointment.</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SERVICE AREAS */}
-      <section className="section-gray">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="mb-8">
-            <span className="inline-block text-amber-600 font-semibold text-sm tracking-widest uppercase mb-2">
-              Coverage
-            </span>
-            <h2 className="text-2xl font-bold text-navy-800 mb-2">Service Areas</h2>
-            <p className="text-slate-600 text-sm">
-              Brian serves Utah County and Salt Lake County. Not sure if you&rsquo;re in range?
-              Just call or text — chances are you are.
-            </p>
+      {/* WHAT TO EXPECT */}
+      <section className="section alt">
+        <div className="container">
+          <div className="sec-head" style={{ marginBottom: 34 }}>
+            <span className="eyebrow">What to Expect</span>
+            <h2>Fast, Clear Communication.</h2>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {serviceAreas.map((area) => (
-              <span
-                key={area}
-                className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-medium px-3 py-1.5 rounded-full"
-              >
-                <MapPin size={12} className="text-amber-500" />
-                {area}
-              </span>
-            ))}
+          <div className="colrow" style={{ gridTemplateColumns: "repeat(4,1fr)" }}>
+            <div className="col">
+              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z" /><path d="m8.5 11 2 2 4.5-4.5" strokeWidth={1.6} /></svg></div>
+              <h3>We Respond Fast</h3>
+              <p>Most inquiries get a response within minutes during business hours.</p>
+            </div>
+            <div className="col">
+              <div className="col-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r="1" fill="currentColor" /></svg></div>
+              <h3>We Listen First</h3>
+              <p>We take the time to understand your goals and priorities.</p>
+            </div>
+            <div className="col">
+              <div className="col-ico"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1" /><path d="M9 8h6M9 12h6M9 16h4" /></svg></div>
+              <h3>Clear Next Steps</h3>
+              <p>You'll always know what to expect and what happens next.</p>
+            </div>
+            <div className="col">
+              <div className="col-ico"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /><path d="M3 4h8" /></svg></div>
+              <h3>No Pressure</h3>
+              <p>Honest guidance and smart advice — never pushy.</p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section">
+        <div className="container" style={{ maxWidth: 940 }}>
+          <div className="sec-head" style={{ marginBottom: 34 }}>
+            <span className="eyebrow">FAQ</span>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <details className="faq"><summary>How quickly will I hear back?<span className="pm">+</span></summary><div className="faq-body">Most calls and texts get a response within minutes during business hours, and same-day for anything that comes in after hours. Brian answers directly — no call centers or gatekeepers.</div></details>
+          <details className="faq"><summary>Do you charge for consultations?<span className="pm">+</span></summary><div className="faq-body">No. Initial conversations, walkthroughs, and buyer or seller consultations are always free. We'll talk through your goals and outline a clear plan before you commit to anything.</div></details>
+          <details className="faq"><summary>What areas do you serve?<span className="pm">+</span></summary><div className="faq-body">We serve buyers, sellers, and homeowners across Northern Utah — including Salt Lake, Utah, Davis, Weber, Summit, and Wasatch counties.</div></details>
+          <details className="faq"><summary>Can you help with both real estate and handyman projects?<span className="pm">+</span></summary><div className="faq-body">Yes — that's the whole idea. Brian handles real estate and handyman work under one roof, whether you're buying, selling, prepping a home for market, or just need trusted repairs and improvements.</div></details>
+        </div>
+      </section>
+
+      {/* AREAS WE SERVE */}
+      <section className="section alt">
+        <div className="container">
+          <div className="sec-head" style={{ marginBottom: 30 }}><span className="eyebrow">Areas We Serve</span></div>
+          <div className="pill-row">
+            <span className="pill">Salt Lake County</span>
+            <span className="pill">Utah County</span>
+            <span className="pill">Davis County</span>
+            <span className="pill">Weber County</span>
+            <span className="pill">Summit County</span>
+            <span className="pill">Wasatch County</span>
+          </div>
+          <p className="lead" style={{ textAlign: "center", fontSize: 15, marginTop: 22 }}>From first-time buyers to seasoned investors, we help clients across Northern Utah.</p>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="section tight">
+        <div className="container">
+          <CtaBand pre="Ready to take " accent="the next step" post="?" strip="Honest Guidance|Clear Communication|Quality Work|Proven Results" />
         </div>
       </section>
     </>
-  )
+  );
 }

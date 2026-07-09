@@ -1,0 +1,11 @@
+# Netlify config for hre-utah.com (Next.js static export).
+#
+# You can drag-and-drop the `out/` folder directly into Netlify's UI.
+# If you later connect this repo to Netlify instead, these settings apply.
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"

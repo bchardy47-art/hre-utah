@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Do not index the form success page.
+Disallow: /thank-you/
+Disallow: /thank-you
+
+Sitemap: https://hre-utah.com/sitemap.xml

@@ -1,181 +1,186 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/image";
+import Link from "next/link";
 import {
-  Phone,
-  MessageSquare,
   Home,
+  Search,
   Wrench,
+  MessageSquare,
+  Phone,
+  ClipboardList,
   Sprout,
   Crosshair,
-  ClipboardList,
   Globe,
-  MapPin,
-  CheckCircle,
-  type LucideIcon,
-} from 'lucide-react'
+  ExternalLink,
+} from "lucide-react";
+import styles from "./links.module.css";
 
-export const metadata: Metadata = {
-  title: 'Brian Hardy Links | Hardy Real Estate',
-  description:
-    'Quick links for Brian Hardy, Utah REALTOR® and handyman serving Utah County and Salt Lake County. Call, text, request handyman help, or get real estate guidance.',
-  alternates: { canonical: 'https://hre-utah.com/links' },
-}
-
-type LinkItem = {
-  label: string
-  href: string
-  icon: LucideIcon
-  style: string
-}
-
-const primaryLinks: LinkItem[] = [
+const links = [
   {
-    label: 'Call Brian',
-    href: 'tel:8013800445',
-    icon: Phone,
-    style:
-      'bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-900/30',
-  },
-  {
-    label: 'Text Brian',
-    href: 'sms:8013800445',
-    icon: MessageSquare,
-    style:
-      'bg-white/10 hover:bg-white/15 border border-white/25 text-white',
-  },
-  {
-    label: 'Buying or Selling a Home?',
-    href: '/real-estate',
+    title: "Buy or Sell Smarter",
+    subtitle: "Smart real estate guidance.",
+    href: "/real-estate",
     icon: Home,
-    style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
   },
   {
-    label: 'Need Handyman Help?',
-    href: '/handyman',
+    title: "Search Homes",
+    subtitle: "Browse Utah homes.",
+    href: "https://hardyhomes-utah.com",
+    icon: Search,
+    external: true,
+  },
+  {
+    title: "Handyman Services",
+    subtitle: "Repairs, updates, clear pricing.",
+    href: "/handyman",
     icon: Wrench,
-    style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
   },
   {
-    label: 'Greener Grass Summer Mix',
-    href: '/greener-grass',
-    icon: Sprout,
-    style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
+    title: "Text Brian",
+    subtitle: "Fastest way to ask.",
+    href: "sms:+18013800445",
+    icon: MessageSquare,
   },
   {
-    label: 'Kill Lawn Weeds Fast',
-    href: '/kill-lawn-weeds',
-    icon: Crosshair,
-    style: 'bg-navy-800 hover:bg-navy-700 border border-navy-600/80 text-white',
+    title: "Call Brian",
+    subtitle: "Talk through your move or project.",
+    href: "tel:+18013800445",
+    icon: Phone,
   },
   {
-    label: 'Request a Quote',
-    href: '/contact',
+    title: "Contact / Request a Quote",
+    subtitle: "Send details and get next steps.",
+    href: "/contact",
     icon: ClipboardList,
-    style:
-      'border border-amber-500/50 text-amber-400 hover:bg-amber-500/10 hover:border-amber-400',
   },
   {
-    label: 'Visit Full Website',
-    href: '/',
-    icon: Globe,
-    style:
-      'border border-white/20 text-white/60 hover:text-white hover:border-white/40',
+    title: "Greener Grass Summer Mix",
+    subtitle: "Lawn care resources.",
+    href: "/greener-grass",
+    icon: Sprout,
   },
-]
-
-const serviceCards = [
-  'Buying a home',
-  'Selling a home',
-  'Home repairs',
-  'Pre-listing fixes',
-  'First-time buyer help',
-  'Utah County / Salt Lake County',
-]
+  {
+    title: "Kill Lawn Weeds Fast",
+    subtitle: "Weed control help.",
+    href: "/kill-lawn-weeds",
+    icon: Crosshair,
+  },
+  {
+    title: "Visit Full Website",
+    subtitle: "Explore everything HRE offers.",
+    href: "/",
+    icon: Globe,
+  },
+];
 
 export default function LinksPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy-950 via-navy-900 to-navy-800">
-      <div className="max-w-sm mx-auto px-5 pt-12 pb-16">
+    <main className={styles.page}>
+      <section className={styles.hero}>
+        <div className={styles.radialGlow} />
+        <div className={styles.overlay} />
 
-        {/* Hero */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-amber-400/60 ring-offset-2 ring-offset-navy-900 shadow-xl mb-5">
+        <div className={styles.container}>
+          <Link
+            href="/"
+            aria-label="Hardy Real Estate Home"
+            className={styles.logoLink}
+          >
             <Image
-              src="/brian-hardy.jpg"
-              alt="Brian Hardy — Utah REALTOR® and Handyman"
-              width={96}
-              height={96}
-              className="object-cover object-top w-full h-full"
+              src="/images/hre-badge-logo.png"
+              alt="Hardy Real Estate"
+              width={118}
+              height={118}
               priority
+              className={styles.logo}
             />
+          </Link>
+
+          <div className={styles.headingBlock}>
+            <h1 className={styles.heading}>
+              <span className={styles.headingTop}>Start Here.</span>
+              <span className={styles.headingBottom}>Pick Your Path.</span>
+            </h1>
+
+            <p className={styles.intro}>
+              Quick links to the most popular ways to work with Brian Hardy —
+              real estate guidance, handyman help, local resources, and straight
+              answers.
+            </p>
+
+            <div className={styles.nameBlock}>
+              <p className={styles.name}>Brian Hardy</p>
+              <p className={styles.role}>REALTOR® + Handyman</p>
+            </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-white mb-1">Brian Hardy</h1>
-          <p className="text-amber-400 font-medium text-sm tracking-wide mb-4">
-            Utah REALTOR® + Handyman
-          </p>
-          <p className="text-slate-400 text-sm leading-relaxed max-w-[260px]">
-            Real estate help, home repairs, and honest advice from someone who actually knows houses.
-          </p>
-        </div>
+          <div className={styles.grid}>
+            {links.map((item) => {
+              const Icon = item.icon;
 
-        {/* Primary Buttons */}
-        <div className="space-y-3 mb-12">
-          {primaryLinks.map((link) => {
-            const Icon = link.icon
-            const cls = `flex items-center justify-center gap-3 w-full py-4 px-5 rounded-xl font-semibold text-[15px] transition-all duration-200 active:scale-[0.97] ${link.style}`
-            const content = (
-              <>
-                <Icon size={18} />
-                {link.label}
-              </>
-            )
+              const content = (
+                <div className={styles.circleCard}>
+                  <div className={styles.iconWrap}>
+                    <Icon size={38} strokeWidth={1.8} />
+                  </div>
 
-            return link.href.startsWith('/') ? (
-              <Link key={link.label} href={link.href} className={cls}>
-                {content}
-              </Link>
-            ) : (
-              <a key={link.label} href={link.href} className={cls}>
-                {content}
-              </a>
-            )
-          })}
-        </div>
+                  <p className={styles.cardTitle}>{item.title}</p>
+                  <p className={styles.cardSubtitle}>{item.subtitle}</p>
 
-        {/* What do you need? */}
-        <div className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 text-center mb-4">
-            What do you need help with?
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {serviceCards.map((card) => (
-              <div
-                key={card}
-                className="flex items-start gap-2 bg-navy-800/60 border border-navy-700/50 rounded-lg px-3 py-2.5 text-sm text-slate-300 leading-snug"
-              >
-                <CheckCircle size={13} className="text-amber-400 flex-shrink-0 mt-0.5" />
-                <span>{card}</span>
-              </div>
-            ))}
+                  {item.external ? (
+                    <span className={styles.externalBadge} aria-hidden="true">
+                      <ExternalLink size={15} strokeWidth={1.8} />
+                    </span>
+                  ) : null}
+                </div>
+              );
+
+              if (item.external) {
+                return (
+                  <a
+                    key={item.title}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.cardLink}
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              if (item.href.startsWith("tel:") || item.href.startsWith("sms:")) {
+                return (
+                  <a key={item.title} href={item.href} className={styles.cardLink}>
+                    {content}
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  className={styles.cardLink}
+                >
+                  {content}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className={styles.ctaRow}>
+            <a href="sms:+18013800445" className={styles.secondaryCta}>
+              <MessageSquare size={22} strokeWidth={1.8} />
+              <span>Text Brian</span>
+            </a>
+
+            <a href="tel:+18013800445" className={styles.primaryCta}>
+              <Phone size={22} strokeWidth={1.8} />
+              <span>Call (801) 380-0445</span>
+            </a>
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="text-center border-t border-navy-700/50 pt-8">
-          <p className="text-white font-semibold text-sm">Hardy Real Estate</p>
-          <p className="text-slate-400 text-xs mt-1">Brian Hardy, REALTOR®</p>
-          <p className="text-slate-500 text-xs mt-0.5">
-            Boardwalk Realty and Property Management
-          </p>
-          <div className="flex items-center justify-center gap-1 text-slate-600 text-xs mt-2.5">
-            <MapPin size={10} />
-            <span>Saratoga Springs, UT · Utah County + Salt Lake County</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  )
+      </section>
+    </main>
+  );
 }

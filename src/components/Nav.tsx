@@ -1,101 +1,113 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Menu, X, Phone } from 'lucide-react'
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/real-estate', label: 'Real Estate' },
-  { href: '/handyman', label: 'Handyman' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-]
+const PHONE = "(801) 380-0445";
+const TEL = "8013800445";
+
+const NAV: [string, string][] = [
+  ["Home", "/"],
+  ["Real Estate", "/real-estate"],
+  ["Handyman", "/handyman"],
+  ["About", "/about"],
+  ["Contact", "/contact"],
+];
+
+const SmsIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+    <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z" />
+    <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
+  </svg>
+);
+const MenuIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </svg>
+);
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path d="M6 6l12 12M18 6 6 18" />
+  </svg>
+);
 
 export default function Nav() {
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth > 980) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex flex-col leading-none group">
-            <span className="text-navy-800 font-bold text-lg tracking-tight group-hover:text-navy-600 transition-colors">
-              Hardy Real Estate
-            </span>
-            <span className="text-amber-600 text-xs font-medium tracking-wide uppercase">
-              Realtor + Handyman
-            </span>
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`nav-link px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  pathname === link.href
-                    ? 'text-navy-800 bg-navy-50'
-                    : 'text-slate-600 hover:text-navy-800 hover:bg-slate-50'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Desktop CTA */}
-          <a
-            href="tel:+18013800445"
-            className="hidden md:inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
-          >
-            <Phone size={15} />
-            (801) 380-0445
-          </a>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-md text-slate-600 hover:text-navy-800 hover:bg-slate-100 transition-colors"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
+    <header className={`nav${scrolled ? " scrolled" : ""}`}>
+      <div className="container nav-inner">
+        <Link className="logo" href="/" aria-label="Hardy Real Estate — HRE Handyman Services">
+          <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate Handyman Services" />
+        </Link>
+        <nav className="nav-links">
+          {NAV.map(([label, href]) => (
+            <Link key={href} className={`nav-link${isActive(href) ? " active" : ""}`} href={href}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <a className="btn btn-primary nav-cta" href={`sms:${TEL}`}>
+          <SmsIcon /> Text Brian
+        </a>
+        <button
+          className="nav-burger"
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="hre-mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? <CloseIcon /> : <MenuIcon />}
+        </button>
       </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden border-t border-slate-200 bg-white">
-          <div className="px-4 py-3 space-y-1">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`block px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
-                  pathname === link.href
-                    ? 'text-navy-800 bg-navy-50'
-                    : 'text-slate-600 hover:text-navy-800 hover:bg-slate-50'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href="tel:+18013800445"
-              className="flex items-center gap-2 mt-2 px-4 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm rounded-lg transition-colors"
-            >
-              <Phone size={15} />
-              Call (801) 380-0445
-            </a>
-          </div>
-        </div>
-      )}
+      <nav
+        className={`mobile-menu${open ? " open" : ""}`}
+        id="hre-mobile-menu"
+        aria-label="Mobile navigation"
+      >
+        {NAV.map(([label, href]) => (
+          <Link
+            key={href}
+            className={`nav-mlink${isActive(href) ? " active" : ""}`}
+            href={href}
+            onClick={() => setOpen(false)}
+          >
+            {label}
+          </Link>
+        ))}
+        <a className="btn btn-primary" href={`sms:${TEL}`} onClick={() => setOpen(false)}>
+          <SmsIcon /> Text Brian
+        </a>
+      </nav>
     </header>
-  )
+  );
 }

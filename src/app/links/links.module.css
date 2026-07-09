@@ -1,0 +1,332 @@
+.page {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 10.5rem 1.25rem 3rem;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.9)),
+    url('/images/tools.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.radialGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(234, 88, 12, 0.13), transparent 42%);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2), #000);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  display: flex;
+  min-height: calc(100vh - 4rem);
+  width: 100%;
+  max-width: 80rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoWrap,
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.35rem;
+  text-decoration: none;
+}
+
+.logo {
+  width: 5.8rem;
+  height: 5.8rem;
+  border-radius: 9999px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(249, 115, 22, 0.35));
+}
+
+.headingBlock {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.headingTop,
+.headingBottom {
+  display: block;
+  font-size: 3rem;
+}
+
+.headingBottom {
+  margin-top: 0.5rem;
+  color: #f97316;
+}
+
+.intro {
+  margin: 1.5rem auto 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #d4d4d8;
+}
+
+.nameBlock {
+  margin-top: 1.5rem;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.role {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f97316;
+}
+
+.grid {
+  display: grid;
+  width: 100%;
+  max-width: 64rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.cardLink {
+  display: block;
+  border-radius: 9999px;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.cardLink:focus-visible {
+  box-shadow: 0 0 0 2px #f97316, 0 0 0 4px #000;
+}
+
+.circleCard {
+  position: relative;
+  display: flex;
+  aspect-ratio: 1 / 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(249, 115, 22, 0.8);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cardLink:hover .circleCard,
+.cardLink:focus-visible .circleCard {
+  transform: translateY(-4px);
+  border-color: rgba(251, 146, 60, 1);
+  background: rgba(124, 45, 18, 0.25);
+  box-shadow: 0 0 28px rgba(249, 115, 22, 0.25);
+}
+
+.iconWrap {
+  margin-bottom: 0.75rem;
+  color: #f97316;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cardLink:hover .iconWrap,
+.cardLink:focus-visible .iconWrap {
+  transform: scale(1.1);
+  color: #fb923c;
+}
+
+.cardTitle {
+  margin: 0;
+  max-width: 8rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.cardSubtitle {
+  display: none;
+  margin: 0.5rem 0 0;
+  max-width: 9rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: #d4d4d8;
+}
+
+.externalBadge {
+  position: absolute;
+  right: 1.75rem;
+  top: 1.75rem;
+  color: rgba(249, 115, 22, 0.8);
+}
+
+.ctaRow {
+  margin-top: 2rem;
+  display: grid;
+  width: 100%;
+  max-width: 64rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.secondaryCta,
+.primaryCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.secondaryCta {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.secondaryCta:hover,
+.secondaryCta:focus-visible {
+  border-color: #f97316;
+  background: rgba(124, 45, 18, 0.25);
+}
+
+.primaryCta {
+  border: 1px solid #f97316;
+  background: #f97316;
+  color: #000;
+  box-shadow: 0 0 24px rgba(249, 115, 22, 0.35);
+}
+
+.primaryCta:hover,
+.primaryCta:focus-visible {
+  background: #fb923c;
+}
+
+.secondaryCta:focus-visible,
+.primaryCta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #f97316, 0 0 0 4px #000;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 8.5rem;
+  }
+
+  .logo {
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding: 10.5rem 2rem 3rem;
+  }
+
+  .logo {
+    height: 5.8rem;
+    width: 5.8rem;
+  }
+
+  .headingTop,
+  .headingBottom {
+    font-size: 3.75rem;
+  }
+
+  .intro {
+    font-size: 1.125rem;
+  }
+
+  .name {
+    font-size: 1.875rem;
+  }
+
+  .role {
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .cardSubtitle {
+    display: block;
+  }
+
+  .ctaRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .headingTop,
+  .headingBottom {
+    font-size: 4.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: 2rem 2.5rem;
+  }
+}

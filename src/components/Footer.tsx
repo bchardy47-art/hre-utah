@@ -1,121 +1,74 @@
-import Link from 'next/link'
-import { Phone, Mail, MapPin } from 'lucide-react'
+import Link from "next/link";
 
-const serviceLinks = [
-  { href: '/real-estate', label: 'Real Estate' },
-  { href: '/handyman', label: 'Handyman Services' },
-  { href: '/about', label: 'About Brian' },
-  { href: '/contact', label: 'Contact' },
-]
+const PHONE = "(801) 380-0445";
+const TEL = "8013800445";
+const EMAIL = "HardyHomesUtah@gmail.com";
 
-const serviceAreas = [
-  'Saratoga Springs',
-  'Eagle Mountain',
-  'Lehi',
-  'American Fork',
-  'Provo / Orem',
-  'Sandy / Draper',
-  'South Jordan',
-  'West Jordan',
-]
+const IgIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+const FbIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h2.5l.5-3H13v-2c0-.6.4-1 1-1Z" />
+  </svg>
+);
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m3 7 9 6 9-6" />
+  </svg>
+);
 
 export default function Footer() {
   return (
-    <footer className="bg-navy-950 text-slate-300">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <div className="mb-4">
-              <div className="text-white font-bold text-lg leading-none">Hardy Real Estate</div>
-              <div className="text-amber-400 text-xs font-medium tracking-widest uppercase mt-0.5">
-                Realtor + Handyman
-              </div>
-            </div>
-            <p className="text-sm text-slate-400 leading-relaxed mb-4">
-              Helping Utah homeowners and buyers with real estate and home repairs — from someone who
-              actually knows houses.
-            </p>
-            <div className="text-xs text-slate-500">
-              Boardwalk Realty and Property Management
-            </div>
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link className="logo logo--footer" href="/" aria-label="Hardy Real Estate — HRE Handyman Services">
+              <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate Handyman Services" />
+            </Link>
           </div>
-
-          {/* Quick links */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
-              Pages
-            </h3>
-            <ul className="space-y-2">
-              {serviceLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h5>Home</h5>
+            <Link href="/">Overview</Link>
+            <Link href="/#advantage">Why It Matters</Link>
           </div>
-
-          {/* Service Areas */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
-              Service Areas
-            </h3>
-            <ul className="space-y-2">
-              {serviceAreas.map((area) => (
-                <li key={area} className="text-sm text-slate-400">
-                  {area}
-                </li>
-              ))}
-            </ul>
+            <h5>Real Estate</h5>
+            <Link href="/real-estate">Buyer Guidance</Link>
+            <Link href="/real-estate#sellers">Seller Strategy</Link>
           </div>
-
-          {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
-              Get in Touch
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="tel:+18013800445"
-                  className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors"
-                >
-                  <Phone size={15} className="text-amber-400 flex-shrink-0" />
-                  (801) 380-0445
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:Hardyhomesutah@gmail.com"
-                  className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-white transition-colors"
-                >
-                  <Mail size={15} className="text-amber-400 flex-shrink-0" />
-                  Hardyhomesutah@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5 text-sm text-slate-400">
-                <MapPin size={15} className="text-amber-400 flex-shrink-0 mt-0.5" />
-                Saratoga Springs, UT<br />
-                Utah County + Salt Lake County
-              </li>
-            </ul>
+            <h5>Handyman</h5>
+            <Link href="/handyman">Services</Link>
+            <Link href="/handyman#request">Request Service</Link>
+          </div>
+          <div>
+            <h5>About</h5>
+            <Link href="/about">Our Approach</Link>
+            <Link href="/about#why">Why It Matters</Link>
+          </div>
+          <div>
+            <h5>Contact</h5>
+            <a href={`tel:${TEL}`}>{PHONE}</a>
+            <a href={`sms:${TEL}`}>Text Brian</a>
           </div>
         </div>
-
-        <div className="border-t border-navy-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} Hardy Real Estate. All rights reserved.
-          </p>
-          <p className="text-xs text-slate-600">
-            Brian Hardy, REALTOR® · Boardwalk Realty and Property Management
-          </p>
+        <div className="footer-base">
+          <span>© 2026 Hardy Real Estate. All rights reserved.</span>
+          <span className="footer-lic">Licensed Utah REALTOR®</span>
+          <div className="social">
+            <a href="#" aria-label="Instagram"><IgIcon /></a>
+            <a href="#" aria-label="Facebook"><FbIcon /></a>
+            <a href={`mailto:${EMAIL}`} aria-label="Email"><MailIcon /></a>
+          </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

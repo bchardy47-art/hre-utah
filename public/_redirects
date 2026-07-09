@@ -1,0 +1,7 @@
+# Netlify _redirects — evaluated at the edge.
+# Format: from  to  status  (! forces even when a matching file exists)
+#
+# Note: /real-estate stays active on this site per the finalized design.
+# Only the typo path /realestate redirects to the IDX site.
+
+/realestate     https://www.hardyhomes-utah.com/   301!
