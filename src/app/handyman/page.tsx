@@ -32,7 +32,7 @@ export default function Handyman() {
           </h1>
           <p className="lead">Quality work. Clear communication. Done right the first time.</p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 30 }}>
-            <Link className="btn btn-primary btn-lg" href="#request">Request Service <Arrow /></Link>
+            <Link className="btn btn-primary btn-lg" href="#request" data-hre-event="Request_Service_Click" data-hre-location="handyman-page">Request Service <Arrow /></Link>
             <Link className="btn btn-ghost btn-lg" href="#handles">What I Handle <Arrow /></Link>
           </div>
         </div>

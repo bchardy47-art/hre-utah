@@ -33,7 +33,12 @@ export default function Home() {
             sellers make confident moves.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 30 }}>
-            <Link className="btn btn-primary btn-lg" href="/real-estate">
+            <Link
+              className="btn btn-primary btn-lg"
+              href="/real-estate"
+              data-hre-event="Work_With_Brian_Click"
+              data-hre-location="hero"
+            >
               Work With Brian <Arrow />
             </Link>
             <Link className="btn btn-ghost btn-lg" href="/real-estate#look">
@@ -93,8 +98,8 @@ export default function Home() {
                 <div className="duo-tag">Smart moves. Strong results.</div>
                 <p>Guidance built on market knowledge and construction experience. From first showing to final signature.</p>
                 <div className="duo-actions">
-                  <Link className="btn btn-primary" href="/real-estate">Buyers <Arrow /></Link>
-                  <Link className="btn btn-ghost" href="/real-estate#sellers">Sellers <Arrow /></Link>
+                  <Link className="btn btn-primary" href="/real-estate" data-hre-event="Buyer_Inquiry_Click" data-hre-location="homepage">Buyers <Arrow /></Link>
+                  <Link className="btn btn-ghost" href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="homepage">Sellers <Arrow /></Link>
                 </div>
               </div>
               <div className="shot scene scene--dusk2">
@@ -107,7 +112,7 @@ export default function Home() {
                 <div className="duo-tag">Done right. Done on time.</div>
                 <p>Small jobs done right. Repairs, updates, and improvements that protect and add value to your home.</p>
                 <div className="duo-actions">
-                  <Link className="btn btn-primary" href="/handyman#request">Request Service <Arrow /></Link>
+                  <Link className="btn btn-primary" href="/handyman#request" data-hre-event="Request_Service_Click" data-hre-location="homepage">Request Service <Arrow /></Link>
                   <Link className="btn btn-ghost" href="/handyman">Learn More <Arrow /></Link>
                 </div>
               </div>

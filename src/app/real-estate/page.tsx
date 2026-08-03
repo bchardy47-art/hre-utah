@@ -36,7 +36,7 @@ export default function RealEstate() {
             <a className="btn btn-primary btn-lg" href="https://hardyhomes-utah.com" target="_blank" rel="noopener">
               Search Homes <Arrow />
             </a>
-            <Link className="btn btn-ghost btn-lg" href="/contact">Work With Brian <Arrow /></Link>
+            <Link className="btn btn-ghost btn-lg" href="/contact" data-hre-event="Work_With_Brian_Click" data-hre-location="real-estate-page">Work With Brian <Arrow /></Link>
             <Link className="btn btn-ghost btn-lg" href="#look">What I Look For <Arrow /></Link>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function RealEstate() {
                 <h3>Buyer Guidance</h3>
                 <div className="big-tag">Smart moves. Strong results.</div>
                 <p>I help buyers evaluate homes like a builder. From structure to systems, I'll help uncover what matters most — so you can buy with clarity and confidence.</p>
-                <Link className="learn" href="/contact">Learn More <Arrow /></Link>
+                <Link className="learn" href="/contact" data-ga-event="buyer_consultation_click" data-hre-event="Buyer_Inquiry_Click" data-hre-location="real-estate-page">Learn More <Arrow /></Link>
               </div>
             </div>
             <div className="card bigcard">
@@ -61,7 +61,7 @@ export default function RealEstate() {
                 <h3>Seller Strategy</h3>
                 <div className="big-tag">Prepare smart. Sell strong.</div>
                 <p>I help sellers position their home for success with strategic improvements and honest insight that attract serious buyers.</p>
-                <Link className="learn" href="/contact">Learn More <Arrow /></Link>
+                <Link className="learn" href="/contact" data-ga-event="seller_consultation_click" data-hre-event="Seller_Inquiry_Click" data-hre-location="real-estate-page">Learn More <Arrow /></Link>
               </div>
             </div>
           </div>

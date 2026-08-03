@@ -40,13 +40,13 @@ export default function Footer() {
           </div>
           <div>
             <h5>Real Estate</h5>
-            <Link href="/real-estate">Buyer Guidance</Link>
-            <Link href="/real-estate#sellers">Seller Strategy</Link>
+            <Link href="/real-estate" data-hre-event="Buyer_Inquiry_Click" data-hre-location="footer">Buyer Guidance</Link>
+            <Link href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="footer">Seller Strategy</Link>
           </div>
           <div>
             <h5>Handyman</h5>
             <Link href="/handyman">Services</Link>
-            <Link href="/handyman#request">Request Service</Link>
+            <Link href="/handyman#request" data-hre-event="Request_Service_Click" data-hre-location="footer">Request Service</Link>
           </div>
           <div>
             <h5>About</h5>
@@ -55,8 +55,8 @@ export default function Footer() {
           </div>
           <div>
             <h5>Contact</h5>
-            <a href={`tel:${TEL}`}>{PHONE}</a>
-            <a href={`sms:${TEL}`}>Text Brian</a>
+            <a href={`tel:${TEL}`} data-hre-location="footer">{PHONE}</a>
+            <a href={`sms:${TEL}`} data-hre-location="footer">Text Brian</a>
           </div>
         </div>
         <div className="footer-base">

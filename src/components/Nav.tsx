@@ -75,7 +75,7 @@ export default function Nav() {
             </Link>
           ))}
         </nav>
-        <a className="btn btn-primary nav-cta" href={`sms:${TEL}`}>
+        <a className="btn btn-primary nav-cta" href={`sms:${TEL}`} data-hre-location="header">
           <SmsIcon /> Text Brian
         </a>
         <button
@@ -104,7 +104,7 @@ export default function Nav() {
             {label}
           </Link>
         ))}
-        <a className="btn btn-primary" href={`sms:${TEL}`} onClick={() => setOpen(false)}>
+        <a className="btn btn-primary" href={`sms:${TEL}`} data-hre-location="header" onClick={() => setOpen(false)}>
           <SmsIcon /> Text Brian
         </a>
       </nav>

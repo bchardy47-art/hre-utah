@@ -1,9 +1,14 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { track } from "@vercel/analytics";
+import { HRE_EVENT } from "@/lib/analytics";
 
 const EMAIL = "HardyHomesUtah@gmail.com";
 const FORMSPREE_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+// Must match the "Handyman Work" <option> below — routes a confirmed submission
+// to Service_Form_Success instead of Contact_Form_Success.
+const HANDYMAN_TOPIC = "Handyman Work";
 
 const Arrow = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -39,6 +44,17 @@ export default function ContactForm() {
         });
       }
       if (!res.ok) throw new Error("bad response");
+      // Past this point the backend has accepted the submission, so this is a
+      // real lead. Button presses and failed sends are deliberately not counted.
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        window.gtag("event", "contact_form_submit");
+      }
+      track(
+        data.get("help-with") === HANDYMAN_TOPIC
+          ? HRE_EVENT.SERVICE_FORM_SUCCESS
+          : HRE_EVENT.CONTACT_FORM_SUCCESS,
+        { location: "contact-page" }
+      );
       setStatus("done");
     } catch {
       // No backend reachable — hand off to the email client so nothing is lost
