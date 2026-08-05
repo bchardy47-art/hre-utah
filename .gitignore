@@ -24,3 +24,7 @@ next-env.d.ts
 
 # OS
 .DS_Store
+
+# local scratch — stale git lock files from crashed processes, and transfer
+# artifacts. Never part of the project; kept out of history deliberately.
+_to_delete/
