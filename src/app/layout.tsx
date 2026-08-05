@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import "./portal.css";
+import SiteChrome from "@/components/SiteChrome";
 import { Analytics } from "@vercel/analytics/next";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
@@ -21,9 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Nav />
-        {children}
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
         <Analytics />
         <GoogleAnalytics />
         <AnalyticsEvents />

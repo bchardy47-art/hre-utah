@@ -5,4 +5,12 @@ Allow: /
 Disallow: /thank-you/
 Disallow: /thank-you
 
+# Trade Partner Portal — private. These routes are protected by server-side
+# authentication; this is only to keep them out of search results.
+Disallow: /trade-partners
+Disallow: /trade-partners/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/portal/
+
 Sitemap: https://hre-utah.com/sitemap.xml

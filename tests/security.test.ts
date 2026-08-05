@@ -1,0 +1,283 @@
+import { describe, expect, it, beforeEach } from 'vitest'
+import { assertCompanyAccess, canAccessCompany, PortalAuthError } from '@/lib/portal/auth/guards'
+import { generateToken, hashToken, tokensMatch } from '@/lib/portal/auth/tokens'
+import { validatePassword } from '@/lib/portal/auth/password'
+import { redact } from '@/lib/portal/audit'
+import { LIMITS, rateLimit, resetRateLimits } from '@/lib/portal/rate-limit'
+import { buildStorageKey, sanitiseFilename, sniffMimeType, validateUpload } from '@/lib/portal/storage'
+import { maskEmail } from '@/lib/portal/email/mailer'
+import type { PortalSession } from '@/lib/portal/auth/session'
+
+const admin: PortalSession = {
+  sessionId: 's1',
+  userId: 'u-admin',
+  email: 'brian@hre-utah.com',
+  name: 'Brian Hardy',
+  role: 'ADMIN',
+  companyId: null,
+  expiresAt: new Date(Date.now() + 3_600_000),
+}
+
+const partnerA: PortalSession = {
+  sessionId: 's2',
+  userId: 'u-a',
+  email: 'a@example.com',
+  name: 'Partner A',
+  role: 'TRADE_PARTNER',
+  companyId: 'company-a',
+  expiresAt: new Date(Date.now() + 3_600_000),
+}
+
+describe('record-level authorization', () => {
+  it('lets an administrator reach any company', () => {
+    expect(() => assertCompanyAccess(admin, 'company-a')).not.toThrow()
+    expect(() => assertCompanyAccess(admin, 'company-b')).not.toThrow()
+  })
+
+  it('lets a trade partner reach only its own company', () => {
+    expect(() => assertCompanyAccess(partnerA, 'company-a')).not.toThrow()
+  })
+
+  it('refuses a trade partner reaching another company — the IDOR case', () => {
+    expect(() => assertCompanyAccess(partnerA, 'company-b')).toThrow(PortalAuthError)
+    try {
+      assertCompanyAccess(partnerA, 'company-b')
+    } catch (error) {
+      expect((error as PortalAuthError).statusCode).toBe(403)
+    }
+  })
+
+  it('refuses a trade partner user with no company attached', () => {
+    const orphan = { ...partnerA, companyId: null }
+    expect(() => assertCompanyAccess(orphan, 'company-a')).toThrow(PortalAuthError)
+  })
+
+  it('refuses an unauthenticated caller', () => {
+    expect(canAccessCompany(null, 'company-a')).toBe(false)
+  })
+
+  it('does not treat an empty company id as a wildcard', () => {
+    expect(() => assertCompanyAccess({ ...partnerA, companyId: '' }, '')).toThrow(PortalAuthError)
+  })
+})
+
+describe('tokens', () => {
+  it('generates 256 bits of entropy, URL-safe', () => {
+    const token = generateToken()
+    expect(token.length).toBeGreaterThanOrEqual(43)
+    expect(token).toMatch(/^[A-Za-z0-9_-]+$/)
+  })
+
+  it('does not repeat', () => {
+    const tokens = new Set(Array.from({ length: 500 }, () => generateToken()))
+    expect(tokens.size).toBe(500)
+  })
+
+  it('matches a token against its stored hash', () => {
+    const token = generateToken()
+    expect(tokensMatch(token, hashToken(token))).toBe(true)
+  })
+
+  it('rejects a different token', () => {
+    expect(tokensMatch(generateToken(), hashToken(generateToken()))).toBe(false)
+  })
+
+  it('rejects a malformed stored hash without throwing', () => {
+    expect(tokensMatch(generateToken(), 'not-hex')).toBe(false)
+    expect(tokensMatch(generateToken(), '')).toBe(false)
+  })
+
+  it('produces a hash that does not contain the token', () => {
+    const token = generateToken()
+    expect(hashToken(token)).not.toContain(token)
+  })
+})
+
+describe('password policy', () => {
+  it('accepts a reasonable passphrase', () => {
+    expect(validatePassword('framing crew 2026')).toEqual([])
+  })
+
+  it('rejects short passwords', () => {
+    expect(validatePassword('short1')).toContain('Use at least 12 characters.')
+  })
+
+  it('requires a number', () => {
+    expect(validatePassword('allletterspassword')).toContain('Include at least one number.')
+  })
+
+  it('rejects predictable words tied to this business', () => {
+    expect(validatePassword('hardyhomes2026!!')).toContain('Avoid common or easily guessed words.')
+  })
+})
+
+describe('upload validation', () => {
+  const pdf = Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(64, 1)])
+  const png = Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    Buffer.alloc(64, 1),
+  ])
+  const jpeg = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(64, 1)])
+  const html = Buffer.from('<!doctype html><script>alert(1)</script>                    ')
+
+  it('identifies allowed types by their magic bytes', () => {
+    expect(sniffMimeType(pdf)).toBe('application/pdf')
+    expect(sniffMimeType(png)).toBe('image/png')
+    expect(sniffMimeType(jpeg)).toBe('image/jpeg')
+  })
+
+  it('rejects HTML even when it is named like a PDF — extensions are not trusted', () => {
+    const result = validateUpload(html, 'certificate-of-insurance.pdf')
+    expect(result.ok).toBe(false)
+  })
+
+  it('accepts a real PDF named with the wrong extension and corrects it', () => {
+    const result = validateUpload(pdf, 'scan.jpg')
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.extension).toBe('pdf')
+  })
+
+  it('rejects an empty file', () => {
+    expect(validateUpload(Buffer.alloc(0), 'x.pdf').ok).toBe(false)
+  })
+
+  it('rejects a file over the size limit', () => {
+    const huge = Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(20 * 1024 * 1024)])
+    const result = validateUpload(huge, 'big.pdf')
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.reason).toMatch(/MB or smaller/)
+  })
+
+  it('computes a checksum for a valid upload', () => {
+    const result = validateUpload(pdf, 'coi.pdf')
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.checksum).toMatch(/^[a-f0-9]{64}$/)
+  })
+})
+
+describe('filename sanitisation', () => {
+  it('keeps only the final path segment, so traversal cannot survive', () => {
+    expect(sanitiseFilename('../../etc/passwd')).toBe('passwd')
+    expect(sanitiseFilename('..\\..\\windows\\system32')).toBe('system32')
+    expect(sanitiseFilename('/absolute/path/coi.pdf')).toBe('coi.pdf')
+  })
+
+  it('removes characters that could break a Content-Disposition header', () => {
+    const cleaned = sanitiseFilename('bad"name\r\nX-Injected: 1.pdf')
+    expect(cleaned).not.toContain('"')
+    expect(cleaned).not.toContain('\r')
+    expect(cleaned).not.toContain('\n')
+  })
+
+  it('collapses repeated dots so a double extension cannot be smuggled', () => {
+    expect(sanitiseFilename('invoice...pdf')).toBe('invoice.pdf')
+  })
+
+  it('never returns an empty name', () => {
+    expect(sanitiseFilename('///')).toBe('document')
+    expect(sanitiseFilename('')).toBe('document')
+  })
+
+  it('truncates absurdly long names', () => {
+    expect(sanitiseFilename(`${'a'.repeat(500)}.pdf`).length).toBeLessThanOrEqual(120)
+  })
+})
+
+describe('storage keys', () => {
+  it('scopes the key to the company and is not guessable', () => {
+    const a = buildStorageKey('company-a', 'W9', 'pdf')
+    const b = buildStorageKey('company-a', 'W9', 'pdf')
+    expect(a).toMatch(/^companies\/company-a\//)
+    expect(a).not.toBe(b)
+  })
+
+  it('cannot be steered outside the company prefix by a hostile requirement code', () => {
+    const key = buildStorageKey('company-a', '../../../etc', 'pdf')
+    expect(key.startsWith('companies/company-a/')).toBe(true)
+    expect(key).not.toContain('..')
+  })
+
+  it('normalises a hostile extension', () => {
+    const key = buildStorageKey('company-a', 'W9', '../../evil')
+    expect(key).not.toContain('..')
+    expect(key).not.toContain('/evil')
+  })
+})
+
+describe('audit redaction', () => {
+  it('redacts anything that looks like a sensitive identifier', () => {
+    const redacted = redact({
+      ein: '87-1234567',
+      policyNumber: 'GL-99887766',
+      password: 'hunter2',
+      token: 'abc',
+      routingNumber: '124000054',
+      companyName: 'Wasatch Framing',
+    }) as Record<string, unknown>
+
+    expect(redacted.ein).toBe('[redacted]')
+    expect(redacted.policyNumber).toBe('[redacted]')
+    expect(redacted.password).toBe('[redacted]')
+    expect(redacted.token).toBe('[redacted]')
+    expect(redacted.routingNumber).toBe('[redacted]')
+    // Non-sensitive values survive, or the audit log would be useless.
+    expect(redacted.companyName).toBe('Wasatch Framing')
+  })
+
+  it('redacts nested values too', () => {
+    const redacted = redact({ outer: { inner: { ssn: '111-22-3333' } } }) as Record<string, any>
+    expect(redacted.outer.inner.ssn).toBe('[redacted]')
+  })
+
+  it('truncates long strings rather than storing an essay', () => {
+    const redacted = redact({ note: 'x'.repeat(1000) }) as Record<string, string>
+    expect(redacted.note.length).toBeLessThan(320)
+  })
+
+  it('stops recursing on deeply nested input', () => {
+    let deep: Record<string, unknown> = { value: 1 }
+    for (let i = 0; i < 20; i++) deep = { nested: deep }
+    expect(() => redact(deep)).not.toThrow()
+  })
+})
+
+describe('email masking', () => {
+  it('masks the local part in logs and audit summaries', () => {
+    expect(maskEmail('brian@hre-utah.com')).toBe('b***n@hre-utah.com')
+  })
+
+  it('handles very short local parts', () => {
+    expect(maskEmail('bh@example.com')).toBe('b***@example.com')
+  })
+
+  it('does not throw on malformed input', () => {
+    expect(maskEmail('not-an-email')).toBe('[invalid]')
+  })
+})
+
+describe('rate limiting', () => {
+  beforeEach(() => resetRateLimits())
+
+  it('allows requests up to the limit and blocks beyond it', () => {
+    const key = 'login:203.0.113.10'
+    for (let i = 0; i < LIMITS.login.limit; i++) {
+      expect(rateLimit(key, LIMITS.login.limit, LIMITS.login.windowSeconds).allowed).toBe(true)
+    }
+    const blocked = rateLimit(key, LIMITS.login.limit, LIMITS.login.windowSeconds)
+    expect(blocked.allowed).toBe(false)
+    expect(blocked.retryAfterSeconds).toBeGreaterThan(0)
+  })
+
+  it('tracks each key independently', () => {
+    for (let i = 0; i < LIMITS.login.limit + 2; i++) {
+      rateLimit('login:a', LIMITS.login.limit, LIMITS.login.windowSeconds)
+    }
+    expect(rateLimit('login:b', LIMITS.login.limit, LIMITS.login.windowSeconds).allowed).toBe(true)
+  })
+
+  it('resets once the window has passed', () => {
+    const key = 'short-window'
+    expect(rateLimit(key, 1, 0).allowed).toBe(true)
+    expect(rateLimit(key, 1, 0).allowed).toBe(true)
+  })
+})
