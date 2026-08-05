@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { requireTradePartner } from '@/lib/portal/auth/guards'
 import { recordAcknowledgment } from '@/lib/portal/services/documents'
-import { acknowledgmentSchema, toFieldErrors, type ActionState } from '@/lib/portal/validation'
+import { acknowledgmentSchema, formText, formValue, toFieldErrors, type ActionState } from '@/lib/portal/validation'
 
 export async function acknowledgeAction(
   _prev: ActionState,
@@ -12,10 +12,10 @@ export async function acknowledgeAction(
   const session = await requireTradePartner()
 
   const parsed = acknowledgmentSchema.safeParse({
-    requirementId: formData.get('requirementId'),
-    signerName: formData.get('signerName'),
-    signerTitle: formData.get('signerTitle'),
-    agreed: formData.get('agreed'),
+    requirementId: formValue(formData, 'requirementId'),
+    signerName: formValue(formData, 'signerName'),
+    signerTitle: formValue(formData, 'signerTitle'),
+    agreed: formValue(formData, 'agreed'),
   })
   if (!parsed.success) {
     return { ok: false, errors: toFieldErrors(parsed.error), message: 'Please complete the acknowledgment.' }

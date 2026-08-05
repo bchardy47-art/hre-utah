@@ -320,6 +320,38 @@ endpoint change.
 scoped to it (Cloudflare → R2 → Manage R2 API Tokens). Fill in `R2_ACCOUNT_ID`,
 `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`.
 
+### CORS is required — uploads fail silently without it
+
+Because the browser PUTs directly to R2 rather than through our own origin, the
+bucket needs a CORS policy. **Without it every upload fails with an opaque
+"Failed to fetch" in the browser and nothing at all in the server logs**, because
+the request is blocked before it ever leaves the browser. This was caught during
+preview acceptance testing and is the single most likely thing to break an
+otherwise correct deployment.
+
+In Cloudflare → R2 → your bucket → Settings → CORS policy:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://hre-utah.com"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedHeaders": ["content-type"],
+    "ExposeHeaders": ["etag"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+Add each Vercel preview origin you intend to test from as an additional entry.
+Do not use `"*"` for `AllowedOrigins` in production: the presigned URL is the
+capability, and narrowing the origin limits where a leaked one can be replayed
+from.
+
+Verify after deploying by uploading a document larger than 4.5 MB. That size is
+the real test — anything smaller might have squeezed through a proxied path,
+whereas a large file only succeeds if the direct-to-R2 route genuinely works.
+
 Accepted types: PDF, JPEG, PNG, HEIC, WebP. Default limit 15 MB.
 
 Superseded documents are never deleted — their objects are retained alongside

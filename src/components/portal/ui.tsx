@@ -57,8 +57,13 @@ export function PortalShell({
             <div>{userLabel}</div>
             {userSub ? <div className="pt-small pt-muted">{userSub}</div> : null}
           </div>
+          {/*
+            Sign out is deliberately understated. As a bordered button it was the
+            heaviest control on every screen — on a phone it competed with the
+            actual task, and it is the last thing a trade partner is trying to do.
+          */}
           <form action={signOutAction}>
-            <button type="submit" className="pt-btn pt-btn-ghost pt-btn-sm">
+            <button type="submit" className="pt-signout">
               Sign out
             </button>
           </form>

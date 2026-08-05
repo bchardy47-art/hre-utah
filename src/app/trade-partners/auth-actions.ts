@@ -7,8 +7,8 @@ import { users } from '@/lib/portal/db/schema'
 import { verifyPassword } from '@/lib/portal/auth/password'
 import { createSession, destroySession, getSession, requestContext } from '@/lib/portal/auth/session'
 import { AUDIT, recordAudit } from '@/lib/portal/audit'
-import { LIMITS, rateLimit } from '@/lib/portal/rate-limit'
-import { acceptInvitationSchema, loginSchema, toFieldErrors, type ActionState } from '@/lib/portal/validation'
+import { clearRateLimit, LIMITS, peekRateLimit, rateLimit, recordFailure } from '@/lib/portal/rate-limit'
+import { acceptInvitationSchema, formText, formValue, loginSchema, toFieldErrors, type ActionState } from '@/lib/portal/validation'
 import { acceptInvitation } from '@/lib/portal/services/invitations'
 
 /**
@@ -27,20 +27,25 @@ const GENERIC_LOGIN_ERROR = 'That email address and password combination was not
 
 export async function loginAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = loginSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-    next: formData.get('next') ?? undefined,
+    email: formValue(formData, 'email'),
+    password: formValue(formData, 'password'),
+    next: formValue(formData, 'next'),
   })
   if (!parsed.success) {
     return { ok: false, errors: toFieldErrors(parsed.error) }
   }
 
   const { ipAddress } = requestContext()
-  const limit = rateLimit(`login:${ipAddress ?? 'unknown'}`, LIMITS.login.limit, LIMITS.login.windowSeconds)
+  const limitKey = `login:${ipAddress ?? 'unknown'}`
+
+  // Checked without consuming. Only FAILED attempts spend the budget (see
+  // recordFailure below) — otherwise several people signing in legitimately from
+  // one office IP or behind CGNAT would lock each other out.
+  const limit = peekRateLimit(limitKey, LIMITS.login.limit)
   if (!limit.allowed) {
     return {
       ok: false,
-      message: `Too many sign-in attempts. Try again in ${Math.ceil(limit.retryAfterSeconds / 60)} minutes.`,
+      message: `Too many failed sign-in attempts from this network. Try again in ${Math.ceil(limit.retryAfterSeconds / 60)} minutes.`,
     }
   }
 
@@ -51,6 +56,7 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
     // Spend comparable time even when the account does not exist, so response
     // timing does not reveal which addresses are registered.
     await verifyPassword(password, '$2a$12$invalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidin')
+    recordFailure(limitKey, LIMITS.login.windowSeconds)
     await recordAudit({
       action: AUDIT.LOGIN_FAILED,
       summary: `Failed sign-in for ${email}`,
@@ -70,6 +76,7 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
   const valid = await verifyPassword(password, user.passwordHash)
 
   if (!valid) {
+    recordFailure(limitKey, LIMITS.login.windowSeconds)
     const failed = user.failedLoginCount + 1
     const lock = failed >= MAX_FAILED_ATTEMPTS
     await db
@@ -90,6 +97,11 @@ export async function loginAction(_prev: ActionState, formData: FormData): Promi
 
     return { ok: false, message: GENERIC_LOGIN_ERROR }
   }
+
+  // A successful sign-in clears the network's failure budget, so one person
+  // fumbling their password cannot degrade sign-in for everyone else sharing
+  // the address.
+  clearRateLimit(limitKey)
 
   await db
     .update(users)
@@ -136,11 +148,11 @@ export async function acceptInvitationAction(
   formData: FormData,
 ): Promise<ActionState> {
   const parsed = acceptInvitationSchema.safeParse({
-    token: formData.get('token'),
-    name: formData.get('name'),
-    phone: formData.get('phone') ?? undefined,
-    password: formData.get('password'),
-    confirmPassword: formData.get('confirmPassword'),
+    token: formValue(formData, 'token'),
+    name: formValue(formData, 'name'),
+    phone: formValue(formData, 'phone'),
+    password: formValue(formData, 'password'),
+    confirmPassword: formValue(formData, 'confirmPassword'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 

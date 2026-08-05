@@ -18,17 +18,7 @@ import { addInternalNote, reviewDocument } from '@/lib/portal/services/documents
 import { sendPortalEmail } from '@/lib/portal/email/mailer'
 import { NOTIFICATION_TYPES } from '@/lib/portal/email/templates'
 import { serverEnv } from '@/lib/portal/env'
-import {
-  applicationReviewSchema,
-  createInvitationSchema,
-  documentReviewSchema,
-  internalNoteSchema,
-  licenseVerificationSchema,
-  referenceContactSchema,
-  statusChangeSchema,
-  toFieldErrors,
-  type ActionState,
-} from '@/lib/portal/validation'
+import { applicationReviewSchema, createInvitationSchema, documentReviewSchema, formText, formValue, internalNoteSchema, licenseVerificationSchema, referenceContactSchema, statusChangeSchema, toFieldErrors, type ActionState } from '@/lib/portal/validation'
 
 /**
  * Administrator actions.
@@ -60,12 +50,12 @@ export async function createInvitationAction(
   }
 
   const parsed = createInvitationSchema.safeParse({
-    companyName: formData.get('companyName'),
-    contactName: formData.get('contactName'),
-    contactEmail: formData.get('contactEmail'),
-    contactPhone: formData.get('contactPhone'),
-    primaryTrade: formData.get('primaryTrade'),
-    message: formData.get('message'),
+    companyName: formValue(formData, 'companyName'),
+    contactName: formValue(formData, 'contactName'),
+    contactEmail: formValue(formData, 'contactEmail'),
+    contactPhone: formValue(formData, 'contactPhone'),
+    primaryTrade: formValue(formData, 'primaryTrade'),
+    message: formValue(formData, 'message'),
   })
   if (!parsed.success) {
     return { ok: false, errors: toFieldErrors(parsed.error), message: 'Please check the highlighted fields.' }
@@ -80,8 +70,8 @@ export async function createInvitationAction(
 
 export async function resendInvitationAction(formData: FormData): Promise<void> {
   const session = await requireAdmin()
-  const invitationId = String(formData.get('invitationId') ?? '')
-  const companyId = String(formData.get('companyId') ?? '')
+  const invitationId = String(formText(formData, 'invitationId'))
+  const companyId = String(formText(formData, 'companyId'))
   if (!invitationId) return
   await resendInvitation(invitationId, session)
   revalidateCompany(companyId)
@@ -89,8 +79,8 @@ export async function resendInvitationAction(formData: FormData): Promise<void> 
 
 export async function revokeInvitationAction(formData: FormData): Promise<void> {
   const session = await requireAdmin()
-  const invitationId = String(formData.get('invitationId') ?? '')
-  const companyId = String(formData.get('companyId') ?? '')
+  const invitationId = String(formText(formData, 'invitationId'))
+  const companyId = String(formText(formData, 'companyId'))
   if (!invitationId) return
   await revokeInvitation(invitationId, session)
   revalidateCompany(companyId)
@@ -107,17 +97,17 @@ export async function reviewDocumentAction(
   const session = await requireAdmin()
 
   const parsed = documentReviewSchema.safeParse({
-    documentId: formData.get('documentId'),
-    decision: formData.get('decision'),
-    reason: formData.get('reason'),
-    notes: formData.get('notes'),
+    documentId: formValue(formData, 'documentId'),
+    decision: formValue(formData, 'decision'),
+    reason: formValue(formData, 'reason'),
+    notes: formValue(formData, 'notes'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
   const result = await reviewDocument({ ...parsed.data, actor: session })
   if (!result.ok) return { ok: false, message: result.error }
 
-  const companyId = String(formData.get('companyId') ?? '')
+  const companyId = String(formText(formData, 'companyId'))
   revalidateCompany(companyId)
   return { ok: true, message: 'Review recorded.' }
 }
@@ -133,9 +123,9 @@ export async function changeStatusAction(
   const session = await requireAdmin()
 
   const parsed = statusChangeSchema.safeParse({
-    companyId: formData.get('companyId'),
-    status: formData.get('status'),
-    reason: formData.get('reason'),
+    companyId: formValue(formData, 'companyId'),
+    status: formValue(formData, 'status'),
+    reason: formValue(formData, 'reason'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
@@ -163,9 +153,9 @@ export async function reviewApplicationAction(
   const session = await requireAdmin()
 
   const parsed = applicationReviewSchema.safeParse({
-    companyId: formData.get('companyId'),
-    decision: formData.get('decision'),
-    reason: formData.get('reason'),
+    companyId: formValue(formData, 'companyId'),
+    decision: formValue(formData, 'decision'),
+    reason: formValue(formData, 'reason'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
@@ -239,10 +229,10 @@ export async function verifyLicenseAction(
   const session = await requireAdmin()
 
   const parsed = licenseVerificationSchema.safeParse({
-    licenseId: formData.get('licenseId'),
-    verificationStatus: formData.get('verificationStatus'),
-    verificationNotes: formData.get('verificationNotes'),
-    verificationSource: formData.get('verificationSource'),
+    licenseId: formValue(formData, 'licenseId'),
+    verificationStatus: formValue(formData, 'verificationStatus'),
+    verificationNotes: formValue(formData, 'verificationNotes'),
+    verificationSource: formValue(formData, 'verificationSource'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
@@ -289,9 +279,9 @@ export async function addNoteAction(_prev: ActionState, formData: FormData): Pro
   const session = await requireAdmin()
 
   const parsed = internalNoteSchema.safeParse({
-    companyId: formData.get('companyId'),
-    documentId: formData.get('documentId'),
-    body: formData.get('body'),
+    companyId: formValue(formData, 'companyId'),
+    documentId: formValue(formData, 'documentId'),
+    body: formValue(formData, 'body'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
@@ -314,8 +304,8 @@ export async function recordReferenceContactAction(
   const session = await requireAdmin()
 
   const parsed = referenceContactSchema.safeParse({
-    projectId: formData.get('projectId'),
-    contactNotes: formData.get('contactNotes'),
+    projectId: formValue(formData, 'projectId'),
+    contactNotes: formValue(formData, 'contactNotes'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 

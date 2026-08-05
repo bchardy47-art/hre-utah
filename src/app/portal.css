@@ -105,6 +105,34 @@
   line-height: 1.35;
 }
 
+/*
+  Quiet by design. Still a 44px tap target, but visually recessive so it does
+  not compete with the primary action on the page.
+*/
+.pt-signout {
+  background: none;
+  border: 0;
+  padding: 12px 4px 12px 14px;
+  min-height: 44px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--muted, #9aa3ad);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.pt-signout:hover {
+  color: var(--text, #f1ede6);
+}
+
+.pt-signout:focus-visible {
+  outline: 2px solid var(--orange, #e2601f);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
 @media (min-width: 720px) {
   .pt-header-user {
     display: block;

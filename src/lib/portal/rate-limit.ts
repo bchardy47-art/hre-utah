@@ -40,6 +40,7 @@ export type RateLimitResult = {
   retryAfterSeconds: number
 }
 
+/** Consumes one unit from the bucket. Use for rate limits on any attempt. */
 export function rateLimit(key: string, limit: number, windowSeconds: number): RateLimitResult {
   const now = Date.now()
   sweep(now)
@@ -57,6 +58,45 @@ export function rateLimit(key: string, limit: number, windowSeconds: number): Ra
     remaining: Math.max(0, limit - existing.count),
     retryAfterSeconds: allowed ? 0 : Math.ceil((existing.resetAt - now) / 1000),
   }
+}
+
+/**
+ * Reads the bucket WITHOUT consuming from it.
+ *
+ * Pair with `recordFailure` for authentication: a legitimate person signing in
+ * successfully must not spend the budget that exists to slow down guessing.
+ * Otherwise a handful of staff behind one office IP or a CGNAT address can lock
+ * each other out of a portal none of them was attacking.
+ */
+export function peekRateLimit(key: string, limit: number): RateLimitResult {
+  const now = Date.now()
+  const existing = buckets.get(key)
+  if (!existing || existing.resetAt <= now) {
+    return { allowed: true, remaining: limit, retryAfterSeconds: 0 }
+  }
+  const allowed = existing.count < limit
+  return {
+    allowed,
+    remaining: Math.max(0, limit - existing.count),
+    retryAfterSeconds: allowed ? 0 : Math.ceil((existing.resetAt - now) / 1000),
+  }
+}
+
+/** Consumes one unit. Call only on a failed attempt. */
+export function recordFailure(key: string, windowSeconds: number): void {
+  const now = Date.now()
+  sweep(now)
+  const existing = buckets.get(key)
+  if (!existing || existing.resetAt <= now) {
+    buckets.set(key, { count: 1, resetAt: now + windowSeconds * 1000 })
+    return
+  }
+  existing.count += 1
+}
+
+/** Clears a key entirely — used after a successful sign-in. */
+export function clearRateLimit(key: string): void {
+  buckets.delete(key)
 }
 
 export const LIMITS = {

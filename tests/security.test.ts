@@ -3,7 +3,7 @@ import { assertCompanyAccess, canAccessCompany, PortalAuthError } from '@/lib/po
 import { generateToken, hashToken, tokensMatch } from '@/lib/portal/auth/tokens'
 import { validatePassword } from '@/lib/portal/auth/password'
 import { redact } from '@/lib/portal/audit'
-import { LIMITS, rateLimit, resetRateLimits } from '@/lib/portal/rate-limit'
+import { clearRateLimit, LIMITS, peekRateLimit, rateLimit, recordFailure, resetRateLimits } from '@/lib/portal/rate-limit'
 import { buildStorageKey, sanitiseFilename, sniffMimeType, validateUpload } from '@/lib/portal/storage'
 import { maskEmail } from '@/lib/portal/email/mailer'
 import type { PortalSession } from '@/lib/portal/auth/session'
@@ -279,5 +279,45 @@ describe('rate limiting', () => {
     const key = 'short-window'
     expect(rateLimit(key, 1, 0).allowed).toBe(true)
     expect(rateLimit(key, 1, 0).allowed).toBe(true)
+  })
+
+  // Regression: the login limiter originally consumed budget on EVERY attempt,
+  // so ten successful sign-ins from one office IP locked everyone out. Only
+  // failures may spend it.
+  describe('peek / recordFailure split (login path)', () => {
+    it('peeking never consumes budget', () => {
+      const key = 'peek-only'
+      for (let i = 0; i < 50; i++) {
+        expect(peekRateLimit(key, 5).allowed).toBe(true)
+      }
+    })
+
+    it('only recorded failures count toward the limit', () => {
+      const key = 'failures-only'
+      for (let i = 0; i < 5; i++) {
+        expect(peekRateLimit(key, 5).allowed).toBe(true)
+        recordFailure(key, 900)
+      }
+      expect(peekRateLimit(key, 5).allowed).toBe(false)
+    })
+
+    it('a successful sign-in clears the network budget', () => {
+      const key = 'cleared-on-success'
+      for (let i = 0; i < 5; i++) recordFailure(key, 900)
+      expect(peekRateLimit(key, 5).allowed).toBe(false)
+
+      clearRateLimit(key)
+      expect(peekRateLimit(key, 5).allowed).toBe(true)
+    })
+
+    it('still blocks sustained guessing', () => {
+      const key = 'stuffing'
+      let blockedAt = -1
+      for (let i = 0; i < 20; i++) {
+        if (!peekRateLimit(key, LIMITS.login.limit).allowed) { blockedAt = i; break }
+        recordFailure(key, LIMITS.login.windowSeconds)
+      }
+      expect(blockedAt).toBe(LIMITS.login.limit)
+    })
   })
 })

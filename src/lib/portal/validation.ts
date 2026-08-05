@@ -313,6 +313,27 @@ export type ActionState = {
   errors?: FieldErrors
 }
 
+/**
+ * Reads a single form field as `string | undefined`.
+ *
+ * `FormData.get()` returns `null` for a field that is not present in the
+ * submission — which is exactly what happens to any conditionally rendered
+ * input, such as the mailing address block that is hidden when "same as
+ * business" is ticked. Passing that `null` into an `.optional()` Zod string
+ * fails with "expected string, received null", so the whole section refuses to
+ * save. Always read optional fields through this helper.
+ */
+export function formValue(formData: FormData, key: string): string | undefined {
+  const raw = formData.get(key)
+  if (raw === null || typeof raw !== 'string') return undefined
+  return raw
+}
+
+/** Same as `formValue`, but returns `''` rather than `undefined` for absent fields. */
+export function formText(formData: FormData, key: string): string {
+  return formValue(formData, key) ?? ''
+}
+
 /** Reads repeated form fields (`contacts.0.name`) into an indexed array. */
 export function collectIndexed(
   formData: FormData,

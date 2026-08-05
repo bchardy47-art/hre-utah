@@ -40,16 +40,71 @@ import {
   submitApplication,
 } from '../application-actions'
 
+/**
+ * Result banner with a full error summary.
+ *
+ * The summary is not decoration. Every field-level error is listed here as well
+ * as inline, because a validation failure on a field this form does not render
+ * an inline message for would otherwise be completely invisible — the banner
+ * would say "check the highlighted fields" with nothing highlighted, and the
+ * person would be stuck with no way to discover the problem. Listing every
+ * message makes that failure mode impossible.
+ *
+ * It also doubles as the accessible error-summary pattern: one alert region,
+ * focusable, naming each problem.
+ */
 function Banner({ state }: { state: ActionState }) {
-  if (!state.message) return null
+  const errorEntries = Object.entries(state.errors ?? {})
+  if (!state.message && errorEntries.length === 0) return null
+
+  const ok = state.ok && errorEntries.length === 0
+
   return (
-    <div
-      className={`pt-notice pt-notice-${state.ok ? 'good' : 'bad'}`}
-      role={state.ok ? 'status' : 'alert'}
-    >
-      <p>{state.message}</p>
+    <div className={`pt-notice pt-notice-${ok ? 'good' : 'bad'}`} role={ok ? 'status' : 'alert'} tabIndex={-1}>
+      <div>
+        {state.message ? <p>{state.message}</p> : null}
+        {errorEntries.length > 0 ? (
+          <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
+            {errorEntries.map(([field, message]) => (
+              <li key={field}>
+                {FIELD_LABELS[field] ? `${FIELD_LABELS[field]}: ` : ''}
+                {message}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
     </div>
   )
+}
+
+/** Human labels so an error summary never shows a raw schema key. */
+const FIELD_LABELS: Record<string, string> = {
+  legalName: 'Legal business name',
+  dba: 'DBA',
+  entityType: 'Entity type',
+  einLast4: 'EIN last four',
+  businessAddress1: 'Street address',
+  businessCity: 'City',
+  businessState: 'State',
+  businessZip: 'ZIP code',
+  mainPhone: 'Main phone',
+  generalEmail: 'General email',
+  website: 'Website',
+  yearEstablished: 'Year established',
+  yearsInBusiness: 'Years in business',
+  primaryTrade: 'Primary trade',
+  additionalTrades: 'Additional trades',
+  serviceAreas: 'Utah counties served',
+  crewSize: 'Crew size',
+  usesLowerTierSubs: 'Lower-tier subcontractors',
+  description: 'Company description',
+  licenseNumber: 'Licence number',
+  expirationDate: 'Expiration date',
+  disciplineExplanation: 'Licence action explanation',
+  signerName: 'Your full name',
+  signerTitle: 'Your title',
+  acknowledged: 'Acknowledgment',
 }
 
 const toDateInput = (value: Date | string | null | undefined) => {

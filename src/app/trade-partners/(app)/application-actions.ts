@@ -20,17 +20,7 @@ import { sendPortalEmail } from '@/lib/portal/email/mailer'
 import { NOTIFICATION_TYPES } from '@/lib/portal/email/templates'
 import { serverEnv } from '@/lib/portal/env'
 import { APPLICATION_SECTIONS, CERTIFICATION_VERSION } from '@/lib/portal/constants'
-import {
-  certificationSchema,
-  collectIndexed,
-  companySectionSchema,
-  disclosuresSectionSchema,
-  experienceSectionSchema,
-  insuranceSectionSchema,
-  licensingSectionSchema,
-  toFieldErrors,
-  type ActionState,
-} from '@/lib/portal/validation'
+import { certificationSchema, collectIndexed, companySectionSchema, disclosuresSectionSchema, experienceSectionSchema, formText, formValue, insuranceSectionSchema, licensingSectionSchema, toFieldErrors, type ActionState } from '@/lib/portal/validation'
 
 /**
  * Application section saves.
@@ -92,36 +82,36 @@ export async function saveCompanySection(
   const session = await requireTradePartner()
 
   const parsed = companySectionSchema.safeParse({
-    legalName: formData.get('legalName'),
-    dba: formData.get('dba'),
-    entityType: formData.get('entityType'),
-    einLast4: formData.get('einLast4'),
-    businessAddress1: formData.get('businessAddress1'),
-    businessAddress2: formData.get('businessAddress2'),
-    businessCity: formData.get('businessCity'),
-    businessState: formData.get('businessState'),
-    businessZip: formData.get('businessZip'),
+    legalName: formValue(formData, 'legalName'),
+    dba: formValue(formData, 'dba'),
+    entityType: formValue(formData, 'entityType'),
+    einLast4: formValue(formData, 'einLast4'),
+    businessAddress1: formValue(formData, 'businessAddress1'),
+    businessAddress2: formValue(formData, 'businessAddress2'),
+    businessCity: formValue(formData, 'businessCity'),
+    businessState: formValue(formData, 'businessState'),
+    businessZip: formValue(formData, 'businessZip'),
     mailingSameAsBusiness: formData.get('mailingSameAsBusiness') === 'on',
-    mailingAddress1: formData.get('mailingAddress1'),
-    mailingAddress2: formData.get('mailingAddress2'),
-    mailingCity: formData.get('mailingCity'),
-    mailingState: formData.get('mailingState'),
-    mailingZip: formData.get('mailingZip'),
-    mainPhone: formData.get('mainPhone'),
-    generalEmail: formData.get('generalEmail'),
-    website: formData.get('website'),
-    yearEstablished: formData.get('yearEstablished') || undefined,
-    yearsInBusiness: formData.get('yearsInBusiness') || undefined,
-    primaryTrade: formData.get('primaryTrade'),
+    mailingAddress1: formValue(formData, 'mailingAddress1'),
+    mailingAddress2: formValue(formData, 'mailingAddress2'),
+    mailingCity: formValue(formData, 'mailingCity'),
+    mailingState: formValue(formData, 'mailingState'),
+    mailingZip: formValue(formData, 'mailingZip'),
+    mainPhone: formValue(formData, 'mainPhone'),
+    generalEmail: formValue(formData, 'generalEmail'),
+    website: formValue(formData, 'website'),
+    yearEstablished: formValue(formData, 'yearEstablished') || undefined,
+    yearsInBusiness: formValue(formData, 'yearsInBusiness') || undefined,
+    primaryTrade: formValue(formData, 'primaryTrade'),
     additionalTrades: formData.getAll('additionalTrades').map(String),
     serviceAreas: formData.getAll('serviceAreas').map(String),
-    typicalProjectSize: formData.get('typicalProjectSize'),
-    largestProject: formData.get('largestProject'),
-    crewSize: formData.get('crewSize') || undefined,
-    annualCapacity: formData.get('annualCapacity'),
-    currentBacklog: formData.get('currentBacklog'),
+    typicalProjectSize: formValue(formData, 'typicalProjectSize'),
+    largestProject: formValue(formData, 'largestProject'),
+    crewSize: formValue(formData, 'crewSize') || undefined,
+    annualCapacity: formValue(formData, 'annualCapacity'),
+    currentBacklog: formValue(formData, 'currentBacklog'),
     usesLowerTierSubs: formData.get('usesLowerTierSubs') === 'yes',
-    description: formData.get('description'),
+    description: formValue(formData, 'description'),
   })
 
   if (!parsed.success) {
@@ -259,15 +249,15 @@ export async function saveLicensingSection(
   const session = await requireTradePartner()
 
   const parsed = licensingSectionSchema.safeParse({
-    licenseNumber: formData.get('licenseNumber'),
-    classification: formData.get('classification'),
-    licensedEntityName: formData.get('licensedEntityName'),
-    qualifierName: formData.get('qualifierName'),
-    issueDate: formData.get('issueDate') ?? '',
-    expirationDate: formData.get('expirationDate') ?? '',
-    otherInformation: formData.get('otherInformation'),
+    licenseNumber: formValue(formData, 'licenseNumber'),
+    classification: formValue(formData, 'classification'),
+    licensedEntityName: formValue(formData, 'licensedEntityName'),
+    qualifierName: formValue(formData, 'qualifierName'),
+    issueDate: formText(formData, 'issueDate'),
+    expirationDate: formText(formData, 'expirationDate'),
+    otherInformation: formValue(formData, 'otherInformation'),
     everDisciplined: formData.get('everDisciplined') === 'yes',
-    disciplineExplanation: formData.get('disciplineExplanation'),
+    disciplineExplanation: formValue(formData, 'disciplineExplanation'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
@@ -486,8 +476,8 @@ export async function saveDisclosuresSection(
   const session = await requireTradePartner()
 
   const read = (key: string) => ({
-    answer: (formData.get(`${key}.answer`) ?? '') as 'yes' | 'no' | '',
-    explanation: (formData.get(`${key}.explanation`) ?? '') as string,
+    answer: formText(formData, `${key}.answer`) as 'yes' | 'no' | '',
+    explanation: formText(formData, `${key}.explanation`),
   })
 
   const parsed = disclosuresSectionSchema.safeParse({
@@ -563,9 +553,9 @@ export async function submitApplication(
   const session = await requireTradePartner()
 
   const parsed = certificationSchema.safeParse({
-    signerName: formData.get('signerName'),
-    signerTitle: formData.get('signerTitle'),
-    acknowledged: formData.get('acknowledged'),
+    signerName: formValue(formData, 'signerName'),
+    signerTitle: formValue(formData, 'signerTitle'),
+    acknowledged: formValue(formData, 'acknowledged'),
   })
   if (!parsed.success) return { ok: false, errors: toFieldErrors(parsed.error) }
 
