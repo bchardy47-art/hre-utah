@@ -14,15 +14,62 @@
  */
 
 import type {
-  Acknowledgment,
-  Company,
   CompanyStatusValue,
-  DocumentRequirement,
+  DocumentCategoryValue,
   DocumentStateValue,
   EntityTypeValue,
-  PortalDocument,
-} from './db/schema'
+} from './firebase/types'
 import { LOCKED_STATUSES } from './constants'
+
+/**
+ * The engine describes the shape it needs rather than importing a database's
+ * row type. That is what let this file survive the move from Postgres/Drizzle to
+ * Firestore without a single rule changing — and it means the rules can be
+ * exercised by tests that construct plain objects, with no database at all.
+ */
+export type DocumentRequirement = {
+  id: string
+  code: string
+  name: string
+  category: DocumentCategoryValue
+  isRequired: boolean
+  applicableTrades: readonly string[]
+  /** Widened to plain strings so either database's row shape satisfies it. */
+  applicableEntityTypes: readonly string[]
+  hasExpiration: boolean
+  blocksBid: boolean
+  blocksWork: boolean
+  isAcknowledgment: boolean
+  sortOrder: number
+  isActive: boolean
+}
+
+export type PortalDocument = {
+  id: string
+  companyId: string
+  requirementId: string
+  state: DocumentStateValue
+  version: number
+  submittedAt: Date | string
+  expirationDate: Date | string | null
+  rejectionReason: string | null
+  notApplicableReason: string | null
+}
+
+export type Company = {
+  id: string
+  status: CompanyStatusValue
+  legalName: string
+  entityType: EntityTypeValue | null
+  primaryTrade: string
+  additionalTrades: readonly string[]
+}
+
+export type Acknowledgment = {
+  requirementId: string
+  templateVersion: string
+  acknowledgedAt: Date | string
+}
 
 export const EXPIRING_SOON_DAYS = 30
 
@@ -498,6 +545,105 @@ function recommendStatus(args: {
   }
 
   return { recommendedStatus: null, canSystemApply: false }
+}
+
+// ---------------------------------------------------------------------------
+// Reminders — computed, not scheduled
+// ---------------------------------------------------------------------------
+
+/**
+ * Which expiry reminders are due right now.
+ *
+ * This replaces the cron job. Rather than a nightly sweep pushing email, the
+ * reminder set is *derived* every time an administrator loads the queue. That
+ * means Version 1 needs no paid scheduler and cannot silently stop working
+ * because a cron was never configured — the worst case is that nobody looks at
+ * the dashboard, which is visible, rather than a job failing quietly.
+ *
+ * A reminder is due once the item is at or past a threshold and no action has
+ * been recorded for that exact (document, threshold) pair.
+ */
+export const REMINDER_THRESHOLDS = [30, 14, 7, 0] as const
+export type ReminderThreshold = (typeof REMINDER_THRESHOLDS)[number]
+
+export type DueReminder = {
+  requirementId: string
+  documentId: string | null
+  code: string
+  name: string
+  /** The highest threshold this item has crossed. */
+  threshold: ReminderThreshold
+  thresholdLabel: string
+  daysUntilExpiration: number
+  expirationDate: Date | null
+  isExpired: boolean
+  dedupeKey: string
+}
+
+/**
+ * The threshold an item has crossed, or null if it is not yet within 30 days.
+ *
+ * Deliberately returns the *most urgent* threshold reached rather than an exact
+ * match on the day. A nightly-cron design could fire on exactly day 14; a
+ * derived design must still surface the reminder if nobody looked at the
+ * dashboard on day 14, otherwise reminders would be silently skipped.
+ */
+export function thresholdFor(daysUntilExpiration: number): ReminderThreshold | null {
+  if (daysUntilExpiration <= 0) return 0
+  if (daysUntilExpiration <= 7) return 7
+  if (daysUntilExpiration <= 14) return 14
+  if (daysUntilExpiration <= 30) return 30
+  return null
+}
+
+export function thresholdLabel(threshold: ReminderThreshold): string {
+  return threshold === 0 ? 'Expired or expiring today' : `Within ${threshold} days`
+}
+
+/**
+ * Computes due reminders for one company.
+ *
+ * `handledKeys` is the set of dedupe keys already actioned by an administrator
+ * (a Gmail draft opened, or marked handled). Anything in it is filtered out, so
+ * the queue does not nag about work already done.
+ */
+export function dueReminders(
+  result: ComplianceResult,
+  companyId: string,
+  handledKeys: ReadonlySet<string> = new Set(),
+): DueReminder[] {
+  const out: DueReminder[] = []
+
+  for (const item of result.items) {
+    if (!item.applicable) continue
+    if (item.state === 'NOT_APPLICABLE') continue
+    if (item.daysUntilExpiration === null) continue
+    // Only items that were actually approved can expire. A missing document is
+    // a different problem, surfaced separately.
+    if (item.state !== 'APPROVED' && item.state !== 'EXPIRED') continue
+
+    const threshold = thresholdFor(item.daysUntilExpiration)
+    if (threshold === null) continue
+
+    const dedupeKey = `expiration_reminder__${item.documentId ?? `${companyId}:${item.requirementId}`}__${threshold}`
+    if (handledKeys.has(dedupeKey)) continue
+
+    out.push({
+      requirementId: item.requirementId,
+      documentId: item.documentId,
+      code: item.code,
+      name: item.name,
+      threshold,
+      thresholdLabel: thresholdLabel(threshold),
+      daysUntilExpiration: item.daysUntilExpiration,
+      expirationDate: item.expirationDate,
+      isExpired: item.isExpired,
+      dedupeKey,
+    })
+  }
+
+  // Most urgent first.
+  return out.sort((a, b) => a.daysUntilExpiration - b.daysUntilExpiration)
 }
 
 // ---------------------------------------------------------------------------

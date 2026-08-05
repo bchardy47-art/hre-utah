@@ -5,14 +5,14 @@
  * fixtures to reset between tests.
  */
 
+import type { DocumentStateValue } from '@/lib/portal/firebase/types'
 import type {
   Acknowledgment,
   Company,
+  ComplianceInput,
   DocumentRequirement,
-  DocumentStateValue,
   PortalDocument,
-} from '@/lib/portal/db/schema'
-import type { ComplianceInput } from '@/lib/portal/compliance'
+} from '@/lib/portal/compliance'
 
 export const NOW = new Date('2026-06-01T12:00:00Z')
 
@@ -33,24 +33,15 @@ export function makeRequirement(
     code: overrides.code,
     name: overrides.name ?? overrides.code,
     category: overrides.category ?? 'INSURANCE',
-    description: overrides.description ?? null,
     isRequired: overrides.isRequired ?? true,
     applicableTrades: overrides.applicableTrades ?? [],
     applicableEntityTypes: overrides.applicableEntityTypes ?? [],
     hasExpiration: overrides.hasExpiration ?? false,
-    allowNotApplicable: overrides.allowNotApplicable ?? false,
     blocksBid: overrides.blocksBid ?? false,
     blocksWork: overrides.blocksWork ?? true,
-    requiresReview: overrides.requiresReview ?? true,
     isAcknowledgment: overrides.isAcknowledgment ?? false,
-    templateStorageKey: null,
-    templateFilename: null,
-    templateVersion: null,
-    templateIsDraft: false,
     sortOrder: overrides.sortOrder ?? 100,
     isActive: overrides.isActive ?? true,
-    createdAt: NOW,
-    updatedAt: NOW,
   } as DocumentRequirement
 }
 
@@ -65,24 +56,10 @@ export function makeDocument(
     requirementId: requirement.id,
     state,
     version: overrides.version ?? 1,
-    originalFilename: 'certificate.pdf',
-    storageKey: `companies/company-1/2026/${requirement.code}/abc.pdf`,
-    mimeType: 'application/pdf',
-    fileSize: 1024,
-    checksumSha256: null,
-    effectiveDate: null,
     expirationDate: overrides.expirationDate ?? null,
-    submittedById: null,
     submittedAt: overrides.submittedAt ?? NOW,
-    reviewedById: null,
-    reviewedAt: null,
     rejectionReason: overrides.rejectionReason ?? null,
-    adminNotes: null,
     notApplicableReason: overrides.notApplicableReason ?? null,
-    notApplicableById: null,
-    supersededByDocumentId: overrides.supersededByDocumentId ?? null,
-    createdAt: NOW,
-    updatedAt: NOW,
   } as PortalDocument
 }
 
@@ -91,13 +68,9 @@ export function makeCompany(overrides: Partial<Company> = {}): Company {
     id: 'company-1',
     status: 'UNDER_REVIEW',
     legalName: 'Wasatch Framing LLC',
-    dba: null,
     entityType: 'LLC',
-    einLast4: '1234',
     primaryTrade: 'Framing',
     additionalTrades: [],
-    serviceAreas: ['Utah'],
-    archivedAt: null,
     ...overrides,
   } as Company
 }

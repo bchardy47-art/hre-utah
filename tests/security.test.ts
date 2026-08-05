@@ -1,30 +1,37 @@
 import { describe, expect, it, beforeEach } from 'vitest'
-import { assertCompanyAccess, canAccessCompany, PortalAuthError } from '@/lib/portal/auth/guards'
+import { assertCompanyAccess, canAccessCompany, PortalAuthError } from '@/lib/portal/auth/firebase-guards'
 import { generateToken, hashToken, tokensMatch } from '@/lib/portal/auth/tokens'
 import { validatePassword } from '@/lib/portal/auth/password'
-import { redact } from '@/lib/portal/audit'
+import { redact } from '@/lib/portal/firebase/audit'
 import { clearRateLimit, LIMITS, peekRateLimit, rateLimit, recordFailure, resetRateLimits } from '@/lib/portal/rate-limit'
-import { buildStorageKey, sanitiseFilename, sniffMimeType, validateUpload } from '@/lib/portal/storage'
-import { maskEmail } from '@/lib/portal/email/mailer'
-import type { PortalSession } from '@/lib/portal/auth/session'
+import {
+  buildStoragePath,
+  pathBelongsToCompany,
+  sanitiseFilename,
+  sniffMimeType,
+} from '@/lib/portal/firebase/storage'
+import { maskEmail } from '@/lib/portal/firebase/audit'
+import type { PortalSession } from '@/lib/portal/auth/firebase-session'
 
 const admin: PortalSession = {
-  sessionId: 's1',
   userId: 'u-admin',
+  uid: 'u-admin',
   email: 'brian@hre-utah.com',
   name: 'Brian Hardy',
   role: 'ADMIN',
   companyId: null,
+  emailVerified: true,
   expiresAt: new Date(Date.now() + 3_600_000),
 }
 
 const partnerA: PortalSession = {
-  sessionId: 's2',
   userId: 'u-a',
+  uid: 'u-a',
   email: 'a@example.com',
   name: 'Partner A',
   role: 'TRADE_PARTNER',
   companyId: 'company-a',
+  emailVerified: true,
   expiresAt: new Date(Date.now() + 3_600_000),
 }
 
@@ -111,7 +118,7 @@ describe('password policy', () => {
   })
 })
 
-describe('upload validation', () => {
+describe('upload content sniffing', () => {
   const pdf = Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(64, 1)])
   const png = Buffer.concat([
     Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
@@ -126,32 +133,25 @@ describe('upload validation', () => {
     expect(sniffMimeType(jpeg)).toBe('image/jpeg')
   })
 
-  it('rejects HTML even when it is named like a PDF — extensions are not trusted', () => {
-    const result = validateUpload(html, 'certificate-of-insurance.pdf')
-    expect(result.ok).toBe(false)
+  /**
+   * Storage Rules cannot read file bytes — they only see the declared
+   * contentType. This server-side sniff is the compensating control, so it is
+   * the thing that actually stops an HTML payload named .pdf.
+   */
+  it('does not recognise HTML, however it is named', () => {
+    expect(sniffMimeType(html)).toBeNull()
   })
 
-  it('accepts a real PDF named with the wrong extension and corrects it', () => {
-    const result = validateUpload(pdf, 'scan.jpg')
-    expect(result.ok).toBe(true)
-    if (result.ok) expect(result.extension).toBe('pdf')
+  it('rejects a truncated header rather than guessing', () => {
+    expect(sniffMimeType(Buffer.from('%PD'))).toBeNull()
   })
 
-  it('rejects an empty file', () => {
-    expect(validateUpload(Buffer.alloc(0), 'x.pdf').ok).toBe(false)
-  })
-
-  it('rejects a file over the size limit', () => {
-    const huge = Buffer.concat([Buffer.from('%PDF-1.7\n'), Buffer.alloc(20 * 1024 * 1024)])
-    const result = validateUpload(huge, 'big.pdf')
-    expect(result.ok).toBe(false)
-    if (!result.ok) expect(result.reason).toMatch(/MB or smaller/)
-  })
-
-  it('computes a checksum for a valid upload', () => {
-    const result = validateUpload(pdf, 'coi.pdf')
-    expect(result.ok).toBe(true)
-    if (result.ok) expect(result.checksum).toMatch(/^[a-f0-9]{64}$/)
+  it('no longer accepts formats the Storage Rules disallow', () => {
+    // HEIC/WebP were dropped so the allow-list and storage.rules agree.
+    const webp = Buffer.concat([
+      Buffer.from('RIFF'), Buffer.alloc(4), Buffer.from('WEBP'), Buffer.alloc(32),
+    ])
+    expect(sniffMimeType(webp)).toBeNull()
   })
 })
 
@@ -183,24 +183,42 @@ describe('filename sanitisation', () => {
   })
 })
 
-describe('storage keys', () => {
-  it('scopes the key to the company and is not guessable', () => {
-    const a = buildStorageKey('company-a', 'W9', 'pdf')
-    const b = buildStorageKey('company-a', 'W9', 'pdf')
-    expect(a).toMatch(/^companies\/company-a\//)
-    expect(a).not.toBe(b)
+describe('storage paths', () => {
+  const base = { companyId: 'company-a', documentId: 'doc-1', filename: 'coi.pdf' }
+
+  it('scopes the path to the company', () => {
+    expect(buildStoragePath(base)).toMatch(/^trade-partners\/company-a\/documents\/doc-1\//)
   })
 
-  it('cannot be steered outside the company prefix by a hostile requirement code', () => {
-    const key = buildStorageKey('company-a', '../../../etc', 'pdf')
-    expect(key.startsWith('companies/company-a/')).toBe(true)
-    expect(key).not.toContain('..')
+  it('gives every upload a fresh version segment, so nothing is overwritten', () => {
+    // This is what makes replacement non-destructive and lets Storage Rules be
+    // create-only: an approved file can never be written over in place.
+    expect(buildStoragePath(base)).not.toBe(buildStoragePath(base))
   })
 
-  it('normalises a hostile extension', () => {
-    const key = buildStorageKey('company-a', 'W9', '../../evil')
-    expect(key).not.toContain('..')
-    expect(key).not.toContain('/evil')
+  it('cannot be steered outside the company prefix by hostile input', () => {
+    const path = buildStoragePath({
+      companyId: '../../other',
+      documentId: '../etc',
+      filename: '../../passwd',
+    })
+    expect(path).not.toContain('..')
+    expect(path.startsWith('trade-partners/')).toBe(true)
+  })
+
+  it('recognises a path that belongs to the company', () => {
+    expect(pathBelongsToCompany(buildStoragePath(base), 'company-a')).toBe(true)
+  })
+
+  it("rejects another company's path — the finalize-step IDOR guard", () => {
+    const foreign = buildStoragePath({ ...base, companyId: 'company-b' })
+    expect(pathBelongsToCompany(foreign, 'company-a')).toBe(false)
+  })
+
+  it('rejects traversal and empty input', () => {
+    expect(pathBelongsToCompany('trade-partners/company-a/documents/../../x', 'company-a')).toBe(false)
+    expect(pathBelongsToCompany('', 'company-a')).toBe(false)
+    expect(pathBelongsToCompany('trade-partners/company-a/documents/x', '')).toBe(false)
   })
 })
 

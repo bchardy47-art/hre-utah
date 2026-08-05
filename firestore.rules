@@ -1,0 +1,240 @@
+rules_version = '2';
+
+/**
+ * Firestore Security Rules — Hardy Homes Trade Partner Portal.
+ *
+ * POSTURE: these rules are defence in depth, not the primary control. Every
+ * sensitive write in the portal goes through a Next.js Server Action or Route
+ * Handler using the Admin SDK, which bypasses rules entirely and performs its
+ * own authorization (see src/lib/portal/auth/guards.ts).
+ *
+ * What these rules exist for is the case where that is not true: a stolen or
+ * curious client credential talking straight to Firestore. In that world the
+ * rules must still hold the line — a trade partner must not be able to read
+ * another company, read internal notes, change their own status, or approve
+ * their own documents.
+ *
+ * Accordingly the default posture is DENY, and clients are granted read on a
+ * narrow set of their own records plus almost no direct write at all.
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------------
+    // Helpers
+    // ---------------------------------------------------------------------
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Coarse role hint from a custom claim. Cheap (no document read), but only
+     * ever used to GRANT admin — never to grant company access, because a claim
+     * can be stale relative to Firestore.
+     */
+    function isAdmin() {
+      return signedIn() && request.auth.token.portalRole == 'ADMIN';
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/portalUsers/$(request.auth.uid)).data;
+    }
+
+    function userExists() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/portalUsers/$(request.auth.uid));
+    }
+
+    function isActiveUser() {
+      return userExists() && userDoc().isActive == true;
+    }
+
+    /** Company membership is read from Firestore, never from a token claim. */
+    function memberOf(companyId) {
+      return isActiveUser() && userDoc().companyId == companyId;
+    }
+
+    function companyDoc(companyId) {
+      return get(/databases/$(database)/documents/tradePartnerCompanies/$(companyId)).data;
+    }
+
+    /** A suspended or Do Not Use company loses normal read access. */
+    function companyUsable(companyId) {
+      let status = companyDoc(companyId).status;
+      return status != 'SUSPENDED' && status != 'DO_NOT_USE';
+    }
+
+    function partnerCanRead(companyId) {
+      return memberOf(companyId) && companyUsable(companyId);
+    }
+
+    /** True when the write touches none of the listed fields. */
+    function untouched(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    // ---------------------------------------------------------------------
+    // portalUsers
+    // ---------------------------------------------------------------------
+    match /portalUsers/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      // Role, company membership and active state are server-owned. A user
+      // rewriting their own role would be a straight privilege escalation.
+      allow create, delete: if false;
+      allow update: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Companies — partners read their own; nobody writes from the client.
+    // ---------------------------------------------------------------------
+    match /tradePartnerCompanies/{companyId} {
+      allow read: if isAdmin() || partnerCanRead(companyId);
+      allow create, delete: if isAdmin();
+      // Status and approval fields are decided by the compliance service and an
+      // administrator, never by the company itself.
+      allow update: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Contacts, licences, insurance, project references
+    // Partner may read its own. Writes go through the server.
+    // ---------------------------------------------------------------------
+    match /tradePartnerContacts/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      allow write: if isAdmin();
+    }
+
+    match /tradePartnerLicenses/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      // Verification fields are administrator-owned even though the licence
+      // number itself is partner-supplied.
+      allow write: if isAdmin();
+    }
+
+    match /tradePartnerInsurancePolicies/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      allow write: if isAdmin();
+    }
+
+    match /tradePartnerProjectHistory/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      // contactedBy/contactNotes are the administrator's reference-check trail.
+      allow write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Applications
+    // ---------------------------------------------------------------------
+    match /tradePartnerApplications/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      allow create, delete: if isAdmin();
+      // A partner must never move its own application to APPROVED, nor clear the
+      // reason it was returned.
+      allow update: if isAdmin() ||
+        (partnerCanRead(resource.data.companyId) &&
+         untouched(['status', 'reviewedAt', 'reviewedById', 'returnReason',
+                    'returnedAt', 'companyId']));
+    }
+
+    // ---------------------------------------------------------------------
+    // Invitations — never client-readable.
+    // A broad query here would expose token hashes and invited addresses.
+    // ---------------------------------------------------------------------
+    match /tradePartnerInvitations/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Document requirements — the catalogue. Readable so a partner can see what
+    // is being asked of them; writable only by an administrator.
+    // ---------------------------------------------------------------------
+    match /documentRequirements/{docId} {
+      allow read: if isActiveUser();
+      allow write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Documents — the partner sees its own, but review fields are untouchable.
+    // ---------------------------------------------------------------------
+    match /tradePartnerDocuments/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      // Creation goes through the server so the object is verified in Storage
+      // before a document row exists at all.
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() ||
+        (partnerCanRead(resource.data.companyId) &&
+         untouched(['state', 'reviewedById', 'reviewedAt', 'rejectionReason',
+                    'adminNotes', 'notApplicableReason', 'notApplicableById',
+                    'companyId', 'storagePath', 'version',
+                    'supersededByDocumentId', 'checksumSha256']));
+    }
+
+    match /tradePartnerDocumentReviews/{docId} {
+      // A partner sees the outcome via the document itself; the review trail is
+      // administrative.
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Acknowledgments — append-only from the partner's side.
+    // ---------------------------------------------------------------------
+    match /tradePartnerAcknowledgments/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      allow create: if isAdmin() ||
+        (signedIn() && memberOf(request.resource.data.companyId));
+      // An acknowledgment is a point-in-time record. Editing or deleting one
+      // would rewrite what the company agreed to.
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Status history — readable by the partner (it is their own timeline),
+    // writable by nobody from the client.
+    // ---------------------------------------------------------------------
+    match /tradePartnerStatusHistory/{docId} {
+      allow read: if isAdmin() || partnerCanRead(resource.data.companyId);
+      allow create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Internal notes — ADMINISTRATOR ONLY, unconditionally.
+    // There is no expression here under which a trade partner can read one.
+    // ---------------------------------------------------------------------
+    match /tradePartnerInternalNotes/{docId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      // Append-only: notes form part of the audit trail.
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Audit events — append-only, administrator-readable.
+    // ---------------------------------------------------------------------
+    match /tradePartnerAuditEvents/{docId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Reminder actions — the record of an administrator opening a Gmail draft
+    // or marking a reminder handled. Never a delivery claim.
+    // ---------------------------------------------------------------------
+    match /tradePartnerReminderActions/{docId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Everything else is denied. New collections must opt in explicitly.
+    // ---------------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

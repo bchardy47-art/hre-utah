@@ -1,0 +1,115 @@
+rules_version = '2';
+
+/**
+ * Firebase Storage Security Rules — Hardy Homes Trade Partner Portal.
+ *
+ * Path convention:
+ *   trade-partners/{companyId}/documents/{documentId}/{versionId}/{filename}
+ *   trade-partners/_templates/{requirementCode}/{filename}
+ *
+ * These rules are the ONLY thing standing between a signed-in trade partner and
+ * another company's tax documents when the client talks straight to Storage, so
+ * they are written to be readable rather than clever.
+ *
+ * HONEST LIMITATION — MIME SPOOFING:
+ * Storage Rules can only inspect the declared `request.resource.contentType`.
+ * They cannot read the file's bytes, so they CANNOT detect a file that declares
+ * `application/pdf` while actually containing HTML or a script. That check is
+ * genuinely impossible here.
+ *
+ * The portal compensates server-side: after upload, a Route Handler downloads
+ * the first bytes of the object and verifies the magic number before the
+ * document is ever recorded as SUBMITTED. An object that fails is deleted and
+ * never becomes a document. See src/lib/portal/storage.ts (verifyUploadedObject).
+ * Do not read these rules as a content guarantee.
+ */
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    /** Coarse role hint from the custom claim; only ever used to grant admin. */
+    function isAdmin() {
+      return signedIn() && request.auth.token.portalRole == 'ADMIN';
+    }
+
+    function userDoc() {
+      return firestore.get(/databases/(default)/documents/portalUsers/$(request.auth.uid)).data;
+    }
+
+    function isActiveUser() {
+      return signedIn() &&
+        firestore.exists(/databases/(default)/documents/portalUsers/$(request.auth.uid)) &&
+        userDoc().isActive == true;
+    }
+
+    /** Membership is read from Firestore so a stale token cannot grant access. */
+    function memberOf(companyId) {
+      return isActiveUser() && userDoc().companyId == companyId;
+    }
+
+    function companyUsable(companyId) {
+      let status = firestore.get(
+        /databases/(default)/documents/tradePartnerCompanies/$(companyId)
+      ).data.status;
+      return status != 'SUSPENDED' && status != 'DO_NOT_USE';
+    }
+
+    /** 10 MB. Large enough for a phone photo of a certificate, small enough to bound abuse. */
+    function withinSizeLimit() {
+      return request.resource.size > 0 && request.resource.size < 10 * 1024 * 1024;
+    }
+
+    /**
+     * Declared type only — see the MIME-spoofing note at the top of this file.
+     * The authoritative check happens server-side after upload.
+     */
+    function declaredTypeAllowed() {
+      return request.resource.contentType.matches('application/pdf')
+          || request.resource.contentType.matches('image/jpeg')
+          || request.resource.contentType.matches('image/png');
+    }
+
+    // ---------------------------------------------------------------------
+    // Company documents
+    // ---------------------------------------------------------------------
+    match /trade-partners/{companyId}/documents/{documentId}/{versionId}/{fileName} {
+
+      allow read: if isAdmin() || memberOf(companyId);
+
+      /**
+       * Create only — never update. Combined with a fresh {versionId} per upload,
+       * this makes every object write-once: a partner cannot overwrite a file an
+       * administrator has already approved. A replacement lands at a new path and
+       * the previous version stays exactly as it was reviewed.
+       */
+      allow create: if (isAdmin() || (memberOf(companyId) && companyUsable(companyId)))
+                    && withinSizeLimit()
+                    && declaredTypeAllowed();
+
+      allow update: if false;
+      // Retention: history is part of the compliance record.
+      allow delete: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Administrator-uploaded agreement/policy templates.
+    // Readable by any active portal user so a partner can review what they are
+    // acknowledging; writable only by an administrator.
+    // ---------------------------------------------------------------------
+    match /trade-partners/_templates/{requirementCode}/{fileName} {
+      allow read: if isActiveUser();
+      allow write: if isAdmin() && withinSizeLimit() && declaredTypeAllowed();
+    }
+
+    // ---------------------------------------------------------------------
+    // Nothing else is reachable. In particular there is no public path.
+    // ---------------------------------------------------------------------
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
