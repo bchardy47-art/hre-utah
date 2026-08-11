@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-base">
-          <span>© 2026 Hardy Real Estate. All rights reserved.</span>
+          <span>© 2026 BCHardy, LLC | Hardy Real Estate. All rights reserved.</span>
           <span className="footer-lic">Licensed Utah REALTOR®</span>
           <div className="social">
             <a href="#" aria-label="Instagram"><IgIcon /></a>
