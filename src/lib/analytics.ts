@@ -16,6 +16,7 @@ export const HRE_EVENT = {
   REQUEST_SERVICE_CLICK: "Request_Service_Click",
   BUYER_INQUIRY_CLICK: "Buyer_Inquiry_Click",
   SELLER_INQUIRY_CLICK: "Seller_Inquiry_Click",
+  DRAFTING_INQUIRY_CLICK: "Drafting_Inquiry_Click",
   CONTACT_FORM_SUCCESS: "Contact_Form_Success",
   SERVICE_FORM_SUCCESS: "Service_Form_Success",
 } as const;

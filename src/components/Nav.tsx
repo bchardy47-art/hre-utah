@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 const PHONE = "(801) 380-0445";
 const TEL = "8013800445";
 
-const NAV: [string, string][] = [
-  ["Home", "/"],
-  ["Real Estate", "/real-estate"],
-  ["Handyman", "/handyman"],
-  ["About", "/about"],
-  ["Contact", "/contact"],
+const NAV: Array<{ label: string; href: string; event?: string }> = [
+  { label: "Home", href: "/" },
+  { label: "Real Estate", href: "/real-estate" },
+  { label: "Home Design", href: "/drafting", event: "Drafting_Inquiry_Click" },
+  { label: "Handyman", href: "/handyman" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const SmsIcon = () => (
@@ -69,8 +70,14 @@ export default function Nav() {
           <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate Handyman Services" />
         </Link>
         <nav className="nav-links">
-          {NAV.map(([label, href]) => (
-            <Link key={href} className={`nav-link${isActive(href) ? " active" : ""}`} href={href}>
+          {NAV.map(({ label, href, event }) => (
+            <Link
+              key={href}
+              className={`nav-link${isActive(href) ? " active" : ""}`}
+              href={href}
+              data-hre-event={event}
+              data-hre-location={event ? "header" : undefined}
+            >
               {label}
             </Link>
           ))}
@@ -94,11 +101,13 @@ export default function Nav() {
         id="hre-mobile-menu"
         aria-label="Mobile navigation"
       >
-        {NAV.map(([label, href]) => (
+        {NAV.map(({ label, href, event }) => (
           <Link
             key={href}
             className={`nav-mlink${isActive(href) ? " active" : ""}`}
             href={href}
+            data-hre-event={event}
+            data-hre-location={event ? "header-mobile" : undefined}
             onClick={() => setOpen(false)}
           >
             {label}

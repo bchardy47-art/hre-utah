@@ -6,9 +6,11 @@ import { HRE_EVENT } from "@/lib/analytics";
 
 const EMAIL = "HardyHomesUtah@gmail.com";
 const FORMSPREE_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
-// Must match the "Handyman Work" <option> below — routes a confirmed submission
-// to Service_Form_Success instead of Contact_Form_Success.
-const HANDYMAN_TOPIC = "Handyman Work";
+// Service-selector submissions route to Service_Form_Success for service inquiries.
+const SERVICE_TOPICS = new Set([
+  "Handyman Work",
+  "Residential Drafting & Home Design",
+]);
 
 const Arrow = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -50,7 +52,7 @@ export default function ContactForm() {
         window.gtag("event", "contact_form_submit");
       }
       track(
-        data.get("help-with") === HANDYMAN_TOPIC
+        SERVICE_TOPICS.has(String(data.get("help-with") || ""))
           ? HRE_EVENT.SERVICE_FORM_SUCCESS
           : HRE_EVENT.CONTACT_FORM_SUCCESS,
         { location: "contact-page" }
@@ -99,6 +101,7 @@ export default function ContactForm() {
             <option>First-Time Buyer Help</option>
             <option>Pre-Listing Walkthrough</option>
             <option>Handyman Work</option>
+            <option>Residential Drafting &amp; Home Design</option>
             <option>Something Else</option>
           </select>
         </div>

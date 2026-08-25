@@ -51,7 +51,7 @@ export default function Home() {
       {/* FOUR CARDS */}
       <section className="section" style={{ paddingTop: 56 }}>
         <div className="container">
-          <div className="feat-grid" style={{ gridTemplateColumns: "repeat(4,1fr)" }}>
+          <div className="feat-grid" style={{ gridTemplateColumns: "repeat(5,1fr)" }}>
             <div className="card card-link feat">
               <div className="feat-ico">
                 <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5" /><path d="M5 10v10h14V10" /><path d="m9 15 2 2 4-4" /></svg>
@@ -67,6 +67,14 @@ export default function Home() {
               <h3>Sell With Strategy</h3>
               <p>Prioritize repairs that pay off.</p>
               <Link className="learn" href="/real-estate#sellers">Learn More <Arrow /></Link>
+            </div>
+            <div className="card card-link feat">
+              <div className="feat-ico">
+                <svg viewBox="0 0 24 24"><path d="M4 20h16" /><path d="M6 20V8l6-4 6 4v12" /><path d="M9 11h6M9 14h4" /></svg>
+              </div>
+              <h3>Residential Drafting &amp; Home Design</h3>
+              <p>Turn a sketch, inspiration plan, or original concept into practical residential drawings, with engineering coordination when required.</p>
+              <Link className="learn" href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="homepage">Explore Home Design <Arrow /></Link>
             </div>
             <div className="card card-link feat">
               <div className="feat-ico">
