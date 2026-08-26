@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { HRE_EVENT } from "@/lib/analytics";
 
-const EMAIL = "HardyHomesUtah@gmail.com";
-const FORMSPREE_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+const EMAIL = "brian@hre-utah.com";
+const CONTACT_ENDPOINT = "/api/contact";
 // Service-selector submissions route to Service_Form_Success for service inquiries.
 const SERVICE_TOPICS = new Set([
   "Handyman Work",
@@ -29,22 +29,10 @@ export default function ContactForm() {
     setStatus("sending");
     const data = new FormData(form);
     try {
-      let res: Response;
-      if (FORMSPREE_ENDPOINT) {
-        res = await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: data,
-        });
-      } else {
-        const params = new URLSearchParams();
-        data.forEach((v, k) => params.append(k, String(v)));
-        res = await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: params.toString(),
-        });
-      }
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: "POST",
+        body: data,
+      });
       if (!res.ok) throw new Error("bad response");
       // Past this point the backend has accepted the submission, so this is a
       // real lead. Button presses and failed sends are deliberately not counted.
@@ -76,13 +64,10 @@ export default function ContactForm() {
   return (
     <form
       ref={formRef}
-      name="contact"
       method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
+      action={CONTACT_ENDPOINT}
       onSubmit={onSubmit}
     >
-      <input type="hidden" name="form-name" defaultValue="contact" />
       <p hidden>
         <label>Leave this field empty: <input name="bot-field" /></label>
       </p>
@@ -118,7 +103,7 @@ export default function ContactForm() {
         )}
         <div className="form-note">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
-          We respect your privacy. Your information will only be used to respond to your message.
+          I respect your privacy. Your information will only be used to respond to your message.
         </div>
       </div>
       {status === "done" && (

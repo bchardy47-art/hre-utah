@@ -25,18 +25,18 @@ const startingPoints = [
   {
     title: "I have a sketch.",
     copy:
-      "We’ll evaluate the layout, improve room relationships, and turn the idea into a clear residential concept.",
+      "I’ll evaluate the layout, improve room relationships, and turn the idea into a clear residential concept.",
   },
   {
     title: "I found a plan I like.",
     copy:
-      "Use it to show us what works for you. We’ll create an original design tailored to your goals, site, budget, and construction approach.",
-    note: "We do not reproduce copyrighted plan sets without authorization.",
+      "Use it to show me what works for you. I’ll create an original design tailored to your goals, site, budget, and construction approach.",
+    note: "I do not reproduce copyrighted plan sets without authorization.",
   },
   {
     title: "I want to modify an HRE concept.",
     copy:
-      "Begin with one of our original concepts and adjust the layout, exterior direction, garage, basement, or room configuration.",
+      "Start from an original HRE concept and adjust the layout, exterior direction, garage, basement, or room configuration.",
   },
   {
     title: "I want a fully custom home.",
@@ -66,7 +66,7 @@ const tiers = [
     number: "03",
     title: "Engineering & Permit Coordination",
     copy:
-      "We organize the drawing package for review by licensed professionals, coordinate requested revisions, and help assemble the jurisdictional submittal set.",
+      "I organize the drawing package for review by licensed professionals, coordinate requested revisions, and help assemble the jurisdictional submittal set.",
     note:
       "Engineering, surveys, soils reports, energy documentation, permit fees, and other third-party costs are separate unless specifically included in writing.",
     bestFor:
@@ -79,19 +79,19 @@ const processSteps = [
     number: "1",
     title: "Discovery",
     copy:
-      "We discuss the property, household needs, inspiration, budget direction, and project goals.",
+      "I discuss the property, household needs, inspiration, budget direction, and project goals with you.",
   },
   {
     number: "2",
     title: "Concept",
     copy:
-      "We develop the floor-plan direction and establish the major room relationships, size, and exterior character.",
+      "I develop the floor-plan direction and establish the major room relationships, size, and exterior character.",
   },
   {
     number: "3",
     title: "Drafting",
     copy:
-      "The approved concept is developed in Chief Architect according to the written scope.",
+      "I develop the approved concept in Chief Architect according to the written scope.",
   },
   {
     number: "4",
@@ -103,7 +103,7 @@ const processSteps = [
     number: "5",
     title: "Permit Review",
     copy:
-      "The project package is prepared for the applicable jurisdiction, with revisions coordinated as required.",
+      "I help prepare the project package for the applicable jurisdiction, with revisions coordinated as required.",
   },
   {
     number: "6",
@@ -127,7 +127,7 @@ const whyHre = [
   {
     title: "Clear Coordination",
     copy:
-      "One point of contact helps keep drafting, engineering revisions, permitting, and construction planning aligned.",
+      "I help keep drafting, engineering revisions, permitting, and construction planning aligned.",
   },
   {
     title: "Flexible Service",
@@ -140,7 +140,7 @@ const faqs = [
   {
     question: "Can I bring a plan I found online?",
     answer:
-      "Yes—as inspiration. We use it to understand your preferences, then create an original design for your project. We do not reproduce copyrighted plan sets without authorization.",
+      "Yes—as inspiration. I use it to understand your preferences, then create an original design for your project. I do not reproduce copyrighted plan sets without authorization.",
   },
   {
     question: "Can BCHardy, LLC stamp my plans?",
@@ -188,9 +188,9 @@ export default function DraftingPage() {
           <span className="eyebrow">Residential Drafting &amp; Home Design</span>
           <h1 className="h-xl drafting-hero-title">Have a home in mind? Let’s put it on paper.</h1>
           <p className="lead">
-            Bring a sketch, an inspiration plan, or start with one of our original HRE concepts.
-            We develop practical residential plans in Chief Architect and coordinate licensed
-            engineering when required.
+            Bring a sketch, an inspiration plan, or start from an original HRE concept. I develop
+            practical residential plans in Chief Architect and coordinate licensed engineering when
+            required.
           </p>
           <div className="drafting-hero-actions">
             <Link
@@ -221,8 +221,8 @@ export default function DraftingPage() {
             <span className="eyebrow">Get Started</span>
             <h2 id="start-where-you-are">Start where you are.</h2>
             <p>
-              You do not need a finished plan to begin. Bring what you have, and we’ll help turn
-              it into a clear design direction.
+              You do not need a finished plan to begin. Bring what you have, and I’ll help turn it
+              into a clear design direction.
             </p>
           </div>
           <div className="drafting-card-grid">
@@ -404,8 +404,8 @@ export default function DraftingPage() {
               <span className="eyebrow">Next Step</span>
               <h2 id="drafting-final-cta">Ready to turn your idea into a real plan?</h2>
               <p>
-                Tell us what you want to build, what you already have, and where the project is
-                located. We’ll help identify the right next step.
+                Tell me what you want to build, what you already have, and where the project is
+                located. I’ll help identify the right next step.
               </p>
             </div>
             <div className="drafting-final-actions">

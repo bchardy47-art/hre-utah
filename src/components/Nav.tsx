@@ -66,8 +66,8 @@ export default function Nav() {
   return (
     <header className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="container nav-inner">
-        <Link className="logo" href="/" aria-label="Hardy Real Estate — HRE Handyman Services">
-          <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate Handyman Services" />
+        <Link className="logo" href="/" aria-label="Hardy Real Estate — HRE">
+          <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate" />
         </Link>
         <nav className="nav-links">
           {NAV.map(({ label, href, event }) => (

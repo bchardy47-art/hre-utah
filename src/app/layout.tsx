@@ -9,7 +9,7 @@ import AnalyticsEvents from "@/components/AnalyticsEvents";
 export const metadata: Metadata = {
   title: "Hardy Real Estate — Don't Just Tour the House. Understand It.",
   description:
-    "Utah realtor Brian Hardy brings real-world construction judgment to buying, selling, and handyman work — honest guidance for confident moves.",
+    "Utah real estate, home design, and handyman help from Brian Hardy — honest guidance backed by real-world construction judgment.",
   icons: { icon: "/images/hre-logo.png" },
 };
 

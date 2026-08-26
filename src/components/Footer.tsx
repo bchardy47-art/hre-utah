@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const PHONE = "(801) 380-0445";
 const TEL = "8013800445";
-const EMAIL = "HardyHomesUtah@gmail.com";
+const EMAIL = "brian@hre-utah.com";
 
 const IgIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
@@ -29,39 +29,32 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="logo logo--footer" href="/" aria-label="Hardy Real Estate — HRE Handyman Services">
-              <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate Handyman Services" />
+            <Link className="logo logo--footer" href="/" aria-label="Hardy Real Estate — HRE">
+              <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate" />
             </Link>
           </div>
           <div>
-            <h5>Home</h5>
-            <Link href="/">Overview</Link>
-            <Link href="/#advantage">Why It Matters</Link>
-          </div>
-          <div>
             <h5>Real Estate</h5>
-            <Link href="/real-estate" data-hre-event="Buyer_Inquiry_Click" data-hre-location="footer">Buyer Guidance</Link>
-            <Link href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="footer">Seller Strategy</Link>
+            <Link href="/real-estate">Real Estate</Link>
+            <Link href="/real-estate" data-hre-event="Buyer_Inquiry_Click" data-hre-location="footer">Buying</Link>
+            <Link href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="footer">Selling</Link>
           </div>
           <div>
             <h5>Home Design</h5>
-            <Link href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="footer">Drafting &amp; Home Design</Link>
+            <Link href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="footer">Home Design</Link>
             <Link href="/drafting#process">How It Works</Link>
           </div>
           <div>
             <h5>Handyman</h5>
-            <Link href="/handyman">Services</Link>
-            <Link href="/handyman#request" data-hre-event="Request_Service_Click" data-hre-location="footer">Request Service</Link>
-          </div>
-          <div>
-            <h5>About</h5>
-            <Link href="/about">Our Approach</Link>
-            <Link href="/about#why">Why It Matters</Link>
+            <Link href="/handyman">Handyman</Link>
+            <Link href="/contact#message" data-hre-event="Request_Service_Click" data-hre-location="footer">Request Service</Link>
           </div>
           <div>
             <h5>Contact</h5>
-            <a href={`tel:${TEL}`} data-hre-location="footer">{PHONE}</a>
+            <Link href="/contact">Contact</Link>
             <a href={`sms:${TEL}`} data-hre-location="footer">Text Brian</a>
+            <a href={`tel:${TEL}`} data-hre-location="footer">Call Brian</a>
+            <a href={`mailto:${EMAIL}`} data-hre-location="footer">{EMAIL}</a>
           </div>
         </div>
         <div className="footer-base">

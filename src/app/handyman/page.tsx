@@ -19,7 +19,6 @@ const featStyle = { padding: "26px 18px", minHeight: 210 };
 export default function Handyman() {
   return (
     <>
-      {/* HERO */}
       <section className="hero hero--page" data-screen-label="Handyman">
         <div className="scene scene--shop">
           <img className="slot" src="/images/hero-handyman.jpg" alt="Workshop" />
@@ -32,13 +31,12 @@ export default function Handyman() {
           </h1>
           <p className="lead">Quality work. Clear communication. Done right the first time.</p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 30 }}>
-            <Link className="btn btn-primary btn-lg" href="#request" data-hre-event="Request_Service_Click" data-hre-location="handyman-page">Request Service <Arrow /></Link>
+            <Link className="btn btn-primary btn-lg" href="/contact#message" data-hre-event="Request_Service_Click" data-hre-location="handyman-page">Request Service <Arrow /></Link>
             <Link className="btn btn-ghost btn-lg" href="#handles">What I Handle <Arrow /></Link>
           </div>
         </div>
       </section>
 
-      {/* SERVICE CATEGORIES */}
       <section className="section" style={{ paddingTop: 56 }}>
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><span className="eyebrow">Handyman Services</span></div>
@@ -47,43 +45,42 @@ export default function Handyman() {
               <div className="feat-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L3 18l3 3 6.4-6.3a4 4 0 0 0 5.3-5.4l-2.5 2.5-2.1-.5-.5-2.1Z" /></svg></div>
               <h3>Repairs &amp; Maintenance</h3>
               <p>Fix what's broken and keep your home working right.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
             <div className="card card-link feat" style={featStyle}>
               <div className="feat-ico"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5" /><path d="M5 10v10h14V10" /></svg></div>
               <h3>Home Improvements</h3>
               <p>Upgrade your space with quality updates that add value.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
             <div className="card card-link feat" style={featStyle}>
               <div className="feat-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="13" height="7" rx="1" /><path d="M17 7h3v4h-6" /><path d="M11 11v3h-1v6h3v-6h-1" /></svg></div>
               <h3>Painting</h3>
               <p>Interior and exterior painting with careful prep and clean finishes.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
             <div className="card card-link feat" style={featStyle}>
               <div className="feat-ico"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="1" /><path d="M4 11h16M12 7V4" /></svg></div>
               <h3>Assembly &amp; Installation</h3>
               <p>Furniture, fixtures, TVs and more — installed securely and correctly.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
             <div className="card card-link feat" style={featStyle}>
               <div className="feat-ico"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1" /><path d="M9 3v18" /><circle cx="12.5" cy="12" r=".9" fill="currentColor" stroke="none" /></svg></div>
               <h3>Doors &amp; Hardware</h3>
               <p>Install, repair, and adjust for function, fit, and security.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
             <div className="card card-link feat" style={featStyle}>
               <div className="feat-ico"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="1" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" /></svg></div>
               <h3>Odds &amp; Ends</h3>
               <p>Those small tasks that make a big difference.</p>
-              <Link className="learn" href="#request">Learn More <Arrow /></Link>
+              <Link className="learn" href="/contact#message">Learn More <Arrow /></Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* WHAT BRIAN HANDLES */}
       <section className="section tight" id="handles">
         <div className="container">
           <div className="card handles">
@@ -118,7 +115,6 @@ export default function Handyman() {
         </div>
       </section>
 
-      {/* PROCESS */}
       <section className="section" id="request">
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><span className="eyebrow">The Hardy Handyman Process</span></div>
@@ -146,7 +142,6 @@ export default function Handyman() {
         </div>
       </section>
 
-      {/* WHY CLIENTS CHOOSE BRIAN */}
       <section className="section alt">
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><span className="eyebrow">Why Clients Choose Brian</span></div>
@@ -154,7 +149,7 @@ export default function Handyman() {
             <div className="col">
               <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z" /></svg></div>
               <h3>Clear Communication</h3>
-              <p>You'll always know what to expect.</p>
+              <p>I keep the scope, timing, and next steps straightforward.</p>
             </div>
             <div className="col">
               <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></svg></div>
@@ -164,12 +159,12 @@ export default function Handyman() {
             <div className="col">
               <div className="col-ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.3 5.5.8-4 4 1 5.6-5-2.7-5 2.7 1-5.6-4-4 5.5-.8Z" /></svg></div>
               <h3>Quality Workmanship</h3>
-              <p>Attention to detail on every project.</p>
+              <p>Attention to detail matters on every repair, update, and install.</p>
             </div>
             <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg></div>
-              <h3>Respect For Your Home</h3>
-              <p>Clean, careful, and considerate always.</p>
+              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M7 21v-6M7 15c-2 0-3-1-3-3l1-5h4l1 5c0 2-1 3-3 3Z" /><path d="m13 4 6 6M11 12l7-7 2 2-7 7Z" /></svg></div>
+              <h3>Respect for Your Home</h3>
+              <p>I work carefully, keep things tidy, and treat your home like it matters.</p>
             </div>
             <div className="col">
               <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3" /><path d="M6 10h12l-1 5a4 4 0 0 1-4 3h-2a4 4 0 0 1-4-3l-1-5Z" /><path d="M10 21h4" /></svg></div>
@@ -180,21 +175,6 @@ export default function Handyman() {
         </div>
       </section>
 
-      {/* SERVICE STANDARDS */}
-      <section className="section">
-        <div className="container">
-          <div className="sec-head" style={{ marginBottom: 34 }}><span className="eyebrow">Service Standards</span></div>
-          <div className="std-grid">
-            <div className="std"><div className="std-ico"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></svg></div><h4>Safety First</h4><p>Work is performed with safety and care in mind.</p></div>
-            <div className="std"><div className="std-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="m8 12 2.5 2.5L16 9" /></svg></div><h4>Right The First Time</h4><p>We do it once, we do it right.</p></div>
-            <div className="std"><div className="std-ico"><svg viewBox="0 0 24 24"><path d="M7 21v-6M7 15c-2 0-3-1-3-3l1-5h4l1 5c0 2-1 3-3 3Z" /><path d="m13 4 6 6M11 12l7-7 2 2-7 7Z" /></svg></div><h4>Clean &amp; Tidy</h4><p>We protect your space and clean up when we're done.</p></div>
-            <div className="std"><div className="std-ico"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3" /><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /><path d="M3 4h8" /></svg></div><h4>Respectful</h4><p>Your time, your home, and your trust matter.</p></div>
-            <div className="std"><div className="std-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6" /><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7" /></svg></div><h4>Satisfaction Guaranteed</h4><p>Not happy? We'll make it right.</p></div>
-          </div>
-        </div>
-      </section>
-
-      {/* COMMON PROJECTS */}
       <section className="section alt">
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><span className="eyebrow">Common Projects</span></div>
@@ -235,7 +215,6 @@ export default function Handyman() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
       <section className="section tight">
         <div className="container">
           <CtaBand

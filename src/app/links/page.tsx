@@ -11,6 +11,7 @@ import {
   Crosshair,
   Globe,
   ExternalLink,
+  PenTool,
 } from "lucide-react";
 import styles from "./links.module.css";
 
@@ -20,6 +21,12 @@ const links = [
     subtitle: "Smart real estate guidance.",
     href: "/real-estate",
     icon: Home,
+  },
+  {
+    title: "Home Design",
+    subtitle: "From sketch to practical plans.",
+    href: "/drafting",
+    icon: PenTool,
   },
   {
     title: "Search Homes",
@@ -103,13 +110,13 @@ export default function LinksPage() {
 
             <p className={styles.intro}>
               Quick links to the most popular ways to work with Brian Hardy —
-              real estate guidance, handyman help, local resources, and straight
-              answers.
+              real estate guidance, home design, handyman help, local resources,
+              and straight answers.
             </p>
 
             <div className={styles.nameBlock}>
               <p className={styles.name}>Brian Hardy</p>
-              <p className={styles.role}>REALTOR® + Handyman</p>
+              <p className={styles.role}>REALTOR® · Home Design · Handyman</p>
             </div>
           </div>
 

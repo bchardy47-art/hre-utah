@@ -52,10 +52,10 @@ The contact form posts to `/api/contact` which uses [Resend](https://resend.com)
 ```
 RESEND_API_KEY=re_your_key_here
 RESEND_FROM_EMAIL=contact@hre-utah.com
-CONTACT_TO_EMAIL=Hardyhomesutah@gmail.com
+CONTACT_TO_EMAIL=brian@hre-utah.com
 ```
 
-The form sends an email to `CONTACT_TO_EMAIL` (defaults to `Hardyhomesutah@gmail.com`) whenever someone submits.
+The form sends an email to `CONTACT_TO_EMAIL` (defaults to `brian@hre-utah.com`) whenever someone submits.
 
 **Alternative:** If you don't want to set up Resend, replace the form action with [Formspree](https://formspree.io) — free for basic use. Change `ContactForm.tsx` to POST to your Formspree endpoint.
 
@@ -120,7 +120,7 @@ Note: with static export, the contact form won't work without a third-party serv
 All copy lives directly in the page files. To update:
 
 - **Phone number:** Search for `8013800445` and replace all (currently in Nav.tsx, Footer.tsx, and every page)
-- **Email:** Search for `Hardyhomesutah@gmail.com` and replace all
+- **Email:** Search for `brian@hre-utah.com` and replace all public contact references as needed
 - **Service areas:** Update the arrays in `page.tsx`, `handyman/page.tsx`, and `contact/page.tsx`
 - **Testimonials:** Update the `testimonials` array in `src/app/page.tsx`
 - **Handyman services list:** Update the `services` array in `src/app/handyman/page.tsx`

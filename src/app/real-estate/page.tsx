@@ -17,7 +17,6 @@ const Arrow = () => (
 export default function RealEstate() {
   return (
     <>
-      {/* HERO */}
       <section className="hero hero--page" data-screen-label="Real Estate">
         <div className="scene scene--dusk">
           <img className="slot" src="/images/hero-re.jpg" alt="Utah home" />
@@ -29,8 +28,8 @@ export default function RealEstate() {
             <span className="accent">Buy or Sell With Confidence.</span>
           </h1>
           <p className="lead">
-            Expert guidance grounded in construction knowledge. Whether you're buying your next
-            home or selling your current one, I'll help you make the right move.
+            I help buyers and sellers make smarter moves with market strategy, honest guidance,
+            and real construction awareness.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 30 }}>
             <a className="btn btn-primary btn-lg" href="https://hardyhomes-utah.com" target="_blank" rel="noopener">
@@ -42,7 +41,6 @@ export default function RealEstate() {
         </div>
       </section>
 
-      {/* BUYER / SELLER */}
       <section className="section" style={{ paddingTop: 56 }} id="sellers">
         <div className="container">
           <div className="big2">
@@ -51,7 +49,7 @@ export default function RealEstate() {
               <div>
                 <h3>Buyer Guidance</h3>
                 <div className="big-tag">Smart moves. Strong results.</div>
-                <p>I help buyers evaluate homes like a builder. From structure to systems, I'll help uncover what matters most — so you can buy with clarity and confidence.</p>
+                <p>I help buyers evaluate homes like a builder. Most agents don't see what's behind the walls. I do.</p>
                 <Link className="learn" href="/contact" data-ga-event="buyer_consultation_click" data-hre-event="Buyer_Inquiry_Click" data-hre-location="real-estate-page">Learn More <Arrow /></Link>
               </div>
             </div>
@@ -68,7 +66,6 @@ export default function RealEstate() {
         </div>
       </section>
 
-      {/* WHAT BRIAN LOOKS FOR */}
       <section className="section alt" id="look">
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><h2>What Brian Looks For in Homes</h2></div>
@@ -112,7 +109,6 @@ export default function RealEstate() {
         </div>
       </section>
 
-      {/* RED / GREEN FLAGS */}
       <section className="section">
         <div className="container">
           <div className="card flags">
@@ -143,61 +139,19 @@ export default function RealEstate() {
         </div>
       </section>
 
-      {/* PROCESS */}
       <section className="section alt">
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 44 }}><h2>Buying &amp; Selling Process</h2></div>
           <div className="proc" style={{ gridTemplateColumns: "repeat(5,1fr)" }}>
-            <div className="proc-step"><div className="proc-num">1</div><h4>Discover &amp; Align</h4><p>We talk goals, timeline, and priorities to build the right plan.</p></div>
+            <div className="proc-step"><div className="proc-num">1</div><h4>Discover &amp; Align</h4><p>I learn your goals, timeline, and priorities so I can build the right plan.</p></div>
             <div className="proc-step"><div className="proc-num">2</div><h4>Evaluate &amp; Strategize</h4><p>I assess homes or your property with a builder's eye and market insight.</p></div>
-            <div className="proc-step"><div className="proc-num">3</div><h4>Plan &amp; Prep</h4><p>Strategic repairs, staging, and positioning for maximum impact.</p></div>
+            <div className="proc-step"><div className="proc-num">3</div><h4>Plan &amp; Prep</h4><p>I help prioritize repairs, staging, and positioning for maximum impact.</p></div>
             <div className="proc-step"><div className="proc-num">4</div><h4>Market &amp; Negotiate</h4><p>Smart pricing, strong marketing, and skilled negotiation.</p></div>
             <div className="proc-step"><div className="proc-num">5</div><h4>Close &amp; Move Forward</h4><p>Smooth closing with clear communication every step of the way.</p></div>
           </div>
         </div>
       </section>
 
-      {/* WHY CONSTRUCTION KNOWLEDGE */}
-      <section className="section">
-        <div className="container">
-          <div className="card" style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 0, padding: 0, overflow: "hidden" }}>
-            <div style={{ padding: 40, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <h2 className="h-lg" style={{ fontSize: "clamp(26px,3vw,38px)", marginBottom: 16 }}>Why Construction Knowledge Matters</h2>
-              <p className="lead" style={{ fontSize: 15, marginBottom: 24 }}>Most agents don't see what's behind the walls. I do. My construction background helps me spot issues early, plan smarter improvements, and protect your investment — whether you're buying or selling.</p>
-              <Link className="btn btn-ghost" href="/contact" style={{ alignSelf: "flex-start" }}>Learn More <Arrow /></Link>
-            </div>
-            <div className="shot scene scene--shop" style={{ minHeight: 360 }}>
-              <img className="slot" src="/images/tools.jpg" alt="Tools on a workbench" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section className="section alt">
-        <div className="container">
-          <div className="sec-head"><span className="eyebrow">What Clients Say</span></div>
-          <div className="review-grid">
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <p>"Brian's construction knowledge gave us total confidence. He found issues others missed and helped us buy the right home."</p>
-              <cite>— J. Thompson, South Jordan</cite>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <p>"We sold fast and for more than we expected. Brian's strategy and recommendations made all the difference."</p>
-              <cite>— M. Reynolds, West Jordan</cite>
-            </div>
-            <div className="review-card">
-              <div className="stars">★★★★★</div>
-              <p>"Honest, responsive, and incredibly thorough. He treats your home like it's his own."</p>
-              <cite>— D. Martinez, Herriman</cite>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
       <section className="section tight">
         <div className="container">
           <CtaBand />
