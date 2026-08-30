@@ -10,6 +10,7 @@ const TEL = "8013800445";
 const NAV: Array<{ label: string; href: string; event?: string }> = [
   { label: "Home", href: "/" },
   { label: "Real Estate", href: "/real-estate" },
+  { label: "Hardy Homes", href: "/hardy-homes" },
   { label: "Home Design", href: "/drafting", event: "Drafting_Inquiry_Click" },
   { label: "Handyman", href: "/handyman" },
   { label: "About", href: "/about" },

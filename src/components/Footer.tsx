@@ -40,6 +40,11 @@ export default function Footer() {
             <Link href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="footer">Selling</Link>
           </div>
           <div>
+            <h5>Hardy Homes</h5>
+            <Link href="/hardy-homes">Overview</Link>
+            <Link href="/hardy-homes#lynx">Explore The Lynx</Link>
+          </div>
+          <div>
             <h5>Home Design</h5>
             <Link href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="footer">Home Design</Link>
             <Link href="/drafting#process">How It Works</Link>
@@ -52,6 +57,7 @@ export default function Footer() {
           <div>
             <h5>Contact</h5>
             <Link href="/contact">Contact</Link>
+            <Link href="/contact#message">Send a Message</Link>
             <a href={`sms:${TEL}`} data-hre-location="footer">Text Brian</a>
             <a href={`tel:${TEL}`} data-hre-location="footer">Call Brian</a>
             <a href={`mailto:${EMAIL}`} data-hre-location="footer">{EMAIL}</a>

@@ -224,6 +224,9 @@ export default function DraftingPage() {
               You do not need a finished plan to begin. Bring what you have, and I’ll help turn it
               into a clear design direction.
             </p>
+            <p>
+              Prefer to start with an existing concept? <Link href="/hardy-homes">Explore Hardy Homes.</Link>
+            </p>
           </div>
           <div className="drafting-card-grid">
             {startingPoints.map((item) => (

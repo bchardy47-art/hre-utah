@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
+import { hardyHomes } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
   title: "Hardy Real Estate — Don't Just Tour the House. Understand It.",
@@ -13,6 +14,8 @@ const Arrow = () => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
+
+const lynx = hardyHomes[0];
 
 export default function Home() {
   return (
@@ -73,6 +76,32 @@ export default function Home() {
               <h3>Handyman</h3>
               <p>Repairs, upgrades, and projects done right.</p>
               <Link className="learn" href="/handyman">Learn More <Arrow /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section tight" aria-labelledby="hardy-homes-homepage">
+        <div className="container">
+          <div className="card hardy-home-feature plan-accent">
+            <div>
+              <span className="eyebrow">Hardy Homes</span>
+              <h2 id="hardy-homes-homepage">Meet Hardy Homes.</h2>
+              <p>
+                A growing collection of efficient home designs built around usable space,
+                thoughtful layouts, and real-world construction.
+              </p>
+            </div>
+            <div className="hardy-home-feature-card">
+              <span className="label">{lynx.name}</span>
+              <h3>{lynx.squareFeet} SQ FT</h3>
+              <div className="hardy-home-feature-specs">
+                <span>2 Bed</span>
+                <span>2.5 Bath</span>
+              </div>
+              <Link className="btn btn-primary" href="/hardy-homes#lynx">
+                Explore The Lynx <Arrow />
+              </Link>
             </div>
           </div>
         </div>
