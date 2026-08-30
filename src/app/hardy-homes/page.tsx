@@ -24,9 +24,9 @@ const Check = () => (
 const lynx = hardyHomes[0];
 
 export default function HardyHomesPage() {
-  const exteriorImage = lynx.images.find((image) => image.key === "exterior");
-  const dollhouseImage = lynx.images.find((image) => image.key === "dollhouse");
-  const kitchenImage = lynx.images.find((image) => image.key === "kitchen");
+  const exteriorImage = lynx.images.find((image) => image.key === "exterior")!;
+  const dollhouseImage = lynx.images.find((image) => image.key === "dollhouse")!;
+  const kitchenImage = lynx.images.find((image) => image.key === "kitchen")!;
 
   return (
     <>
@@ -94,20 +94,16 @@ export default function HardyHomesPage() {
 
           <div className="hardy-gallery-grid" aria-label="The Lynx gallery">
             <article className="card hardy-gallery hardy-gallery-main">
-              <div className="hardy-gallery-media">
-                {exteriorImage?.src ? (
-                  <Image
-                    src={exteriorImage.src}
-                    alt={exteriorImage.alt}
-                    fill
-                    priority={exteriorImage.priority}
-                    sizes={exteriorImage.sizes}
-                  />
-                ) : (
-                  <div className="hardy-gallery-placeholder" aria-hidden="true">
-                    <span>Exterior rendering pending clean production asset</span>
-                  </div>
-                )}
+              <div className="hardy-gallery-media hardy-gallery-media-exterior">
+                <Image
+                  src={exteriorImage.src}
+                  alt={exteriorImage.alt}
+                  fill
+                  priority={exteriorImage.priority}
+                  sizes={exteriorImage.sizes}
+                  className="hardy-gallery-image"
+                  style={{ objectFit: exteriorImage.fit, objectPosition: exteriorImage.position }}
+                />
               </div>
               <div className="hardy-gallery-body">
                 <span className="eyebrow">Exterior Rendering</span>
@@ -116,21 +112,19 @@ export default function HardyHomesPage() {
                   A compact home concept designed to deliver a full detached-home feel without
                   carrying unnecessary square footage.
                 </p>
-                {!exteriorImage?.src && exteriorImage?.note ? (
-                  <div className="hardy-asset-note">{exteriorImage.note}</div>
-                ) : null}
               </div>
             </article>
 
             <article className="card hardy-gallery hardy-gallery-side">
-              <div className="hardy-gallery-media hardy-gallery-media-tall">
-                {dollhouseImage?.src ? (
-                  <Image src={dollhouseImage.src} alt={dollhouseImage.alt} fill sizes={dollhouseImage.sizes} />
-                ) : (
-                  <div className="hardy-gallery-placeholder" aria-hidden="true">
-                    <span>Dollhouse view pending clean production asset</span>
-                  </div>
-                )}
+              <div className="hardy-gallery-media hardy-gallery-media-tall hardy-gallery-media-dollhouse">
+                <Image
+                  src={dollhouseImage.src}
+                  alt={dollhouseImage.alt}
+                  fill
+                  sizes={dollhouseImage.sizes}
+                  className="hardy-gallery-image"
+                  style={{ objectFit: dollhouseImage.fit, objectPosition: dollhouseImage.position }}
+                />
               </div>
               <div className="hardy-gallery-body">
                 <span className="eyebrow">Dollhouse View</span>
@@ -139,21 +133,19 @@ export default function HardyHomesPage() {
                   The overall plan is set up to make the most of a small-footprint home without
                   forcing everything into one room.
                 </p>
-                {!dollhouseImage?.src && dollhouseImage?.note ? (
-                  <div className="hardy-asset-note">{dollhouseImage.note}</div>
-                ) : null}
               </div>
             </article>
 
             <article className="card hardy-gallery hardy-gallery-side">
               <div className="hardy-gallery-media hardy-gallery-media-tall">
-                {kitchenImage?.src ? (
-                  <Image src={kitchenImage.src} alt={kitchenImage.alt} fill sizes={kitchenImage.sizes} />
-                ) : (
-                  <div className="hardy-gallery-placeholder" aria-hidden="true">
-                    <span>Kitchen rendering pending clean production asset</span>
-                  </div>
-                )}
+                <Image
+                  src={kitchenImage.src}
+                  alt={kitchenImage.alt}
+                  fill
+                  sizes={kitchenImage.sizes}
+                  className="hardy-gallery-image"
+                  style={{ objectFit: kitchenImage.fit, objectPosition: kitchenImage.position }}
+                />
               </div>
               <div className="hardy-gallery-body">
                 <span className="eyebrow">Kitchen Rendering</span>
@@ -162,9 +154,6 @@ export default function HardyHomesPage() {
                   The Lynx is meant to feel practical and livable, with room for a full-size
                   kitchen and comfortable daily routines.
                 </p>
-                {!kitchenImage?.src && kitchenImage?.note ? (
-                  <div className="hardy-asset-note">{kitchenImage.note}</div>
-                ) : null}
               </div>
             </article>
           </div>
@@ -210,18 +199,16 @@ export default function HardyHomesPage() {
               <p>{lynx.dollhouseCopy}</p>
             </article>
             <article className="card hardy-dollhouse-media">
-              <div className="hardy-gallery-media hardy-gallery-media-wide">
-                {dollhouseImage?.src ? (
-                  <Image src={dollhouseImage.src} alt={dollhouseImage.alt} fill sizes="(max-width: 980px) 100vw, 60vw" />
-                ) : (
-                  <div className="hardy-gallery-placeholder" aria-hidden="true">
-                    <span>Dollhouse rendering will be published when a clean asset is supplied.</span>
-                  </div>
-                )}
+              <div className="hardy-gallery-media hardy-gallery-media-wide hardy-gallery-media-dollhouse-wide">
+                <Image
+                  src={dollhouseImage.src}
+                  alt={dollhouseImage.alt}
+                  fill
+                  sizes="(max-width: 980px) 100vw, 60vw"
+                  className="hardy-gallery-image"
+                  style={{ objectFit: dollhouseImage.fit, objectPosition: dollhouseImage.position }}
+                />
               </div>
-              {!dollhouseImage?.src && dollhouseImage?.note ? (
-                <div className="hardy-asset-note hardy-asset-note-inline">{dollhouseImage.note}</div>
-              ) : null}
             </article>
           </div>
         </div>

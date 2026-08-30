@@ -2,10 +2,11 @@ export type HardyHomeImage = {
   key: string;
   title: string;
   alt: string;
-  src?: string;
-  note?: string;
+  src: string;
   priority?: boolean;
   sizes?: string;
+  fit?: "cover" | "contain";
+  position?: string;
 };
 
 export type HardyHomeConcept = {
@@ -83,24 +84,30 @@ export const hardyHomes: HardyHomeConcept[] = [
       {
         key: "exterior",
         title: "Exterior rendering",
-        alt: "Exterior rendering of The Lynx Hardy Homes concept",
-        note: "Production-ready exterior rendering will be added when a clean export is available.",
+        alt: "Exterior rendering of The Lynx, a 965 square foot Hardy Homes concept",
+        src: "/images/hardy-homes/lynx/LynxExt.jpg",
         priority: true,
         sizes: "(max-width: 980px) 100vw, 62vw",
+        fit: "contain",
+        position: "center bottom",
       },
       {
         key: "dollhouse",
         title: "Dollhouse layout view",
-        alt: "Dollhouse layout rendering of The Lynx Hardy Homes concept",
-        note: "Production-ready dollhouse rendering will be added when a clean export is available.",
+        alt: "Dollhouse view of The Lynx 2 bedroom 2.5 bathroom floor plan",
+        src: "/images/hardy-homes/lynx/LynxDollhouse.jpg",
         sizes: "(max-width: 980px) 100vw, 38vw",
+        fit: "contain",
+        position: "center center",
       },
       {
         key: "kitchen",
         title: "Kitchen rendering",
-        alt: "Kitchen rendering of The Lynx Hardy Homes concept",
-        note: "Production-ready kitchen rendering will be added when a clean export is available.",
+        alt: "Kitchen rendering inside The Lynx Hardy Homes concept",
+        src: "/images/hardy-homes/lynx/LynxKitchen.jpg",
         sizes: "(max-width: 980px) 100vw, 38vw",
+        fit: "cover",
+        position: "center center",
       },
     ],
   },

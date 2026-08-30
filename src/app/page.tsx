@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 import { hardyHomes } from "@/lib/hardyHomes";
@@ -93,11 +94,21 @@ export default function Home() {
               </p>
             </div>
             <div className="hardy-home-feature-card">
-              <span className="label">{lynx.name}</span>
+              <div className="hardy-home-feature-media">
+                <Image
+                  src={lynx.images[0].src}
+                  alt={lynx.images[0].alt}
+                  fill
+                  sizes="(max-width: 1080px) 100vw, 24vw"
+                  className="hardy-gallery-image"
+                  style={{ objectFit: "contain", objectPosition: "center bottom" }}
+                />
+              </div>
+              <span className="label">THE LYNX</span>
               <h3>{lynx.squareFeet} SQ FT</h3>
               <div className="hardy-home-feature-specs">
-                <span>2 Bed</span>
-                <span>2.5 Bath</span>
+                <span>2 BED</span>
+                <span>2.5 BATH</span>
               </div>
               <Link className="btn btn-primary" href="/hardy-homes#lynx">
                 Explore The Lynx <Arrow />
