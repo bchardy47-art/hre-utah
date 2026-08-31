@@ -41,8 +41,9 @@ export default function Footer() {
           </div>
           <div>
             <h5>Hardy Homes</h5>
-            <Link href="/hardy-homes">Overview</Link>
-            <Link href="/hardy-homes#brindle">Explore The Brindle</Link>
+            <Link href="/hardy-homes">Floor Plans</Link>
+            <Link href="/hardy-homes/cottages">Cottage Homes</Link>
+            <Link href="/hardy-homes/single-family">Single Family Homes</Link>
           </div>
           <div>
             <h5>Home Design</h5>
