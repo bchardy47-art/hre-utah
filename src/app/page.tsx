@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
-import { hardyHomes } from "@/lib/hardyHomes";
+import { hardyHomeBySlug } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
   title: "Hardy Real Estate — Don't Just Tour the House. Understand It.",
@@ -16,7 +16,7 @@ const Arrow = () => (
   </svg>
 );
 
-const lynx = hardyHomes[0];
+const brindle = hardyHomeBySlug.brindle;
 
 export default function Home() {
   return (
@@ -96,22 +96,22 @@ export default function Home() {
             <div className="hardy-home-feature-card">
               <div className="hardy-home-feature-media">
                 <Image
-                  src={lynx.images[0].src}
-                  alt={lynx.images[0].alt}
+                  src={brindle.images[0].src}
+                  alt={brindle.images[0].alt}
                   fill
                   sizes="(max-width: 1080px) 100vw, 24vw"
                   className="hardy-gallery-image"
                   style={{ objectFit: "contain", objectPosition: "center bottom" }}
                 />
               </div>
-              <span className="label">THE LYNX</span>
-              <h3>{lynx.squareFeet} SQ FT</h3>
+              <span className="label">THE BRINDLE</span>
+              <h3>{brindle.squareFeet} SQ FT</h3>
               <div className="hardy-home-feature-specs">
                 <span>2 BED</span>
                 <span>2.5 BATH</span>
               </div>
-              <Link className="btn btn-primary" href="/hardy-homes#lynx">
-                Explore The Lynx <Arrow />
+              <Link className="btn btn-primary" href="/hardy-homes#brindle">
+                Explore The Brindle <Arrow />
               </Link>
             </div>
           </div>
