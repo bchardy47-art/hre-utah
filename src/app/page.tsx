@@ -110,7 +110,7 @@ export default function Home() {
                 <span>2 BED</span>
                 <span>2.5 BATH</span>
               </div>
-              <Link className="btn btn-primary" href="/hardy-homes#brindle">
+              <Link className="btn btn-primary" href="/hardy-homes/cottages/brindle">
                 Explore The Brindle <Arrow />
               </Link>
             </div>
