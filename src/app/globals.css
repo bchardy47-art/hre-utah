@@ -1019,7 +1019,8 @@ select.field{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg x
 .hardy-plan-card-body p,
 .hardy-detail-copy,
 .hardy-layout-card p,
-.hardy-standard-inline{ color:var(--muted); font-size:15px; }
+.hardy-standard-inline,
+.hardy-flint-intro p{ color:var(--muted); font-size:15px; }
 .hardy-back-links{
   display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:18px;
   font-family:var(--head); font-weight:500; text-transform:uppercase; letter-spacing:.08em;
@@ -1051,8 +1052,10 @@ select.field{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg x
 }
 .hardy-detail-gallery{ display:grid; gap:18px; }
 .hardy-detail-gallery--brindle-twoup,
-.hardy-detail-gallery--rock{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-.hardy-detail-gallery--brindle-twoup > :first-child{ grid-column:1 / -1; }
+.hardy-detail-gallery--rock,
+.hardy-detail-gallery--flint{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+.hardy-detail-gallery--brindle-twoup > :first-child,
+.hardy-detail-gallery--flint > :first-child{ grid-column:1 / -1; }
 .hardy-detail-caption{
   padding:14px 18px 18px; font-family:var(--head); font-weight:500; text-transform:uppercase;
   letter-spacing:.08em; font-size:12px; color:var(--muted);

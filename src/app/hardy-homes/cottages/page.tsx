@@ -6,7 +6,7 @@ import { getHardyCollection, hardyHomes } from "@/lib/hardyHomes";
 export const metadata: Metadata = {
   title: "Cottage Floor Plans | Hardy Homes",
   description:
-    "Explore Cottage Floor Plans from Hardy Homes, including The Brindle — a compact detached home concept designed to make every square foot count.",
+    "Explore Cottage Floor Plans from Hardy Homes, including The Brindle and The Flint — compact detached home concepts designed to make every square foot count.",
 };
 
 const Arrow = () => (
@@ -30,7 +30,7 @@ export default function CottageCollectionPage() {
           <h1 className="h-lg">Cottage Floor Plans</h1>
           <p>{collection.description}</p>
         </div>
-        <div className="hardy-plan-card-grid hardy-plan-card-grid--single">
+        <div className="hardy-plan-card-grid">
           {homes.map((home) => {
             const exterior = home.images.find((image) => image.key === "exterior")!;
             return (
@@ -50,8 +50,8 @@ export default function CottageCollectionPage() {
                   <h2>{home.name}</h2>
                   <div className="hardy-inline-specs">
                     <span>{home.squareFeet} SQ FT</span>
-                    <span>{home.bedrooms.replace(" Bedrooms", " BED")}</span>
-                    <span>{home.bathrooms.replace(" Bathrooms", " BATH")}</span>
+                    <span>{home.bedrooms.replace(" Bedrooms", " BED").replace(" Bedroom", " BED")}</span>
+                    <span>{home.bathrooms.replace(" Bathrooms", " BATH").replace(" Bathroom", " BATH")}</span>
                   </div>
                   <p>{home.shortDescription}</p>
                   <Link className="btn btn-primary" href={home.detailPath}>

@@ -26,6 +26,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://hre-utah.com/hardy-homes/cottages/flint/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hre-utah.com/hardy-homes/single-family/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
