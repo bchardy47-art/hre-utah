@@ -1097,6 +1097,35 @@ select.field{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg x
   .hardy-compact-spec-grid--three{ grid-template-columns:repeat(3,minmax(0,1fr)); }
   .hardy-compact-spec-grid--four{ grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+@media(max-width:680px){
+  .hardy-detail-gallery--brindle-twoup,
+  .hardy-detail-gallery--rock,
+  .hardy-detail-gallery--flint{ grid-template-columns:1fr; }
+  .hardy-detail-gallery--brindle-twoup > :first-child,
+  .hardy-detail-gallery--flint > :first-child{ grid-column:auto; }
+  .hardy-detail-gallery .hardy-gallery-media-exterior,
+  .hardy-detail-gallery .hardy-gallery-media-tall{
+    min-height:0;
+    height:auto;
+    aspect-ratio:16 / 9;
+    padding:0;
+  }
+  .hardy-detail-gallery .hardy-gallery-media-exterior img,
+  .hardy-detail-gallery .hardy-gallery-media-tall img{
+    object-fit:cover !important;
+    object-position:center center !important;
+  }
+  .hardy-detail-gallery .hardy-gallery-media-dollhouse{
+    min-height:0;
+    height:auto;
+    aspect-ratio:1 / 1;
+    padding:14px;
+  }
+  .hardy-detail-gallery .hardy-gallery-media-dollhouse img{
+    object-fit:contain !important;
+    object-position:center center !important;
+  }
+}
 @media(max-width:560px){
   .hardy-hero{ min-height:auto; }
   .hardy-catalog-grid,
