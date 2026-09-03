@@ -5,9 +5,9 @@ import { hardyCollections, hardyStandardCopy } from "@/lib/hardyHomes";
 import LegacyHardyHomesRedirect from "./LegacyHardyHomesRedirect";
 
 export const metadata: Metadata = {
-  title: "Hardy Homes | Floor Plan Catalog by HRE Utah",
+  title: "Hardy Homes | Home Plans Built with Real Construction in Mind",
   description:
-    "Explore Hardy Homes floor plans, including cottage and single family concepts designed around practical layouts, usable space, and real-world construction.",
+    "Explore Hardy Homes floor plans, including cottage and single family concepts designed around practical layouts, usable space, and builder-first thinking.",
 };
 
 const Arrow = () => (
@@ -70,8 +70,9 @@ export default function HardyHomesPage() {
           <div className="card hardy-standard-card plan-accent">
             <span className="eyebrow" id="hardy-standard-heading">{hardyStandardCopy.heading}</span>
             <p className="hardy-standard-inline">{hardyStandardCopy.body}</p>
+            <p className="hardy-standard-note">{hardyStandardCopy.note}</p>
             <div className="hardy-cta-actions">
-              <Link className="btn btn-ghost" href="/contact#message">
+              <Link className="btn btn-ghost" href="/hardy-homes/standard">
                 {hardyStandardCopy.action} <Arrow />
               </Link>
             </div>
@@ -89,6 +90,9 @@ export default function HardyHomesPage() {
             <div className="hardy-cta-actions">
               <Link className="btn btn-primary btn-lg" href="/contact#message">
                 Talk With Brian <Arrow />
+              </Link>
+              <Link className="btn btn-ghost btn-lg" href="/hardy-homes/standard">
+                The Hardy Standard <Arrow />
               </Link>
             </div>
           </div>

@@ -38,9 +38,11 @@ export type HardyHomeConcept = {
 
 export const hardyStandardCopy = {
   heading: "The Hardy Standard",
-  body: "Every Hardy Home starts from a defined standard of quality, function, and finish.",
+  body:
+    "A Hardy Home starts with a defined standard of quality, function, and finish — so buyers understand what's included before they start choosing upgrades.",
   action: "Learn More",
-  note: "Full Hardy Standard specifications coming soon.",
+  note:
+    "Final specifications vary by home, site, jurisdiction, and selected options. A complete construction specification is provided before contract.",
 };
 
 export const hardyCollections: HardyCollection[] = [

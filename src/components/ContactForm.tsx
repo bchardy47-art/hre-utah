@@ -6,10 +6,10 @@ import { HRE_EVENT } from "@/lib/analytics";
 
 const EMAIL = "brian@hre-utah.com";
 const CONTACT_ENDPOINT = "/api/contact";
-// Service-selector submissions route to Service_Form_Success for service inquiries.
 const SERVICE_TOPICS = new Set([
-  "Handyman Work",
-  "Residential Drafting & Home Design",
+  "Build a Hardy Home",
+  "Custom Home Design",
+  "Handyman Project",
 ]);
 
 const Arrow = () => (
@@ -34,8 +34,6 @@ export default function ContactForm() {
         body: data,
       });
       if (!res.ok) throw new Error("bad response");
-      // Past this point the backend has accepted the submission, so this is a
-      // real lead. Button presses and failed sends are deliberately not counted.
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
         window.gtag("event", "contact_form_submit");
       }
@@ -47,7 +45,6 @@ export default function ContactForm() {
       );
       setStatus("done");
     } catch {
-      // No backend reachable — hand off to the email client so nothing is lost
       const subject = encodeURIComponent("Website inquiry — " + (data.get("help-with") || "General"));
       const body = encodeURIComponent(
         "Name: " + (data.get("full-name") || "") + "\n" +
@@ -81,13 +78,12 @@ export default function ContactForm() {
           <label>What can we help you with?</label>
           <select className="field" name="help-with" required defaultValue="">
             <option value="" disabled>Select an option</option>
-            <option>Buying a Home</option>
-            <option>Selling a Home</option>
-            <option>First-Time Buyer Help</option>
-            <option>Pre-Listing Walkthrough</option>
-            <option>Handyman Work</option>
-            <option>Residential Drafting &amp; Home Design</option>
-            <option>Something Else</option>
+            <option>Build a Hardy Home</option>
+            <option>Custom Home Design</option>
+            <option>Buy a Home</option>
+            <option>Sell a Home</option>
+            <option>Handyman Project</option>
+            <option>Other</option>
           </select>
         </div>
       </div>

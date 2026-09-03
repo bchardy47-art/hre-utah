@@ -4,14 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const PHONE = "(801) 380-0445";
 const TEL = "8013800445";
 
 const NAV: Array<{ label: string; href: string; event?: string }> = [
-  { label: "Home", href: "/" },
-  { label: "Real Estate", href: "/real-estate" },
   { label: "Hardy Homes", href: "/hardy-homes" },
   { label: "Home Design", href: "/drafting", event: "Drafting_Inquiry_Click" },
+  { label: "Real Estate", href: "/real-estate" },
   { label: "Handyman", href: "/handyman" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -61,14 +59,13 @@ export default function Nav() {
     };
   }, []);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isActive = (href: string) => pathname.startsWith(href);
 
   return (
     <header className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="container nav-inner">
-        <Link className="logo" href="/" aria-label="Hardy Real Estate — HRE">
-          <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate" />
+        <Link className="logo" href="/" aria-label="HRE home">
+          <img className="logo-badge" src="/images/hre-logo.png" alt="HRE" />
         </Link>
         <nav className="nav-links">
           {NAV.map(({ label, href, event }) => (

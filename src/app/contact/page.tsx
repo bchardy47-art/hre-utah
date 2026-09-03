@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact — Let's Talk. Real Answers. Real Fast. | Hardy Real Estate",
+  title: "Contact Brian Hardy | Hardy Homes, Design, Real Estate & Handyman",
   description:
-    "Contact Brian Hardy — text, call, or email about Utah real estate, home design, and handyman help. Fast, clear answers with no runaround.",
+    "Contact Brian Hardy about Hardy Homes, custom home design, Utah real estate, and handyman projects. Call, text, email, or send a message.",
 };
 
 const Arrow = () => (
@@ -23,12 +23,12 @@ export default function Contact() {
         <div className="hero-overlay" />
         <div className="container hero-inner">
           <h1 className="h-xl">
-            Let's Talk.<br />Real Answers.<br />
-            <span className="accent">Real Fast.</span>
+            Talk With Brian.<br />Plan the Next Step.<br />
+            <span className="accent">Get Real Answers.</span>
           </h1>
           <p className="lead">
-            Have a question, a project, or ready to make a move? I’m here to help with straight
-            answers and no runaround.
+            Reach out about building a Hardy Home, residential design, buying or selling in Utah,
+            or a handyman project. You&apos;ll hear back from Brian directly.
           </p>
         </div>
       </section>
@@ -47,14 +47,14 @@ export default function Contact() {
               <div className="cm-ico"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" /></svg></div>
               <div className="cm-label">Call Brian</div>
               <div className="cm-value">(801) 380-0445</div>
-              <p>Let's talk through your goals.</p>
+              <p>Talk through your goals and timeline.</p>
               <a className="learn" href="tel:8013800445">Call Now <Arrow /></a>
             </div>
             <div className="cmethod">
               <div className="cm-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg></div>
               <div className="cm-label">Email Brian</div>
               <div className="cm-value sm">brian@hre-utah.com</div>
-              <p>I’ll respond as quickly as I can.</p>
+              <p>Use email for plans, property details, or project notes.</p>
               <a className="learn" href="mailto:brian@hre-utah.com">Send Email <Arrow /></a>
             </div>
           </div>
@@ -66,12 +66,13 @@ export default function Contact() {
           <div className="contact-split">
             <div className="card form-card">
               <h3>Send a Message</h3>
-              <div className="form-sub">Tell me a little about your needs and how I can help.</div>
+              <div className="form-sub">Tell Brian what you need help with and the best way to reach you.</div>
               <ContactForm />
             </div>
 
             <div className="card biz-card">
               <h3>Business Details</h3>
+              <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><path d="M3 20h18" /><path d="M6 20V8l6-4 6 4v12" /><path d="M9 11h6M9 14h6" /></svg></span><span>BCHardy, LLC<small>Hardy Homes</small><small>Utah R100 Contractor</small></span></div>
               <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg></span><span>Hardy Real Estate<small>Boardwalk Realty &amp; Property Management</small><small>Saratoga Springs, UT</small></span></div>
               <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg></span><span>brian@hre-utah.com</span></div>
               <div className="biz-line"><span className="biz-ico"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" /></svg></span><span>(801) 380-0445</span></div>
@@ -95,9 +96,9 @@ export default function Contact() {
             <h2>Frequently Asked Questions</h2>
           </div>
           <details className="faq"><summary>How quickly will I hear back?<span className="pm">+</span></summary><div className="faq-body">Most calls and texts get a response within minutes during business hours, and same-day for anything that comes in after hours. Brian answers directly — no call centers or gatekeepers.</div></details>
-          <details className="faq"><summary>Do you charge for consultations?<span className="pm">+</span></summary><div className="faq-body">No. Initial conversations, walkthroughs, and buyer, seller, home-design, or handyman consultations are always free. I’ll talk through your goals and outline a clear next step before you commit to anything.</div></details>
-          <details className="faq"><summary>What areas do you serve?<span className="pm">+</span></summary><div className="faq-body">We serve buyers, sellers, and homeowners across Northern Utah — including Salt Lake, Utah, Davis, Weber, Summit, and Wasatch counties.</div></details>
-          <details className="faq"><summary>Can you help with real estate, home design, and handyman projects?<span className="pm">+</span></summary><div className="faq-body">Yes. Brian helps clients with real estate, home design, and handyman work under one roof, whether you're buying, selling, planning a home project, or improving the one you already own.</div></details>
+          <details className="faq"><summary>What kinds of projects can I reach out about?<span className="pm">+</span></summary><div className="faq-body">You can contact Brian about Hardy Homes, custom residential design and drafting, buying or selling a home, handyman work, and broader planning questions about how a project could move forward.</div></details>
+          <details className="faq"><summary>Do you charge for consultations?<span className="pm">+</span></summary><div className="faq-body">Initial conversations are free. Brian will talk through your goals, explain what kind of help makes sense, and identify a practical next step before you commit to anything.</div></details>
+          <details className="faq"><summary>Can you handle design and construction together?<span className="pm">+</span></summary><div className="faq-body">In some cases, yes. BCHardy, LLC can provide residential drafting and design coordination, and accepted projects may continue into a builder conversation through Hardy Homes. Final scope always depends on the property, project requirements, licensing, and written agreement.</div></details>
         </div>
       </section>
     </>

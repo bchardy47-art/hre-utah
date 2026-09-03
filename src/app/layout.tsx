@@ -7,9 +7,10 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 
 export const metadata: Metadata = {
-  title: "Hardy Real Estate — Don't Just Tour the House. Understand It.",
+  title: "HRE | Hardy Homes, Home Design & Real Estate",
   description:
-    "Utah real estate, home design, and handyman help from Brian Hardy — honest guidance backed by real-world construction judgment.",
+    "Hardy Homes by BCHardy, LLC combines residential homebuilding, home design, real estate, and property improvement services in Utah.",
+  metadataBase: new URL("https://www.hre-utah.com"),
   icons: { icon: "/images/hre-logo.png" },
 };
 

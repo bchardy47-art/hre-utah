@@ -3,9 +3,9 @@ import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 
 export const metadata: Metadata = {
-  title: "Real Estate — Smart Real Estate. Real-World Judgment. | Hardy Real Estate",
+  title: "Real Estate | Utah Buying & Selling with Builder-Minded Guidance",
   description:
-    "Buy or sell in Utah with a realtor who evaluates homes like a builder — spotting hidden issues and shaping smart strategy. Work with Brian Hardy.",
+    "Buy or sell in Utah with Brian Hardy — a Utah REALTOR® bringing construction awareness, market strategy, and practical advice to real estate decisions.",
 };
 
 const Arrow = () => (
@@ -24,16 +24,17 @@ export default function RealEstate() {
         <div className="hero-overlay" />
         <div className="container hero-inner">
           <h1 className="h-xl">
-            Smart Real Estate.<br />Real-World Judgment.<br />
-            <span className="accent">Buy or Sell With Confidence.</span>
+            Utah Real Estate.<br />Builder-Minded Guidance.<br />
+            <span className="accent">Buy or Sell With Clarity.</span>
           </h1>
           <p className="lead">
-            I help buyers and sellers make smarter moves with market strategy, honest guidance,
-            and real construction awareness.
+            Real estate remains a core part of the business — helping buyers and sellers make
+            smarter decisions with market strategy, honest guidance, and practical construction
+            awareness.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 30 }}>
             <a className="btn btn-primary btn-lg" href="https://hardyhomes-utah.com" target="_blank" rel="noopener">
-              Search Homes <Arrow />
+              Search Utah Listings <Arrow />
             </a>
             <Link className="btn btn-ghost btn-lg" href="/contact" data-hre-event="Work_With_Brian_Click" data-hre-location="real-estate-page">Work With Brian <Arrow /></Link>
             <Link className="btn btn-ghost btn-lg" href="#look">What I Look For <Arrow /></Link>
@@ -70,41 +71,13 @@ export default function RealEstate() {
         <div className="container">
           <div className="sec-head" style={{ marginBottom: 34 }}><h2>What Brian Looks For in Homes</h2></div>
           <div className="colrow" style={{ gridTemplateColumns: "repeat(7,1fr)" }}>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" /><path d="M10 12h4M12 10v4" strokeWidth={1.8} /></svg></div>
-              <h3>Structural Integrity</h3>
-              <p>Solid bones. Built to last.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M3 13 12 5l9 8" /><path d="M6 12h12" /><path d="M9 11h6" strokeWidth={1.2} /></svg></div>
-              <h3>Roofing &amp; Exterior</h3>
-              <p>Protection from the elements.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" /><path d="M12 3v2.5M12 18.5V21M4.2 7l2.2 1.3M17.6 15.7l2.2 1.3M4.2 17l2.2-1.3M17.6 8.3l2.2-1.3" /></svg></div>
-              <h3>Systems</h3>
-              <p>Electrical, plumbing, HVAC — safe and up to par.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z" /></svg></div>
-              <h3>Water Management</h3>
-              <p>Drainage, grading, and moisture control.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L3 18l3 3 6.4-6.3a4 4 0 0 0 5.3-5.4l-2.5 2.5-2.1-.5-.5-2.1Z" /></svg></div>
-              <h3>Materials &amp; Craftsmanship</h3>
-              <p>Quality materials. Work done right.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1" /><path d="M4 11h16M11 4v16" strokeWidth={1.4} /></svg></div>
-              <h3>Layout &amp; Function</h3>
-              <p>Spaces that work for real life.</p>
-            </div>
-            <div className="col">
-              <div className="col-ico"><svg viewBox="0 0 24 24"><path d="M4 18 10 11l4 4 6-8" /><path d="M17 7h3v3" strokeWidth={1.8} /></svg></div>
-              <h3>Future Potential</h3>
-              <p>Room to grow. Value to gain.</p>
-            </div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z" /><path d="M10 12h4M12 10v4" strokeWidth={1.8} /></svg></div><h3>Structural Integrity</h3><p>Solid bones. Built to last.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><path d="M3 13 12 5l9 8" /><path d="M6 12h12" /><path d="M9 11h6" strokeWidth={1.2} /></svg></div><h3>Roofing &amp; Exterior</h3><p>Protection from the elements.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" /><path d="M12 3v2.5M12 18.5V21M4.2 7l2.2 1.3M17.6 15.7l2.2 1.3M4.2 17l2.2-1.3M17.6 8.3l2.2-1.3" /></svg></div><h3>Systems</h3><p>Electrical, plumbing, HVAC — safe and up to par.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z" /></svg></div><h3>Water Management</h3><p>Drainage, grading, and moisture control.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.3L3 18l3 3 6.4-6.3a4 4 0 0 0 5.3-5.4l-2.5 2.5-2.1-.5-.5-2.1Z" /></svg></div><h3>Materials &amp; Craftsmanship</h3><p>Quality materials. Work done right.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1" /><path d="M4 11h16M11 4v16" strokeWidth={1.4} /></svg></div><h3>Layout &amp; Function</h3><p>Spaces that work for real life.</p></div>
+            <div className="col"><div className="col-ico"><svg viewBox="0 0 24 24"><path d="M4 18 10 11l4 4 6-8" /><path d="M17 7h3v3" strokeWidth={1.8} /></svg></div><h3>Future Potential</h3><p>Room to grow. Value to gain.</p></div>
           </div>
         </div>
       </section>
@@ -154,7 +127,12 @@ export default function RealEstate() {
 
       <section className="section tight">
         <div className="container">
-          <CtaBand />
+          <CtaBand
+            pre="Need help with a "
+            accent="purchase or sale"
+            post="?"
+            sub="Brian can help you evaluate the property, plan the strategy, and move forward with more confidence."
+          />
         </div>
       </section>
     </>

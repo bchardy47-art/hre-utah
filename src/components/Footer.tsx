@@ -29,9 +29,27 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="logo logo--footer" href="/" aria-label="Hardy Real Estate — HRE">
-              <img className="logo-badge" src="/images/hre-logo.png" alt="HRE — Hardy Real Estate" />
+            <Link className="logo logo--footer" href="/" aria-label="HRE home">
+              <img className="logo-badge" src="/images/hre-logo.png" alt="HRE" />
             </Link>
+            <div className="footer-brand-copy">
+              <strong>BCHardy, LLC</strong>
+              <span>Hardy Homes • Hardy Real Estate • Home Design • Handyman</span>
+              <span>Utah R100 Contractor • Utah REALTOR®</span>
+              <small>Real estate services through Boardwalk Realty &amp; Property Management.</small>
+            </div>
+          </div>
+          <div>
+            <h5>Hardy Homes</h5>
+            <Link href="/hardy-homes">Browse Homes</Link>
+            <Link href="/hardy-homes/cottages">Cottage Collection</Link>
+            <Link href="/hardy-homes/single-family">Single Family Collection</Link>
+            <Link href="/hardy-homes/standard">The Hardy Standard</Link>
+          </div>
+          <div>
+            <h5>Home Design</h5>
+            <Link href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="footer">Home Design</Link>
+            <Link href="/drafting#process">How It Works</Link>
           </div>
           <div>
             <h5>Real Estate</h5>
@@ -40,33 +58,22 @@ export default function Footer() {
             <Link href="/real-estate#sellers" data-hre-event="Seller_Inquiry_Click" data-hre-location="footer">Selling</Link>
           </div>
           <div>
-            <h5>Hardy Homes</h5>
-            <Link href="/hardy-homes">Floor Plans</Link>
-            <Link href="/hardy-homes/cottages">Cottage Homes</Link>
-            <Link href="/hardy-homes/single-family">Single Family Homes</Link>
-          </div>
-          <div>
-            <h5>Home Design</h5>
-            <Link href="/drafting" data-hre-event="Drafting_Inquiry_Click" data-hre-location="footer">Home Design</Link>
-            <Link href="/drafting#process">How It Works</Link>
-          </div>
-          <div>
             <h5>Handyman</h5>
-            <Link href="/handyman">Handyman</Link>
+            <Link href="/handyman">Handyman Services</Link>
             <Link href="/contact#message" data-hre-event="Request_Service_Click" data-hre-location="footer">Request Service</Link>
           </div>
           <div>
-            <h5>Contact</h5>
+            <h5>Company</h5>
+            <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/contact#message">Send a Message</Link>
             <a href={`sms:${TEL}`} data-hre-location="footer">Text Brian</a>
-            <a href={`tel:${TEL}`} data-hre-location="footer">Call Brian</a>
+            <a href={`tel:${TEL}`} data-hre-location="footer">Call {PHONE}</a>
             <a href={`mailto:${EMAIL}`} data-hre-location="footer">{EMAIL}</a>
           </div>
         </div>
         <div className="footer-base">
-          <span>© 2026 BCHardy, LLC | Hardy Real Estate. All rights reserved.</span>
-          <span className="footer-lic">Licensed Utah REALTOR®</span>
+          <span>© 2026 BCHardy, LLC. All rights reserved.</span>
+          <span className="footer-lic">Hardy Homes • Hardy Real Estate • Home Design • Handyman</span>
           <div className="social">
             <a href="#" aria-label="Instagram"><IgIcon /></a>
             <a href="#" aria-label="Facebook"><FbIcon /></a>
