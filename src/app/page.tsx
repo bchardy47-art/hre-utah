@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 import HardyHomeCard from "@/components/HardyHomeCard";
-import { hardyHomes } from "@/lib/hardyHomes";
+import { getPublicHardyHomes } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
   title: "Hardy Homes | Home Builder, Design & Real Estate in Utah",
@@ -113,6 +113,8 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const publicHomes = getPublicHardyHomes();
+
   return (
     <>
       <section className="hero" data-screen-label="Home">
@@ -197,7 +199,7 @@ export default function Home() {
             <p>Efficient plans. Thoughtful layouts. Built with real construction in mind.</p>
           </div>
           <div className="hardy-plan-card-grid homepage-hardy-grid">
-            {hardyHomes.map((home) => (
+            {publicHomes.map((home) => (
               <HardyHomeCard key={home.slug} home={home} />
             ))}
           </div>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getHardyHome } from "@/lib/hardyHomes";
+import { getHardyCollectionForHome, getHardyHome } from "@/lib/hardyHomes";
+import { getCollectionPath } from "@/lib/hardyHomesRoutes";
 
 export const metadata: Metadata = {
   title: "The Rock | Single Family Floor Plans | Hardy Homes",
@@ -22,6 +23,7 @@ const Check = () => (
 );
 
 const home = getHardyHome("rock")!;
+const collection = getHardyCollectionForHome(home);
 const front = home.images.find((image) => image.key === "exterior-front")!;
 const kitchen = home.images.find((image) => image.key === "kitchen-dining")!;
 const living = home.images.find((image) => image.key === "living")!;
@@ -43,13 +45,13 @@ export default function RockPage() {
           <div className="hardy-back-links">
             <Link href="/hardy-homes">Hardy Homes</Link>
             <span>/</span>
-            <Link href={home.collectionPath}>Single Family Floor Plans</Link>
+            <Link href={getCollectionPath(collection, "hre")}>{collection.title}</Link>
           </div>
           <div className="hardy-detail-hero">
             <div>
               <span className="eyebrow">{home.collection}</span>
               <h1 className="h-lg">{home.name}</h1>
-              <p className="hardy-detail-copy">A spacious family home with open gathering areas, private retreats, and room to grow.</p>
+              <p className="hardy-detail-copy">{home.heroCopy}</p>
             </div>
             <div className="hardy-compact-spec-grid hardy-compact-spec-grid--four" aria-label="The Rock specifications">
               <div className="card hardy-mini-spec-card"><span className="label">SQ FT</span><strong>3,209</strong></div>

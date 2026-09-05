@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getHardyHome } from "@/lib/hardyHomes";
+import { getHardyCollectionForHome, getHardyHome } from "@/lib/hardyHomes";
+import { getCollectionPath } from "@/lib/hardyHomesRoutes";
 
 export const metadata: Metadata = {
   title: "The Brindle | Cottage Floor Plans | Hardy Homes",
@@ -22,6 +23,7 @@ const Check = () => (
 );
 
 const home = getHardyHome("brindle")!;
+const collection = getHardyCollectionForHome(home);
 const exterior = home.images.find((image) => image.key === "exterior")!;
 const kitchen = home.images.find((image) => image.key === "kitchen")!;
 const layout = home.images.find((image) => image.key === "layout")!;
@@ -34,14 +36,14 @@ export default function BrindlePage() {
           <div className="hardy-back-links">
             <Link href="/hardy-homes">Hardy Homes</Link>
             <span>/</span>
-            <Link href={home.collectionPath}>Cottage Floor Plans</Link>
+            <Link href={getCollectionPath(collection, "hre")}>{collection.title}</Link>
           </div>
           <span id="lynx" className="hardy-anchor-compat" aria-hidden="true" />
           <div id="brindle" className="hardy-detail-hero">
             <div>
               <span className="eyebrow">{home.collection}</span>
               <h1 className="h-lg">{home.name}</h1>
-              <p className="hardy-detail-copy">Compact single-level living without giving up the spaces that matter.</p>
+              <p className="hardy-detail-copy">{home.heroCopy}</p>
             </div>
             <div className="hardy-compact-spec-grid hardy-compact-spec-grid--three" aria-label="The Brindle specifications">
               <div className="card hardy-mini-spec-card"><span className="label">SQ FT</span><strong>{home.squareFeet}</strong></div>

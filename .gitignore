@@ -24,3 +24,7 @@ next-env.d.ts
 
 # OS
 .DS_Store
+
+# standalone Hardy Homes app
+hardy-homes-site/node_modules/
+hardy-homes-site/.next/

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HardyHomeCard from "@/components/HardyHomeCard";
-import { getHardyCollection, hardyHomes } from "@/lib/hardyHomes";
+import { getHardyCollection, getPublicHardyHomes } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
   title: "Cottage Floor Plans | Hardy Homes",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const collection = getHardyCollection("cottages")!;
-const homes = hardyHomes.filter((home) => home.collectionSlug === "cottages");
+const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === "cottages");
 
 export default function CottageCollectionPage() {
   return (
@@ -20,8 +20,8 @@ export default function CottageCollectionPage() {
           <Link href="/hardy-homes">Hardy Homes</Link>
         </div>
         <div className="sec-head hardy-collection-page-head">
-          <span className="eyebrow">Cottage Floor Plans</span>
-          <h1 className="h-lg">Cottage Floor Plans</h1>
+          <span className="eyebrow">{collection.title}</span>
+          <h1 className="h-lg">{collection.title}</h1>
           <p>{collection.description}</p>
         </div>
         <div className="hardy-plan-card-grid">

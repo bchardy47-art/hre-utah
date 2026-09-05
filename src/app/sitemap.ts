@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { hardyCollections, hardyHomes } from "@/lib/hardyHomes";
+import { hardyCollections, getPublicHardyHomes } from "@/lib/hardyHomes";
+import { getCollectionPath, getPlanPath } from "@/lib/hardyHomesRoutes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.hre-utah.com";
@@ -15,8 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const hardyRoutes = [
-    ...hardyCollections.map((collection) => collection.path),
-    ...hardyHomes.map((home) => home.detailPath),
+    ...hardyCollections.map((collection) => getCollectionPath(collection, "hre")),
+    ...getPublicHardyHomes().map((home) => getPlanPath(home, "hre")),
   ];
 
   const routes = [...new Set([...staticRoutes, ...hardyRoutes])];

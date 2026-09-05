@@ -1,0 +1,11 @@
+{
+  "name": "@hardy-homes/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./hardyHomes": "./hardyHomes.ts",
+    "./hardyHomesRoutes": "./hardyHomesRoutes.ts",
+    "./hardyHomesSite": "./hardyHomesSite.ts"
+  }
+}

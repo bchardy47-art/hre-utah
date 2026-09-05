@@ -1218,3 +1218,19 @@ select.field{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg x
   .hardy-standard-overview,
   .hardy-standard-process{ padding:26px 22px; }
 }
+
+.hardy-gateway-actions{ margin-top:30px; }
+.hardy-offer-grid .hardy-offer-card{ min-height:0; }
+.hardy-offer-card h3{ font-size:16px; }
+.hardy-standard-chip-row{ margin-top:18px; }
+.hardy-gateway-connection{ display:grid; grid-template-columns:1.15fr auto; gap:24px; align-items:center; }
+@media(max-width:1080px){
+  .hardy-offer-grid{ grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  .hardy-gateway-connection{ grid-template-columns:1fr; }
+}
+@media(max-width:680px){
+  .hardy-offer-grid{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+@media(max-width:560px){
+  .hardy-offer-grid{ grid-template-columns:1fr !important; }
+}
