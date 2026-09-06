@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -58,8 +59,15 @@ export default function HardyHomesNav() {
     <header className="hh-nav">
       <div className="container hh-nav-inner">
         <Link href="/" className="hh-brand" aria-label="Hardy Homes home">
-          <span className="hh-brand-mark">Hardy Homes</span>
-          <span className="hh-brand-sub">Homes built on your land</span>
+          <Image
+            src="/brand/hardy-homes-logo-header.png"
+            alt="Hardy Homes"
+            width={1153}
+            height={738}
+            priority
+            sizes="(max-width: 980px) 160px, 210px"
+            className="hh-brand-logo"
+          />
         </Link>
         <nav className="hh-nav-links" aria-label="Primary navigation">
           {PRIMARY_NAV.map((item) => (
