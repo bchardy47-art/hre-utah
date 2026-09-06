@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { HardyStandardFeature } from "@hardy-homes/shared/hardyHomes";
-import HardyStandardFeatureGrid from "@/components/HardyStandardFeatureGrid";
-import { getOptionsPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { coreStandards } from "@hardy-homes/shared/hardyHomes";
 
 export const metadata: Metadata = {
   title: "The Hardy Standard | Standard Features",
@@ -28,65 +27,65 @@ const Arrow = () => (
   </svg>
 );
 
-const signatureStandards: HardyStandardFeature[] = [
-  {
-    key: "2x6-exterior-walls",
-    title: "2×6 Exterior Wall Construction",
-    description: "A stronger wall assembly that supports durability, insulation capacity, and long-term comfort.",
-    icon: "structure",
-  },
-  {
-    key: "tankless-water-heater",
-    title: "Tankless Water Heater",
-    description: "Efficient on-demand hot water without a traditional storage tank footprint.",
-    icon: "efficiency",
-  },
-  {
-    key: "plan-specific-construction-specifications",
-    title: "Plan-Specific Construction Specifications",
-    description: "Each Hardy Home is documented around the selected floor plan and the way that home is meant to be built.",
-    icon: "structure",
-  },
-  {
-    key: "standard-vs-upgrades-separated",
-    title: "Standard Features Separated from Upgrades",
-    description: "Buyers can clearly understand what is included before choosing the options they want to add.",
-    icon: "finish",
-  },
-];
+const Check = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path d="m5 12 4 4L19 6" />
+  </svg>
+);
+
+function pickFeatures(keys: string[]) {
+  const featureMap = new Map(coreStandards.map((feature) => [feature.key, feature]));
+  return keys
+    .map((key) => featureMap.get(key))
+    .filter((feature): feature is HardyStandardFeature => Boolean(feature));
+}
 
 const standardCategories = [
   {
     title: "Structure & Foundation",
-    copy:
-      "Hardy Homes begins with the structural baseline for the selected plan, engineering requirements, site conditions, and code requirements. 2×6 exterior wall construction is part of that standard baseline.",
+    features: [
+      ...pickFeatures(["2x6-exterior-walls"]),
+      {
+        key: "9-foot-main-living-ceilings",
+        title: "9' Ceilings on the Main Living Level",
+        description: "9-foot ceilings throughout the main living level.",
+        icon: "structure",
+      },
+    ],
   },
   {
-    title: "Exterior Wall Assemblies",
-    copy:
-      "Exterior assemblies are coordinated to the selected elevation, project requirements, and site conditions so the home is built around the way it will actually live on the lot.",
+    title: "Exterior",
+    features: pickFeatures(["fiber-cement-cladding", "architectural-shingles"]),
   },
   {
-    title: "Windows, Doors & Insulation",
-    copy:
-      "Window, door, and insulation specifications are finalized for the selected home and project conditions before contract so buyers understand the baseline being built.",
+    title: "Windows & Doors",
+    features: pickFeatures(["low-e-windows", "insulated-exterior-doors"]),
   },
   {
-    title: "Heating, Cooling & Hot Water",
-    copy:
-      "The Hardy Standard includes a tankless water heater. Heating, cooling, controls, and related mechanical specifications are finalized around the selected plan and project requirements.",
+    title: "Heating & Cooling",
+    features: pickFeatures(["high-efficiency-hvac", "smart-thermostat"]),
   },
   {
-    title: "Kitchen, Bath & Interior Finishes",
-    copy:
-      "Interior baseline selections are defined clearly so buyers can understand standard finishes separately from optional upgrades and personalized selections.",
+    title: "Plumbing & Hot Water",
+    features: pickFeatures(["tankless-water-heater", "pex-plumbing"]),
   },
   {
-    title: "Site Conditions & Final Construction Specifications",
-    copy:
-      "Utilities, access, jurisdictional requirements, engineering, and other site realities are incorporated into the final construction specification package prepared for the home.",
+    title: "Electrical",
+    features: pickFeatures(["led-lighting"]),
   },
-] as const;
+  {
+    title: "Kitchen",
+    features: pickFeatures(["quartz-countertops", "soft-close-cabinetry"]),
+  },
+  {
+    title: "Interior Finishes",
+    features: pickFeatures(["modern-interior-trim"]),
+  },
+  {
+    title: "Flooring",
+    features: pickFeatures(["lvp-main-living"]),
+  },
+].filter((category) => category.features.length > 0);
 
 export default function StandardFeaturesPage() {
   return (
@@ -98,9 +97,9 @@ export default function StandardFeaturesPage() {
         <div className="container hh-standard-page-hero-grid">
           <div className="hh-standard-page-hero-copy">
             <span className="eyebrow">The Hardy Standard</span>
-            <h1 className="h-xl">A better baseline. Before you add a single upgrade.</h1>
+            <h1 className="h-xl">What comes standard in a Hardy Home.</h1>
             <p className="lead hh-standard-page-hero-lead">
-              Every Hardy Home starts with a thoughtfully selected construction standard focused on durability, efficiency, comfort, and long-term value.
+              A straightforward look at the features and construction standards included in a Hardy Home.
             </p>
           </div>
           <div className="card hh-standard-page-hero-mark plan-accent">
@@ -117,59 +116,26 @@ export default function StandardFeaturesPage() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="signature-standard">
+      <section className="section" aria-labelledby="standard-features-list">
         <div className="container">
           <div className="sec-head hh-head-left hardy-section-head-compact">
-            <span className="eyebrow">Included in the Hardy Standard</span>
-            <h2 id="signature-standard">A clear baseline before selections begin.</h2>
-            <p>
-              Hardy Homes starts with meaningful standards buyers can understand before upgrades are selected.
-            </p>
+            <span className="eyebrow">Standard Features</span>
+            <h2 id="standard-features-list">Included in the Hardy Standard</h2>
           </div>
-          <HardyStandardFeatureGrid features={signatureStandards} featured />
-        </div>
-      </section>
-
-      <section className="section alt" aria-labelledby="standard-categories">
-        <div className="container">
-          <div className="sec-head hh-head-left hardy-section-head-compact">
-            <span className="eyebrow">The Hardy Standard</span>
-            <h2 id="standard-categories">Built around the parts of the home that matter most.</h2>
-          </div>
-          <div className="hh-standard-category-grid">
+          <div className="hh-standard-sheet-grid">
             {standardCategories.map((category) => (
-              <article key={category.title} className="card hh-standard-category-card plan-accent">
-                <div className="hh-standard-category-head">
-                  <div className="feat-ico hh-standard-feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                      <path d="M3 20h18" />
-                      <path d="M6 20V8l6-4 6 4v12" />
-                    </svg>
-                  </div>
-                  <h3>{category.title}</h3>
-                </div>
-                <p>{category.copy}</p>
+              <article key={category.title} className="card hh-standard-sheet-card plan-accent">
+                <h3>{category.title}</h3>
+                <ul className="hh-standard-sheet-list">
+                  {category.features.map((feature) => (
+                    <li key={feature.key}>
+                      <Check />
+                      <span>{feature.title}</span>
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="standard-vs-options">
-        <div className="container">
-          <div className="card hh-standard-compare-band plan-accent">
-            <div>
-              <span className="eyebrow">Standard vs Options</span>
-              <h2 id="standard-vs-options">Know what is included. Then choose what to add.</h2>
-              <p>
-                Hardy Homes begins with a defined baseline. Optional upgrades are selected separately so buyers can clearly understand what is included and what they are choosing to add.
-              </p>
-            </div>
-            <div className="hardy-cta-actions">
-              <Link className="btn btn-primary btn-lg" href={getOptionsPath("standalone")}>
-                Explore Options &amp; Upgrades <Arrow />
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -178,9 +144,9 @@ export default function StandardFeaturesPage() {
         <div className="container">
           <div className="card hh-standard-disclaimer plan-accent">
             <span className="eyebrow">Final Specifications</span>
-            <h2 id="final-specifications">Your home. Your site. Your final spec.</h2>
+            <h2 id="final-specifications">Final specifications</h2>
             <p className="hardy-standard-inline">
-              Final construction specifications are prepared for the selected home plan and building site before contract. Site conditions, jurisdictional requirements, and selected options may affect individual specifications.
+              Final specifications may vary by home plan, site conditions, jurisdictional requirements, and selected options. Your final construction specifications will be provided before contract.
             </p>
           </div>
         </div>
@@ -191,7 +157,7 @@ export default function StandardFeaturesPage() {
           <div className="card hardy-catalog-cta plan-accent hh-final-cta">
             <div>
               <span className="eyebrow">Ready to Build?</span>
-              <h2 id="standard-final-cta">Start with the home. Then make it yours.</h2>
+              <h2 id="standard-final-cta">Find your home.</h2>
             </div>
             <div className="hardy-cta-actions">
               <Link className="btn btn-primary btn-lg" href="/floor-plans">View Floor Plans <Arrow /></Link>
