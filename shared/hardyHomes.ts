@@ -44,6 +44,21 @@ export type HardyHomeConcept = {
   featuredOnStandaloneHome?: boolean;
 };
 
+export type HardyStandardIconKey =
+  | "structure"
+  | "efficiency"
+  | "finish"
+  | "technology"
+  | "storage"
+  | "exterior";
+
+export type HardyStandardFeature = {
+  key: string;
+  title: string;
+  description?: string;
+  icon?: HardyStandardIconKey;
+};
+
 export const hardyStandardCopy = {
   heading: "The Hardy Standard",
   body:
