@@ -25,67 +25,22 @@ const Arrow = () => (
   </svg>
 );
 
-const standardCategories = [
-  {
-    title: "Structure & Foundation",
-    features: [
-      { key: "2x6-exterior-walls", title: "2×6 Exterior Wall Construction" },
-      { key: "9-foot-main-living-ceilings", title: "9' Ceilings on the Main Living Level" },
-    ],
-  },
-  {
-    title: "Exterior",
-    features: [
-      { key: "fiber-cement-cladding", title: "Fiber-Cement or Equivalent Quality Exterior Cladding" },
-      { key: "architectural-shingles", title: "Architectural Shingles" },
-    ],
-  },
-  {
-    title: "Windows & Doors",
-    features: [
-      { key: "low-e-windows", title: "Low-E Energy-Efficient Windows" },
-      { key: "insulated-exterior-doors", title: "Insulated Exterior Doors" },
-    ],
-  },
-  {
-    title: "Heating & Cooling",
-    features: [
-      { key: "high-efficiency-hvac", title: "High-Efficiency HVAC" },
-      { key: "smart-thermostat", title: "Smart Thermostat" },
-    ],
-  },
-  {
-    title: "Plumbing & Hot Water",
-    features: [
-      { key: "tankless-water-heater", title: "High-Efficiency Tankless Water Heater" },
-      { key: "pex-plumbing", title: "PEX Plumbing" },
-    ],
-  },
-  {
-    title: "Electrical",
-    features: [
-      { key: "led-lighting", title: "LED Lighting Throughout" },
-    ],
-  },
-  {
-    title: "Kitchen",
-    features: [
-      { key: "quartz-countertops", title: "Quartz Countertops" },
-      { key: "soft-close-cabinetry", title: "Soft-Close Cabinetry" },
-    ],
-  },
-  {
-    title: "Interior Finishes",
-    features: [
-      { key: "modern-interior-trim", title: "Modern Interior Trim and Lever Hardware" },
-    ],
-  },
-  {
-    title: "Flooring",
-    features: [
-      { key: "lvp-main-living", title: "LVP in Primary Living Areas" },
-    ],
-  },
+const standardFeatures = [
+  { key: "2x6-exterior-walls", title: "2×6 Exterior Wall Construction" },
+  { key: "9-foot-main-living-ceilings", title: "9' Ceilings on the Main Living Level" },
+  { key: "fiber-cement-cladding", title: "Fiber-Cement or Equivalent Quality Exterior Cladding" },
+  { key: "architectural-shingles", title: "Architectural Shingles" },
+  { key: "low-e-windows", title: "Low-E Energy-Efficient Windows" },
+  { key: "insulated-exterior-doors", title: "Insulated Exterior Doors" },
+  { key: "high-efficiency-hvac", title: "High-Efficiency HVAC" },
+  { key: "smart-thermostat", title: "Smart Thermostat" },
+  { key: "tankless-water-heater", title: "High-Efficiency Tankless Water Heater" },
+  { key: "pex-plumbing", title: "PEX Plumbing" },
+  { key: "led-lighting", title: "LED Lighting Throughout" },
+  { key: "quartz-countertops", title: "Quartz Countertops" },
+  { key: "soft-close-cabinetry", title: "Soft-Close Cabinetry" },
+  { key: "modern-interior-trim", title: "Modern Interior Trim and Lever Hardware" },
+  { key: "lvp-main-living", title: "LVP in Primary Living Areas" },
 ];
 
 export default function StandardFeaturesPage() {
@@ -123,17 +78,12 @@ export default function StandardFeaturesPage() {
             <span className="eyebrow">Standard Features</span>
             <h2 id="standard-features-list">Included in the Hardy Standard</h2>
           </div>
-          <div className="hh-standard-sheet-grid">
-            {standardCategories.map((category) => (
-              <div key={category.title} className="hh-spec-block">
-                <h3 className="hh-spec-title">{category.title}</h3>
-                <ul className="hh-spec-list">
-                  {category.features.map((feature) => (
-                    <li key={feature.key}>{feature.title}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="hh-spec-sheet">
+            <ul className="hh-spec-list">
+              {standardFeatures.map((feature) => (
+                <li key={feature.key}>{feature.title}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
