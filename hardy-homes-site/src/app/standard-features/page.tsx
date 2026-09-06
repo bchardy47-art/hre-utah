@@ -6,7 +6,7 @@ import HardyStandardFeatureGrid from "@/components/HardyStandardFeatureGrid";
 import { getOptionsPath } from "@hardy-homes/shared/hardyHomesRoutes";
 
 export const metadata: Metadata = {
-  title: "The Hardy Standard | Standard Features | Hardy Homes",
+  title: "The Hardy Standard | Standard Features",
   description:
     "See what's included in a Hardy Home, including 2×6 exterior walls, tankless water heating, and the baseline construction and finish standards that come before upgrades.",
   alternates: {
@@ -105,10 +105,10 @@ export default function StandardFeaturesPage() {
           </div>
           <div className="card hh-standard-page-hero-mark plan-accent">
             <Image
-              src="/brand/hardy-homes-logo.png"
+              src="/brand/hardy-homes-logo-header.png"
               alt="Hardy Homes logo"
-              width={1448}
-              height={1086}
+              width={1153}
+              height={738}
               priority
               sizes="(max-width: 980px) 80vw, 34vw"
               className="hh-standard-logo"
