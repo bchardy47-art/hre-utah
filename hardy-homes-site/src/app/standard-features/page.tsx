@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { HardyStandardFeature } from "@hardy-homes/shared/hardyHomes";
-import { coreStandards } from "@hardy-homes/shared/hardyHomes";
 
 export const metadata: Metadata = {
   title: "The Hardy Standard | Standard Features",
@@ -33,59 +31,68 @@ const Check = () => (
   </svg>
 );
 
-function pickFeatures(keys: string[]) {
-  const featureMap = new Map(coreStandards.map((feature) => [feature.key, feature]));
-  return keys
-    .map((key) => featureMap.get(key))
-    .filter((feature): feature is HardyStandardFeature => Boolean(feature));
-}
-
 const standardCategories = [
   {
     title: "Structure & Foundation",
     features: [
-      ...pickFeatures(["2x6-exterior-walls"]),
-      {
-        key: "9-foot-main-living-ceilings",
-        title: "9' Ceilings on the Main Living Level",
-        description: "9-foot ceilings throughout the main living level.",
-        icon: "structure",
-      },
+      { key: "2x6-exterior-walls", title: "2×6 Exterior Wall Construction" },
+      { key: "9-foot-main-living-ceilings", title: "9' Ceilings on the Main Living Level" },
     ],
   },
   {
     title: "Exterior",
-    features: pickFeatures(["fiber-cement-cladding", "architectural-shingles"]),
+    features: [
+      { key: "fiber-cement-cladding", title: "Fiber-Cement or Equivalent Quality Exterior Cladding" },
+      { key: "architectural-shingles", title: "Architectural Shingles" },
+    ],
   },
   {
     title: "Windows & Doors",
-    features: pickFeatures(["low-e-windows", "insulated-exterior-doors"]),
+    features: [
+      { key: "low-e-windows", title: "Low-E Energy-Efficient Windows" },
+      { key: "insulated-exterior-doors", title: "Insulated Exterior Doors" },
+    ],
   },
   {
     title: "Heating & Cooling",
-    features: pickFeatures(["high-efficiency-hvac", "smart-thermostat"]),
+    features: [
+      { key: "high-efficiency-hvac", title: "High-Efficiency HVAC" },
+      { key: "smart-thermostat", title: "Smart Thermostat" },
+    ],
   },
   {
     title: "Plumbing & Hot Water",
-    features: pickFeatures(["tankless-water-heater", "pex-plumbing"]),
+    features: [
+      { key: "tankless-water-heater", title: "High-Efficiency Tankless Water Heater" },
+      { key: "pex-plumbing", title: "PEX Plumbing" },
+    ],
   },
   {
     title: "Electrical",
-    features: pickFeatures(["led-lighting"]),
+    features: [
+      { key: "led-lighting", title: "LED Lighting Throughout" },
+    ],
   },
   {
     title: "Kitchen",
-    features: pickFeatures(["quartz-countertops", "soft-close-cabinetry"]),
+    features: [
+      { key: "quartz-countertops", title: "Quartz Countertops" },
+      { key: "soft-close-cabinetry", title: "Soft-Close Cabinetry" },
+    ],
   },
   {
     title: "Interior Finishes",
-    features: pickFeatures(["modern-interior-trim"]),
+    features: [
+      { key: "modern-interior-trim", title: "Modern Interior Trim and Lever Hardware" },
+    ],
   },
   {
     title: "Flooring",
-    features: pickFeatures(["lvp-main-living"]),
+    features: [
+      { key: "lvp-main-living", title: "LVP in Primary Living Areas" },
+    ],
   },
-].filter((category) => category.features.length > 0);
+];
 
 export default function StandardFeaturesPage() {
   return (
