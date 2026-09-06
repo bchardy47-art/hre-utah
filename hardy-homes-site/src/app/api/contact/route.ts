@@ -18,7 +18,17 @@ export async function POST(request: Request) {
   const to = process.env.CONTACT_TO_EMAIL;
 
   if (!apiKey || !from || !to) {
-    return NextResponse.json({ error: "Contact email is not configured." }, { status: 503 });
+    return NextResponse.json(
+      {
+        error: "Contact email is not configured.",
+        configuration: {
+          RESEND_API_KEY: Boolean(apiKey),
+          RESEND_FROM_EMAIL: Boolean(from),
+          CONTACT_TO_EMAIL: Boolean(to),
+        },
+      },
+      { status: 503 }
+    );
   }
 
   const name = text(formData.get("name"));
