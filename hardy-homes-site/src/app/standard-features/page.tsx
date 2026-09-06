@@ -25,12 +25,6 @@ const Arrow = () => (
   </svg>
 );
 
-const Check = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-    <path d="m5 12 4 4L19 6" />
-  </svg>
-);
-
 const standardCategories = [
   {
     title: "Structure & Foundation",
@@ -131,17 +125,14 @@ export default function StandardFeaturesPage() {
           </div>
           <div className="hh-standard-sheet-grid">
             {standardCategories.map((category) => (
-              <article key={category.title} className="card hh-standard-sheet-card plan-accent">
-                <h3>{category.title}</h3>
-                <ul className="hh-standard-sheet-list">
+              <div key={category.title} className="hh-spec-block">
+                <h3 className="hh-spec-title">{category.title}</h3>
+                <ul className="hh-spec-list">
                   {category.features.map((feature) => (
-                    <li key={feature.key}>
-                      <Check />
-                      <span>{feature.title}</span>
-                    </li>
+                    <li key={feature.key}>{feature.title}</li>
                   ))}
                 </ul>
-              </article>
+              </div>
             ))}
           </div>
         </div>
