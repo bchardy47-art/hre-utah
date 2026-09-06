@@ -39,8 +39,20 @@ export default function HardyHomesHomePage() {
   return (
     <>
       <section className="hero hero--page hh-hero" data-screen-label="Hardy Homes Home">
-        <div className="scene">
-          <img className="slot" src="/images/hardy-homes/brindle/BrindleExterior.jpg" alt="Hardy Homes exterior rendering" />
+        <div className="scene hh-video-scene">
+          <div className="hh-hero-poster" aria-hidden="true" />
+          <video
+            className="hh-hero-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/videos/hardy-homes-hero-poster.jpg"
+            aria-hidden="true"
+          >
+            <source src="/videos/hardy-homes-hero.mp4" type="video/mp4" />
+          </video>
         </div>
         <div className="hero-overlay" />
         <div className="container hero-inner">
