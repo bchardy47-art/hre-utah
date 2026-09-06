@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const POSTER_SRC = "/videos/hardy-homes-hero-poster.jpg";
 const VIDEO_SRC = "/videos/hardy-homes-hero.mp4";
@@ -12,45 +12,55 @@ const VIDEO_SRC = "/videos/hardy-homes-hero.mp4";
  * actually emitted `playing`, so a failed or blocked autoplay simply leaves the
  * poster in place. The video is never `display:none` — hiding it that way stops
  * it loading at all and leaves no way to recover.
- *
- * `prefers-reduced-motion: reduce` is honoured: we never call play(), and the
- * poster stays visible, so those users get a completely static hero.
  */
 export default function HardyHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const tryPlay = useCallback(async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    try {
+      await video.play();
+    } catch {
+      setIsPlaying(false);
+    }
+  }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const stop = () => {
-      video.pause();
-      setIsPlaying(false);
+    const onCanPlay = () => {
+      void tryPlay();
     };
 
-    const start = () => {
-      // Muted playback is what makes autoplay permissible; set it on the
-      // element (not just the attribute) before asking to play.
-      video.muted = true;
-      const attempt = video.play();
-      if (attempt) {
-        // Autoplay can still be refused (power saving, data saver, policy).
-        // That is not an error state — the poster just stays visible.
-        attempt.catch(() => setIsPlaying(false));
+    const onPageShow = () => {
+      void tryPlay();
+    };
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void tryPlay();
       }
     };
 
-    const apply = () => (query.matches ? stop() : start());
+    void tryPlay();
 
-    apply();
+    video.addEventListener("canplay", onCanPlay);
+    window.addEventListener("pageshow", onPageShow);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
-    // Respond if the user changes the preference while the page is open.
-    query.addEventListener("change", apply);
-    return () => query.removeEventListener("change", apply);
-  }, []);
+    return () => {
+      video.removeEventListener("canplay", onCanPlay);
+      window.removeEventListener("pageshow", onPageShow);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [tryPlay]);
 
   return (
     <div className="scene hh-video-scene">
