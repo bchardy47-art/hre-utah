@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const POSTER_SRC = "/videos/hardy-homes-hero-poster.jpg";
 const VIDEO_SRC = "/videos/hardy-homes-hero.mp4";
-const PLAYBACK_RATE = 2;
+const PLAYBACK_RATE = 1;
 
 /**
  * Hero background video.
@@ -17,7 +17,8 @@ const PLAYBACK_RATE = 2;
  * `tryPlay` re-asserts muted and playback rate every time it runs (mount,
  * `canplay`, `pageshow`, visibility change), so both survive a reload of the
  * media element. `defaultPlaybackRate` is what `load()` restores, which is why
- * it is set alongside `playbackRate`.
+ * it is set alongside `playbackRate`. The rate is pinned to 1 so the footage
+ * always plays at its true source timing.
  */
 export default function HardyHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
