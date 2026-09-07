@@ -142,7 +142,7 @@ export const hardyHomes: HardyHomeConcept[] = [
         key: "exterior",
         title: "Exterior",
         alt: "Exterior rendering of The Brindle, a 965 square foot Hardy Homes concept",
-        src: "/images/hardy-homes/brindle/BrindleExterior2.jpeg",
+        src: "/images/hardy-homes/brindle/BrindleExterior3.jpeg",
         priority: true,
         sizes: "(max-width: 980px) 100vw, 72vw",
         fit: "contain",
