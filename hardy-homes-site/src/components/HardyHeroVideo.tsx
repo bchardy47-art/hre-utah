@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const POSTER_SRC = "/videos/hardy-homes-hero-poster.jpg";
 const VIDEO_SRC = "/videos/hardy-homes-hero.mp4";
+const PLAYBACK_RATE = 2;
 
 /**
  * Hero background video.
@@ -12,6 +13,11 @@ const VIDEO_SRC = "/videos/hardy-homes-hero.mp4";
  * actually emitted `playing`, so a failed or blocked autoplay simply leaves the
  * poster in place. The video is never `display:none` — hiding it that way stops
  * it loading at all and leaves no way to recover.
+ *
+ * `tryPlay` re-asserts muted and playback rate every time it runs (mount,
+ * `canplay`, `pageshow`, visibility change), so both survive a reload of the
+ * media element. `defaultPlaybackRate` is what `load()` restores, which is why
+ * it is set alongside `playbackRate`.
  */
 export default function HardyHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,6 +29,8 @@ export default function HardyHeroVideo() {
 
     video.muted = true;
     video.defaultMuted = true;
+    video.defaultPlaybackRate = PLAYBACK_RATE;
+    video.playbackRate = PLAYBACK_RATE;
 
     try {
       await video.play();
