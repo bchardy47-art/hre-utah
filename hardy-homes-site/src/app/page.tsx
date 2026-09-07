@@ -44,9 +44,9 @@ export default function HardyHomesHomePage() {
         <div className="hero-overlay" />
         <div className="container hero-inner">
           <span className="eyebrow">Hardy Homes</span>
-          <h1 className="h-xl">Thoughtfully designed homes. Straightforward building. Built on your land.</h1>
+          <h1 className="h-xl">PLAN IT. BUILD IT. LIVE{"\u00a0"}IT.</h1>
           <p className="lead hh-hero-lead">
-            Browse pre-designed floor plans, understand the standard, and move through a clearer build-on-your-land process.
+            Pre-designed homes. Clear standards. Built on your land.
           </p>
           <div className="hardy-cta-actions hh-hero-actions">
             <Link className="btn btn-primary btn-lg" href={getFloorPlansPath("standalone")}>View Floor Plans <Arrow /></Link>
