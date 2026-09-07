@@ -6,7 +6,7 @@ import {
   getStandardFeaturesPath,
 } from "./hardyHomesRoutes";
 
-export const DEFAULT_HARDY_HOMES_URL = "https://buildwithhardy.com";
+export const DEFAULT_HARDY_HOMES_URL = "https://buildahardyhome.com";
 export const HARDY_HOMES_CONTACT_EMAIL = "brian@hre-utah.com";
 export const HARDY_HOMES_PHONE = "(801) 380-0445";
 export const HARDY_HOMES_TEL = "8013800445";
