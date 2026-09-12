@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HardyHomeCard from "@/components/HardyHomeCard";
 import { getHardyCollection, getPublicHardyHomes } from "@/lib/hardyHomes";
+import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
+
+const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
 
 export const metadata: Metadata = {
   title: "Single Family Floor Plans | Hardy Homes",
   description:
     "Explore Single Family Floor Plans from Hardy Homes, including The Rock — a spacious 3,209 sq ft plan with 4 bedrooms, 3.5 bathrooms, and a 3-car garage.",
+  alternates: {
+    canonical: `${HARDY_HOMES_CANONICAL}/collections/single-family`,
+  },
 };
 
 const collection = getHardyCollection("single-family")!;

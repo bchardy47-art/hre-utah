@@ -3,11 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { getHardyCollectionForHome, getHardyHome } from "@/lib/hardyHomes";
 import { getCollectionPath } from "@/lib/hardyHomesRoutes";
+import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
+
+const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
 
 export const metadata: Metadata = {
   title: "The Brindle | Cottage Floor Plans | Hardy Homes",
   description:
     "Explore The Brindle, a 965 sq ft Hardy Homes cottage plan with 2 bedrooms and 2.5 bathrooms.",
+  alternates: {
+    canonical: `${HARDY_HOMES_CANONICAL}/floor-plans/the-brindle`,
+  },
 };
 
 const Arrow = () => (

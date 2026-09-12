@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Options & Upgrades",
+  title: "Options and Upgrades",
   description:
-    "Review how Hardy Homes is structuring options and upgrades without inventing package names, pricing, or unfinished specification details.",
+    "Where a Hardy Home can be personalized: exterior elevations, kitchen and bath finishes, flooring, fixtures, and site-driven adjustments to the plan.",
   alternates: {
     canonical: "/options",
   },
   openGraph: {
     title: "Options & Upgrades | Hardy Homes",
     description:
-      "Review how Hardy Homes is structuring options and upgrades without inventing package names, pricing, or unfinished specification details.",
+      "Where a Hardy Home can be personalized: exterior elevations, kitchen and bath finishes, flooring, fixtures, and site-driven adjustments to the plan.",
     url: "/options",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

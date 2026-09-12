@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Hardy Homes | Build-On-Your-Land Homebuilder Gateway | HRE Utah",
   description:
     "Explore Hardy Homes through HRE Utah — thoughtfully designed homes, straightforward building, and guidance from land search through construction.",
+  alternates: {
+    canonical: "https://www.hre-utah.com/hardy-homes",
+  },
 };
 
 const Arrow = () => (

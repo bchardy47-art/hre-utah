@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: { absolute: "About Hardy Homes | BCHardy, LLC" },
   description:
-    "Learn how Hardy Homes by BCHardy, LLC approaches pre-designed floor plans, standard features, and build-on-your-land homebuilding.",
+    "Hardy Homes is the homebuilding brand of BCHardy, LLC, a licensed Utah R100 residential contractor building pre-designed plans on land our clients own.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About | Hardy Homes",
     description:
-      "Learn how Hardy Homes by BCHardy, LLC approaches pre-designed floor plans, standard features, and build-on-your-land homebuilding.",
+      "Hardy Homes is the homebuilding brand of BCHardy, LLC, a licensed Utah R100 residential contractor building pre-designed plans on land our clients own.",
     url: "/about",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

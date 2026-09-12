@@ -3,27 +3,37 @@ import "./globals.css";
 import HardyHomesNav from "@/components/HardyHomesNav";
 import HardyHomesFooter from "@/components/HardyHomesFooter";
 import { DEFAULT_HARDY_HOMES_URL } from "@hardy-homes/shared/hardyHomesSite";
+import { SiteStructuredData } from "@/components/StructuredData";
 
 const siteUrl = process.env.NEXT_PUBLIC_HARDY_HOMES_URL || DEFAULT_HARDY_HOMES_URL;
 
 export const metadata: Metadata = {
   title: {
-    default: "Hardy Homes | Thoughtfully Designed Homes Built on Your Land",
+    default: "Hardy Homes | Utah Home Builder | Build On Your Land",
     template: "%s | Hardy Homes",
   },
   description:
-    "Hardy Homes by BCHardy, LLC offers build-on-your-land homes, pre-designed floor plans, standard features, and a straightforward building process.",
+    "Hardy Homes by BCHardy, LLC is a Utah home builder. Choose a pre-designed floor plan, review your site, and build on your own land with clear standards.",
   metadataBase: new URL(siteUrl),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
-    title: "Hardy Homes | Thoughtfully Designed Homes Built on Your Land",
+    title: "Hardy Homes | Utah Home Builder | Build On Your Land",
     description:
-      "Hardy Homes by BCHardy, LLC offers build-on-your-land homes, pre-designed floor plans, standard features, and a straightforward building process.",
+      "Hardy Homes by BCHardy, LLC is a Utah home builder. Choose a pre-designed floor plan, review your site, and build on your own land with clear standards.",
     url: siteUrl,
     siteName: "Hardy Homes",
+    locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/videos/hardy-homes-hero-poster.jpg",
+        width: 1280,
+        height: 720,
+        alt: "A Hardy Homes residence built on an owner's land in Utah",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
@@ -39,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <SiteStructuredData />
         <HardyHomesNav />
         {children}
         <HardyHomesFooter />

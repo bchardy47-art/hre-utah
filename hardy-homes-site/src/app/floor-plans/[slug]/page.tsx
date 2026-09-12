@@ -4,11 +4,13 @@ import Link from "next/link";
 import {
   getHardyCollectionForHome,
   getHardyHomeByStandaloneSlug,
+  getHardyPrimaryImage,
   getPublicHardyHomes,
   hardyStandardHighlights,
 } from "@hardy-homes/shared/hardyHomes";
 import { DEFAULT_HARDY_HOMES_URL } from "@hardy-homes/shared/hardyHomesSite";
 import { getCollectionPath, getFloorPlansPath, getPlanPath, getStandardFeaturesPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
 
 const Arrow = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -34,18 +36,23 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: "Hardy Homes" };
   }
   const path = getPlanPath(home, "standalone");
+  const specs = [home.bedrooms, home.bathrooms, home.garage].filter(Boolean).join(", ");
+  const title = `${home.name} | ${home.squareFeet.toLocaleString()} Sq Ft Utah Home Plan`;
+  const description = `${home.name} is a ${home.squareFeet.toLocaleString()} sq ft Hardy Homes plan with ${specs.toLowerCase()}. See renderings and the layout, then build it on your land in Utah.`;
+  const hero = getHardyPrimaryImage(home);
   return {
-    title: home.name,
-    description: `Explore ${home.name}, a ${home.squareFeet.toLocaleString()} sq ft Hardy Homes plan in the ${home.collection}.`,
+    title,
+    description,
     alternates: {
       canonical: path,
     },
     openGraph: {
       title: `${home.name} | Hardy Homes`,
-      description: `Explore ${home.name}, a ${home.squareFeet.toLocaleString()} sq ft Hardy Homes plan in the ${home.collection}.`,
+      description,
       url: `${siteUrl}${path}`,
       siteName: "Hardy Homes",
       type: "website",
+      images: hero ? [{ url: hero.src, alt: hero.alt }] : undefined,
     },
   };
 }
@@ -65,13 +72,24 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
 
   return (
     <>
+      <BreadcrumbStructuredData
+        crumbs={[
+          { name: "Home", path: "/" },
+          { name: "Floor Plans", path: getFloorPlansPath("standalone") },
+          { name: collection.title, path: getCollectionPath(collection, "standalone") },
+          { name: home.name, path: getPlanPath(home, "standalone") },
+        ]}
+      />
       <section className="section hardy-detail-page hh-plan-hero-section">
         <div className="container">
-          <div className="hardy-back-links">
-            <Link href={getFloorPlansPath("standalone")}>Floor Plans</Link>
-            <span>/</span>
-            <Link href={getCollectionPath(collection, "standalone")}>{collection.title}</Link>
-          </div>
+          <nav className="hardy-back-links" aria-label="Breadcrumb">
+            <ol className="hardy-crumbs">
+              <li><Link href="/">Home</Link></li>
+              <li><Link href={getFloorPlansPath("standalone")}>Floor Plans</Link></li>
+              <li><Link href={getCollectionPath(collection, "standalone")}>{collection.title}</Link></li>
+              <li><span aria-current="page">{home.name}</span></li>
+            </ol>
+          </nav>
           <div className="hardy-detail-hero hh-plan-hero-copy">
             <div>
               <span className="eyebrow">{home.collection}</span>

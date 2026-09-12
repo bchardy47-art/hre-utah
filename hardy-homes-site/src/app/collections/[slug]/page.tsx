@@ -7,6 +7,7 @@ import {
 } from "@hardy-homes/shared/hardyHomes";
 import { DEFAULT_HARDY_HOMES_URL } from "@hardy-homes/shared/hardyHomesSite";
 import { getCollectionPath, getFloorPlansPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
 
 export function generateStaticParams() {
   return [
@@ -21,18 +22,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const siteUrl = process.env.NEXT_PUBLIC_HARDY_HOMES_URL || DEFAULT_HARDY_HOMES_URL;
   if (!collection) return { title: "Collections" };
   const path = getCollectionPath(collection, "standalone");
+  const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === collection.slug);
+  const planNames = homes.map((home) => home.name).join(" and ");
+  const description = `${collection.description} Includes ${planNames}. Compare layouts and square footage, then build on your land in Utah.`;
   return {
-    title: collection.title,
-    description: collection.description,
+    title: `${collection.title} | Utah Home Plans`,
+    description,
     alternates: {
       canonical: path,
     },
     openGraph: {
       title: `${collection.title} | Hardy Homes`,
-      description: collection.description,
+      description,
       url: `${siteUrl}${path}`,
       siteName: "Hardy Homes",
       type: "website",
+      images: [{ url: collection.image.src, alt: collection.image.alt }],
     },
   };
 }
@@ -47,11 +52,24 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
   const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === collection.slug);
 
   return (
+    <>
+      <BreadcrumbStructuredData
+        crumbs={[
+          { name: "Home", path: "/" },
+          { name: "Collections", path: "/collections" },
+          { name: collection.title, path: getCollectionPath(collection, "standalone") },
+        ]}
+      />
     <section className="section hardy-collection-page">
       <div className="container">
-        <div className="hardy-back-links">
-          <Link href={getFloorPlansPath("standalone")}>Floor Plans</Link>
-        </div>
+        <nav className="hardy-back-links" aria-label="Breadcrumb">
+          <ol className="hardy-crumbs">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/collections">Collections</Link></li>
+            <li><Link href={getFloorPlansPath("standalone")}>Floor Plans</Link></li>
+            <li><span aria-current="page">{collection.title}</span></li>
+          </ol>
+        </nav>
         <div className="sec-head hardy-collection-page-head hh-head-left">
           <span className="eyebrow">Collection</span>
           <h1 className="h-lg">{collection.title}</h1>
@@ -64,5 +82,6 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         </div>
       </div>
     </section>
+    </>
   );
 }

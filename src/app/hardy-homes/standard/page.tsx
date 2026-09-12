@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { hardyStandardCopy } from "@/lib/hardyHomes";
+import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
+
+const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
 
 export const metadata: Metadata = {
   title: "The Hardy Standard | Hardy Homes",
   description:
     "Review the Hardy Homes framework for quality, function, and finish. Final specifications vary by home, site, jurisdiction, and selected options.",
+  alternates: {
+    canonical: `${HARDY_HOMES_CANONICAL}/standard-features`,
+  },
 };
 
 const Arrow = () => (

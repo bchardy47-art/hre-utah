@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HardyHomeCard from "@/components/HardyHomeCard";
 import { getHardyCollection, getPublicHardyHomes } from "@/lib/hardyHomes";
+import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
+
+const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
 
 export const metadata: Metadata = {
   title: "Cottage Floor Plans | Hardy Homes",
   description:
     "Explore Cottage Floor Plans from Hardy Homes, including The Brindle and The Flint — compact detached home concepts designed to make every square foot count.",
+  alternates: {
+    canonical: `${HARDY_HOMES_CANONICAL}/collections/cottage`,
+  },
 };
 
 const collection = getHardyCollection("cottages")!;

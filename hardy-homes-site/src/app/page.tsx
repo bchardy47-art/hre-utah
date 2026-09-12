@@ -5,21 +5,23 @@ import HardyHomeCard from "@/components/HardyHomeCard";
 import HardyHeroVideo from "@/components/HardyHeroVideo";
 import { getStandaloneFeaturedHomes, hardyCollections, hardyStandardHighlights } from "@hardy-homes/shared/hardyHomes";
 import { getCollectionPath, getFloorPlansPath, getStandardFeaturesPath, getBuildOnYourLandPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Hardy Homes | Thoughtfully Designed Homes Built on Your Land",
+  title: "Hardy Homes | Utah Home Builder | Build On Your Land",
   description:
-    "Explore Hardy Homes floor plans, standard features, and a straightforward build-on-your-land process.",
+    "Hardy Homes is a Utah home builder for people who already have land, or are looking for it. Browse floor plans, see what comes standard, and start your build.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Hardy Homes | Thoughtfully Designed Homes Built on Your Land",
+    title: "Hardy Homes | Utah Home Builder | Build On Your Land",
     description:
-      "Explore Hardy Homes floor plans, standard features, and a straightforward build-on-your-land process.",
+      "Hardy Homes is a Utah home builder for people who already have land, or are looking for it. Browse floor plans, see what comes standard, and start your build.",
     url: "/",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

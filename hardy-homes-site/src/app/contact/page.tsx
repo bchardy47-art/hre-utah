@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import HardyHomesContactForm from "@/components/HardyHomesContactForm";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { HARDY_HOMES_PHONE, HARDY_HOMES_TEL } from "@hardy-homes/shared/hardyHomesSite";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: { absolute: "Contact Hardy Homes | Utah Home Builder" },
   description:
-    "Contact Hardy Homes about floor plans, build-on-your-land questions, and next steps for your property or project.",
+    "Talk to Hardy Homes about a floor plan, a lot you own or are considering, or what building on your land in Utah involves. Call (801) 380-0445.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
     title: "Contact | Hardy Homes",
     description:
-      "Contact Hardy Homes about floor plans, build-on-your-land questions, and next steps for your property or project.",
+      "Talk to Hardy Homes about a floor plan, a lot you own or are considering, or what building on your land in Utah involves. Call (801) 380-0445.",
     url: "/contact",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -26,6 +29,10 @@ export default function ContactPage() {
           <span className="eyebrow">Contact</span>
           <h1 className="h-lg">Start your Hardy Homes conversation.</h1>
           <p>Tell us about the property, the plan you are considering, and what stage you are in.</p>
+          <p className="hh-service-area">
+            Serving Millard County, Utah County, and Salt Lake County. Call or text{" "}
+            <a href={`tel:${HARDY_HOMES_TEL}`}>{HARDY_HOMES_PHONE}</a>.
+          </p>
         </div>
         <div className="hh-contact-split">
           <div className="card plan-accent" style={{ padding: 32 }}>

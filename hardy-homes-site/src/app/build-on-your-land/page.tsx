@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { HARDY_HOMES_SERVICE_AREA_LINE } from "@hardy-homes/shared/hardyHomesSite";
 
 export const metadata: Metadata = {
-  title: "Build On Your Land",
+  title: "Build On Your Land in Utah | How It Works",
   description:
-    "Learn how Hardy Homes approaches build-on-your-land projects, from choosing a plan to reviewing site conditions and clarifying final scope.",
+    "Already own a lot, or buying one? See how Hardy Homes builds on land you own in Utah, from picking a plan through site review, scope, and construction.",
   alternates: {
     canonical: "/build-on-your-land",
   },
   openGraph: {
     title: "Build On Your Land | Hardy Homes",
     description:
-      "Learn how Hardy Homes approaches build-on-your-land projects, from choosing a plan to reviewing site conditions and clarifying final scope.",
+      "Already own a lot, or buying one? See how Hardy Homes builds on land you own in Utah, from picking a plan through site review, scope, and construction.",
     url: "/build-on-your-land",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -33,6 +36,9 @@ export default function BuildOnYourLandPage() {
           <span className="eyebrow">Build On Your Land</span>
           <h1 className="h-lg">Bring the lot. Start with a plan. Build with more clarity.</h1>
           <p>Hardy Homes is built around a straightforward build-on-your-land process that starts with the home and the site together.</p>
+          <p className="hh-service-area">
+            {HARDY_HOMES_SERVICE_AREA_LINE} If you already own a lot, or you are looking at one, we can talk through what building on it would involve.
+          </p>
         </div>
         <div className="hh-band card plan-accent hh-band-featured">
           <div>

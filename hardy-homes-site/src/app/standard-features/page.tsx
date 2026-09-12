@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "The Hardy Standard | Standard Features",
+  title: "Standard Features | What Comes Included",
   description:
-    "See what's included in a Hardy Home, including 2×6 exterior walls, tankless water heating, and the baseline construction and finish standards that come before upgrades.",
+    "What's included in a Hardy Home before any upgrades: 2×6 exterior walls, tankless water heating, 9-foot main-level ceilings, and the rest of the Hardy Standard.",
   alternates: {
     canonical: "/standard-features",
   },
   openGraph: {
     title: "The Hardy Standard | Standard Features | Hardy Homes",
     description:
-      "See what's included in a Hardy Home, including 2×6 exterior walls, tankless water heating, and the baseline construction and finish standards that come before upgrades.",
+      "What's included in a Hardy Home before any upgrades: 2×6 exterior walls, tankless water heating, 9-foot main-level ceilings, and the rest of the Hardy Standard.",
     url: "/standard-features",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -61,7 +63,7 @@ export default function StandardFeaturesPage() {
           <div className="card hh-standard-page-hero-mark plan-accent">
             <Image
               src="/brand/hardy-homes-logo-header.png"
-              alt="Hardy Homes logo"
+              alt="Hardy Homes"
               width={1153}
               height={738}
               priority

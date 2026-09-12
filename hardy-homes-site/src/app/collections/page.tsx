@@ -3,21 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { hardyCollections } from "@hardy-homes/shared/hardyHomes";
 import { getCollectionPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Collections",
+  title: { absolute: "Cottage & Single Family Home Plans | Hardy Homes" },
   description:
-    "Browse the Hardy Homes collections and go straight into the floor plans that fit each one.",
+    "Hardy Homes plans are grouped into two collections: compact cottage homes and full-size single family homes. Start with the one that fits how you want to live.",
   alternates: {
     canonical: "/collections",
   },
   openGraph: {
     title: "Collections | Hardy Homes",
     description:
-      "Browse the Hardy Homes collections and go straight into the floor plans that fit each one.",
+      "Hardy Homes plans are grouped into two collections: compact cottage homes and full-size single family homes. Start with the one that fits how you want to live.",
     url: "/collections",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

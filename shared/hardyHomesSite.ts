@@ -11,6 +11,20 @@ export const HARDY_HOMES_CONTACT_EMAIL = "brian@hre-utah.com";
 export const HARDY_HOMES_PHONE = "(801) 380-0445";
 export const HARDY_HOMES_TEL = "8013800445";
 
+/**
+ * Confirmed advertising / service areas for Hardy Homes (Brian, 2026-09-11).
+ * Keep this broad and accurate — do not imply completed projects, permit
+ * experience, or city-level history that has not been verified.
+ */
+export const HARDY_HOMES_SERVICE_AREAS = [
+  "Millard County",
+  "Utah County",
+  "Salt Lake County",
+] as const;
+
+export const HARDY_HOMES_SERVICE_AREA_LINE =
+  "Serving Millard County, Utah County, and Salt Lake County.";
+
 function cleanUrl(value?: string | null) {
   const url = String(value || "").trim();
   return url ? url.replace(/\/+$/, "") : "";

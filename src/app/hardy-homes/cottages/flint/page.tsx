@@ -3,11 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { getHardyCollectionForHome, getHardyHome } from "@/lib/hardyHomes";
 import { getCollectionPath } from "@/lib/hardyHomesRoutes";
+import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
+
+const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
 
 export const metadata: Metadata = {
   title: "The Flint | 983 Sq Ft Cottage Home Plan | Hardy Homes",
   description:
     "Explore The Flint, a 983 sq ft cottage home concept from Hardy Homes, featuring an efficient compact floor plan designed for practical single-level living.",
+  alternates: {
+    canonical: `${HARDY_HOMES_CANONICAL}/floor-plans/the-flint`,
+  },
 };
 
 const Arrow = () => (

@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Financing",
+  title: "Financing a Build On Your Land",
   description:
-    "See how financing fits into the Hardy Homes planning conversation without promising specific lender programs or loan terms.",
+    "How financing fits into planning a Hardy Homes build, including where land you already own can factor in. No lender programs or loan terms are promised here.",
   alternates: {
     canonical: "/financing",
   },
   openGraph: {
     title: "Financing | Hardy Homes",
     description:
-      "See how financing fits into the Hardy Homes planning conversation without promising specific lender programs or loan terms.",
+      "How financing fits into planning a Hardy Homes build, including where land you already own can factor in. No lender programs or loan terms are promised here.",
     url: "/financing",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

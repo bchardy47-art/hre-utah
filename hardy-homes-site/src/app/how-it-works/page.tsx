@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "How It Works",
+  title: "How Building With Hardy Homes Works",
   description:
-    "Follow the Hardy Homes customer journey from choosing a direction to reviewing the site, defining the scope, and moving toward construction.",
+    "The Hardy Homes build process in four steps: choose a plan, review your property, define the scope and selections, then move into construction.",
   alternates: {
     canonical: "/how-it-works",
   },
   openGraph: {
     title: "How It Works | Hardy Homes",
     description:
-      "Follow the Hardy Homes customer journey from choosing a direction to reviewing the site, defining the scope, and moving toward construction.",
+      "The Hardy Homes build process in four steps: choose a plan, review your property, define the scope and selections, then move into construction.",
     url: "/how-it-works",
     siteName: "Hardy Homes",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
