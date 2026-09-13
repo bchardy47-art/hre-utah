@@ -4,7 +4,7 @@ import type { HardyHomeConcept } from "@hardy-homes/shared/hardyHomes";
 import { getPlanPath } from "@hardy-homes/shared/hardyHomesRoutes";
 
 const Arrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
@@ -36,7 +36,6 @@ export default function HardyHomeCard({ home }: { home: HardyHomeConcept }) {
         />
       </div>
       <div className="hardy-plan-card-body hardy-plan-card-body--builder">
-        <span className="eyebrow">{home.collection}</span>
         <h2>{home.name}</h2>
         <div className="hardy-inline-specs hardy-inline-specs--wide">
           <span>{home.squareFeet.toLocaleString()} SQ FT</span>
@@ -44,9 +43,8 @@ export default function HardyHomeCard({ home }: { home: HardyHomeConcept }) {
           <span>{bathLabel}</span>
           {home.garage ? <span>{home.garage.toUpperCase()}</span> : null}
         </div>
-        <p>{home.shortDescription}</p>
         <Link className="btn btn-primary" href={getPlanPath(home, "standalone")}>
-          View This Plan <Arrow />
+          View Home <Arrow />
         </Link>
       </div>
     </article>

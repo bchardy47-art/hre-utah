@@ -7,29 +7,24 @@ import { useEffect, useState } from "react";
 
 const PRIMARY_NAV = [
   { label: "Floor Plans", href: "/floor-plans" },
-  { label: "Collections", href: "/collections" },
   { label: "Standard Features", href: "/standard-features" },
   { label: "Build On Your Land", href: "/build-on-your-land" },
   { label: "How It Works", href: "/how-it-works" },
-  { label: "About", href: "/about" },
 ];
 
 const MOBILE_NAV = [
   { label: "Home", href: "/" },
   ...PRIMARY_NAV,
-  { label: "Options & Upgrades", href: "/options" },
-  { label: "Financing", href: "/financing" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const MenuIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="M4 7h16M4 12h16M4 17h16" />
   </svg>
 );
 
 const CloseIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="M6 6l12 12M18 6 6 18" />
   </svg>
 );
@@ -77,7 +72,6 @@ export default function HardyHomesNav() {
           ))}
         </nav>
         <div className="hh-nav-actions">
-          <Link className="btn btn-ghost" href="/contact">Contact</Link>
           <Link className="btn btn-primary" href="/contact">Start Your Build</Link>
         </div>
         <button
@@ -98,7 +92,6 @@ export default function HardyHomesNav() {
           </Link>
         ))}
         <div className="hh-mobile-actions">
-          <Link className="btn btn-ghost" href="/contact" onClick={() => setOpen(false)}>Contact Hardy Homes</Link>
           <Link className="btn btn-primary" href="/contact" onClick={() => setOpen(false)}>Start Your Build</Link>
         </div>
       </nav>

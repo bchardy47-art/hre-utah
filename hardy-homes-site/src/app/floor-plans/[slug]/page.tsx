@@ -2,24 +2,23 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  getHardyCollectionForHome,
   getHardyHomeByStandaloneSlug,
   getHardyPrimaryImage,
   getPublicHardyHomes,
-  hardyStandardHighlights,
 } from "@hardy-homes/shared/hardyHomes";
 import { DEFAULT_HARDY_HOMES_URL } from "@hardy-homes/shared/hardyHomesSite";
-import { getCollectionPath, getFloorPlansPath, getPlanPath, getStandardFeaturesPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { getFloorPlansPath, getPlanPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import HardyPlanStandardPanel from "@/components/HardyPlanStandardPanel";
 import { BreadcrumbStructuredData } from "@/components/StructuredData";
 
 const Arrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
 
 const Check = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="m5 12 4 4L19 6" />
   </svg>
 );
@@ -63,7 +62,6 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
   if (!home) {
     return <section className="section"><div className="container"><h1 className="h-lg">Plan not found.</h1></div></section>;
   }
-  const collection = getHardyCollectionForHome(home);
   const hero = home.images.find((image) => image.key === "exterior" || image.key === "exterior-front") ?? home.images[0];
   const galleryImages = home.slug === "rock"
     ? home.images.filter((image) => ["kitchen-dining", "living", "primary-bath", "primary-bedroom", "exterior-rear"].includes(image.key))
@@ -76,7 +74,6 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
         crumbs={[
           { name: "Home", path: "/" },
           { name: "Floor Plans", path: getFloorPlansPath("standalone") },
-          { name: collection.title, path: getCollectionPath(collection, "standalone") },
           { name: home.name, path: getPlanPath(home, "standalone") },
         ]}
       />
@@ -86,15 +83,21 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
             <ol className="hardy-crumbs">
               <li><Link href="/">Home</Link></li>
               <li><Link href={getFloorPlansPath("standalone")}>Floor Plans</Link></li>
-              <li><Link href={getCollectionPath(collection, "standalone")}>{collection.title}</Link></li>
               <li><span aria-current="page">{home.name}</span></li>
             </ol>
           </nav>
           <div className="hardy-detail-hero hh-plan-hero-copy">
             <div>
-              <span className="eyebrow">{home.collection}</span>
               <h1 className="h-lg">{home.name}</h1>
               <p className="hardy-detail-copy">{home.heroCopy}</p>
+              <div className="hardy-cta-actions" style={{ marginTop: 24 }}>
+                <Link className="btn btn-primary btn-lg" href="/contact">
+                  Start This Home <Arrow />
+                </Link>
+                <Link className="btn btn-ghost btn-lg" href="#plan-floor-plans">
+                  View Floor Plans
+                </Link>
+              </div>
             </div>
             <div className={`hardy-compact-spec-grid ${home.garage ? "hardy-compact-spec-grid--four" : "hardy-compact-spec-grid--three"}`} aria-label={`${home.name} specifications`}>
               <div className="card hardy-mini-spec-card"><span className="label">SQ FT</span><strong>{home.squareFeet.toLocaleString()}</strong></div>
@@ -134,7 +137,7 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
         <div className="container">
           <div className="sec-head hardy-section-head-compact hh-head-left">
             <span className="eyebrow">Gallery</span>
-            <h2 id="plan-gallery">See {home.name} at a glance.</h2>
+            <h2 id="plan-gallery">See {home.name}.</h2>
           </div>
           <div className={`hardy-detail-gallery ${home.slug === "brindle" ? "hardy-detail-gallery--brindle-twoup" : home.slug === "rock" ? "hardy-detail-gallery--rock" : "hardy-detail-gallery--flint"}`}>
             {galleryImages.map((image) => (
@@ -154,37 +157,32 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
           <div className="hardy-detail-grid hardy-detail-grid--compact">
             <article className="card hardy-highlights-card">
               <span className="eyebrow">Plan Highlights</span>
-              <h2 id="plan-highlights">What matters most in {home.name}</h2>
+              <h2 id="plan-highlights">Why this plan works.</h2>
               <ul className="list-check yes hardy-feature-list hardy-feature-list--single">
                 {home.highlights.map((feature) => (
                   <li key={feature}><Check /><span>{feature}</span></li>
                 ))}
               </ul>
             </article>
-            <article className="card hardy-standard-card plan-accent hh-plan-standard-card">
-              <span className="eyebrow">Hardy Standard</span>
-              <p className="hardy-standard-inline">A Hardy Home starts with a defined baseline before upgrades and site-specific adjustments are finalized.</p>
-              <ul className="hh-plan-standard-list">
-                {hardyStandardHighlights.map((item) => (
-                  <li key={item}><Check /><span>{item}</span></li>
-                ))}
-              </ul>
-              <Link className="btn btn-ghost" href={getStandardFeaturesPath("standalone")}>View Standard Features <Arrow /></Link>
-            </article>
+            <HardyPlanStandardPanel home={home} />
           </div>
         </div>
       </section>
 
-      <section className="section tight" aria-labelledby="plan-cta">
+      <section className="section tight" aria-labelledby="plan-next-step">
         <div className="container">
-          <div className="card hardy-catalog-cta plan-accent">
+          <div className="card hardy-catalog-cta plan-accent hh-final-cta">
             <div>
-              <span className="eyebrow">Interested in {home.name}?</span>
-              <h2 id="plan-cta">Tell us about your property and what you want to build.</h2>
+              <span className="eyebrow">Next Step</span>
+              <h2 id="plan-next-step">Interested in {home.name}?</h2>
             </div>
             <div className="hardy-cta-actions">
-              <Link className="btn btn-primary btn-lg" href="/contact">Start Your Build <Arrow /></Link>
-              <Link className="btn btn-ghost btn-lg" href="/options">See Options &amp; Upgrades <Arrow /></Link>
+              <Link className="btn btn-primary btn-lg" href="/contact">
+                Start This Home <Arrow />
+              </Link>
+              <Link className="btn btn-ghost btn-lg" href={getFloorPlansPath("standalone")}>
+                View All Homes <Arrow />
+              </Link>
             </div>
           </div>
         </div>

@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HardyHomeCard from "@/components/HardyHomeCard";
+import HardyStandardFeatureGrid from "@/components/HardyStandardFeatureGrid";
 import {
   getHardyCollectionByStandaloneSlug,
+  getHardyCollectionStandards,
   getPublicHardyHomes,
 } from "@hardy-homes/shared/hardyHomes";
 import { DEFAULT_HARDY_HOMES_URL } from "@hardy-homes/shared/hardyHomesSite";
-import { getCollectionPath, getFloorPlansPath } from "@hardy-homes/shared/hardyHomesRoutes";
+import { getCollectionPath, getFloorPlansPath, getStandardFeaturesPath } from "@hardy-homes/shared/hardyHomesRoutes";
 import { BreadcrumbStructuredData } from "@/components/StructuredData";
+
+const Arrow = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
 
 export function generateStaticParams() {
   return [
@@ -50,6 +58,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
   }
 
   const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === collection.slug);
+  const standards = getHardyCollectionStandards(collection.slug);
 
   return (
     <>
@@ -79,6 +88,17 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
           {homes.map((home) => (
             <HardyHomeCard key={home.slug} home={home} />
           ))}
+        </div>
+        <div className="card hh-collection-standard-callout plan-accent">
+          <span className="eyebrow">The Hardy Standard</span>
+          <h2>Built to the Hardy Standard.</h2>
+          <p>{collection.slug === "cottages"
+            ? "Cottage homes combine Hardy construction and finish standards with efficient layouts and a durable, streamlined feature package."
+            : "Single Family homes build on the Hardy core standard with expanded kitchens, garages, storage, technology, and primary-suite features."}</p>
+          <HardyStandardFeatureGrid features={standards.collectionCalloutHighlights} compact />
+          <Link className="btn btn-ghost" href={getStandardFeaturesPath("standalone")}>
+            See Standard Features <Arrow />
+          </Link>
         </div>
       </div>
     </section>

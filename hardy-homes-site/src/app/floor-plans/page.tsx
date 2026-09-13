@@ -25,8 +25,7 @@ export default function FloorPlansPage() {
       <div className="container">
         <div className="sec-head hardy-collection-page-head hh-head-left">
           <span className="eyebrow">Floor Plans</span>
-          <h1 className="h-lg">Compare current Hardy Homes floor plans.</h1>
-          <p>Review square footage, collection, and overall layout direction at a glance.</p>
+          <h1 className="h-lg">Find your Hardy Home.</h1>
         </div>
         <div className="hardy-plan-card-grid hh-plan-index-grid">
           {getPublicHardyHomes().map((home) => (

@@ -59,20 +59,401 @@ export type HardyStandardFeature = {
   icon?: HardyStandardIconKey;
 };
 
+export type HardyCollectionStandardConfig = {
+  eyebrow: string;
+  heading: string;
+  copy: string;
+  ctaLabel: string;
+  features: HardyStandardFeature[];
+  planHighlights: HardyStandardFeature[];
+  collectionCalloutHighlights: HardyStandardFeature[];
+};
+
+const CORE_STANDARD_FEATURES: HardyStandardFeature[] = [
+  {
+    key: "2x6-exterior-walls",
+    title: "2×6 Exterior Wall Construction",
+    description: "A stronger wall assembly that supports durability, insulation, and long-term comfort.",
+    icon: "structure",
+  },
+  {
+    key: "tankless-water-heater",
+    title: "High-Efficiency Tankless Water Heater",
+    description: "Efficient hot water performance without a bulky storage tank footprint.",
+    icon: "efficiency",
+  },
+  {
+    key: "low-e-windows",
+    title: "Low-E Energy-Efficient Windows",
+    description: "Windows selected to support comfort, efficiency, and everyday livability.",
+    icon: "efficiency",
+  },
+  {
+    key: "high-efficiency-hvac",
+    title: "High-Efficiency HVAC",
+    description: "Heating and cooling systems chosen to support comfort and energy-conscious performance.",
+    icon: "efficiency",
+  },
+  {
+    key: "smart-thermostat",
+    title: "Smart Thermostat",
+    description: "Simple day-to-day control over comfort and energy use.",
+    icon: "technology",
+  },
+  {
+    key: "quartz-countertops",
+    title: "Quartz Countertops",
+    description: "Durable, low-maintenance surfaces in the spaces that work hardest.",
+    icon: "finish",
+  },
+  {
+    key: "soft-close-cabinetry",
+    title: "Soft-Close Cabinetry",
+    description: "A finished, everyday detail that improves how kitchens and baths feel to use.",
+    icon: "finish",
+  },
+  {
+    key: "led-lighting",
+    title: "LED Lighting Throughout",
+    description: "Efficient, long-lasting lighting carried throughout the home.",
+    icon: "efficiency",
+  },
+  {
+    key: "lvp-main-living",
+    title: "LVP in Primary Living Areas",
+    description: "Durable flooring selected for the spaces where life actually happens.",
+    icon: "finish",
+  },
+  {
+    key: "fiber-cement-cladding",
+    title: "Fiber-Cement or Equivalent Quality Exterior Cladding",
+    description: "Exterior materials selected for durability, appearance, and long-term performance.",
+    icon: "exterior",
+  },
+  {
+    key: "architectural-shingles",
+    title: "Architectural Shingles",
+    description: "Roofing selected to support both curb appeal and weather performance.",
+    icon: "exterior",
+  },
+  {
+    key: "pex-plumbing",
+    title: "PEX Plumbing",
+    description: "A practical plumbing system chosen for reliability and serviceability.",
+    icon: "structure",
+  },
+  {
+    key: "insulated-exterior-doors",
+    title: "Insulated Exterior Doors",
+    description: "Exterior doors selected to support comfort, efficiency, and durability.",
+    icon: "exterior",
+  },
+  {
+    key: "modern-interior-trim",
+    title: "Modern Interior Trim and Lever Hardware",
+    description: "Clean, cohesive finish details carried throughout the home.",
+    icon: "finish",
+  },
+  {
+    key: "exterior-lighting-outlets-hose-bibs",
+    title: "Exterior Lighting, Outlets, and Hose Bibs",
+    description: "The practical exterior details that make the home more usable from day one.",
+    icon: "exterior",
+  },
+];
+
+const COTTAGE_STANDARD_FEATURES: HardyStandardFeature[] = [
+  {
+    key: "efficient-compact-floor-plans",
+    title: "Efficient, Compact Floor Plans",
+    description: "Smaller homes designed to use every square foot intentionally.",
+    icon: "structure",
+  },
+  {
+    key: "8-or-9-foot-ceilings",
+    title: "8' or 9' Ceilings Depending on Plan",
+    description: "Ceiling heights matched to the plan for comfort, openness, and efficiency.",
+    icon: "structure",
+  },
+  {
+    key: "cottage-quartz-kitchen-bath",
+    title: "Quartz Kitchen and Bath Countertops",
+    description: "The same durable, finished surfaces carried into compact cottage layouts.",
+    icon: "finish",
+  },
+  {
+    key: "cottage-soft-close-cabinetry",
+    title: "Soft-Close Cabinetry",
+    description: "A finished detail that adds everyday quality without overcomplicating the plan.",
+    icon: "finish",
+  },
+  {
+    key: "cottage-lvp-most-main-living",
+    title: "LVP Throughout Most Main Living Areas",
+    description: "Durable flooring suited to compact living and easy upkeep.",
+    icon: "finish",
+  },
+  {
+    key: "stainless-kitchen-sink",
+    title: "Stainless Kitchen Sink",
+    description: "A practical, durable kitchen staple matched to the scale of the home.",
+    icon: "finish",
+  },
+  {
+    key: "full-appliance-package",
+    title: "Full Appliance Package as Specified by Plan",
+    description: "Appliances coordinated to the selected cottage plan and layout.",
+    icon: "finish",
+  },
+  {
+    key: "pantry-or-built-in-storage",
+    title: "Pantry or Built-In Storage Where Shown",
+    description: "Storage built into the plan wherever the layout allows it to work best.",
+    icon: "storage",
+  },
+  {
+    key: "primary-suite-sized-to-plan",
+    title: "Primary Suite Features Sized Appropriately to the Plan",
+    description: "Primary spaces scaled to feel efficient, finished, and comfortable.",
+    icon: "finish",
+  },
+  {
+    key: "covered-porch-or-architectural-detail",
+    title: "Covered Porch or Architectural Exterior Detail Where Shown",
+    description: "Exterior details that help small homes feel complete and intentional.",
+    icon: "exterior",
+  },
+  {
+    key: "garage-only-where-included",
+    title: "Garage Included Only on Plans Designed With One",
+    description: "Garage availability follows the selected cottage plan rather than being assumed.",
+    icon: "structure",
+  },
+  {
+    key: "durable-streamlined-finish-package",
+    title: "Simplified, Durable Finish Package Focused on Value and Efficiency",
+    description: "Streamlined selections chosen to keep cottages efficient without feeling stripped down.",
+    icon: "finish",
+  },
+];
+
+const SINGLE_FAMILY_STANDARD_FEATURES: HardyStandardFeature[] = [
+  {
+    key: "9-foot-main-floor-ceilings",
+    title: "9' Main-Floor Ceilings",
+    description: "A more open feel carried through the primary living level.",
+    icon: "structure",
+  },
+  {
+    key: "larger-kitchen-layouts",
+    title: "Larger Kitchen Layouts and Islands Where Shown",
+    description: "Kitchen footprints designed to support gathering, prep space, and day-to-day family life.",
+    icon: "finish",
+  },
+  {
+    key: "expanded-cabinetry-storage",
+    title: "Expanded Cabinetry and Storage",
+    description: "More built-in storage and cabinetry scaled to larger homes.",
+    icon: "storage",
+  },
+  {
+    key: "single-family-quartz-throughout",
+    title: "Quartz Countertops Throughout Kitchen and Bathrooms",
+    description: "Quartz surfaces carried through the major kitchen and bath spaces.",
+    icon: "finish",
+  },
+  {
+    key: "single-family-soft-close-cabinetry",
+    title: "Soft-Close Cabinetry",
+    description: "A finished detail carried through a broader cabinetry package.",
+    icon: "finish",
+  },
+  {
+    key: "finished-garage-drywall",
+    title: "Finished Garage Drywall",
+    description: "A more complete garage environment from the start.",
+    icon: "structure",
+  },
+  {
+    key: "insulated-garage-doors",
+    title: "Insulated Garage Doors",
+    description: "Garage doors selected to support comfort and durability.",
+    icon: "exterior",
+  },
+  {
+    key: "wifi-garage-door-opener",
+    title: "Wi-Fi-Enabled Garage Door Opener",
+    description: "Convenience and control built into the garage from day one.",
+    icon: "technology",
+  },
+  {
+    key: "larger-primary-suite-layouts",
+    title: "Larger Primary Suite Layouts",
+    description: "Primary bedroom and bath layouts sized for larger single-family living.",
+    icon: "finish",
+  },
+  {
+    key: "walk-in-primary-closet",
+    title: "Walk-In Primary Closet Where Shown",
+    description: "Storage and suite planning tied directly to the selected plan.",
+    icon: "storage",
+  },
+  {
+    key: "dual-primary-vanities",
+    title: "Dual Primary Vanities Where Plan Allows",
+    description: "Bathroom layouts that expand with the size and configuration of the home.",
+    icon: "finish",
+  },
+  {
+    key: "glass-primary-shower-enclosure",
+    title: "Glass Primary Shower Enclosure",
+    description: "A more finished primary bath feature where the plan supports it.",
+    icon: "finish",
+  },
+  {
+    key: "more-electrical-data-locations",
+    title: "More Electrical and Data Locations",
+    description: "Additional utility points placed where larger homes typically benefit from them most.",
+    icon: "technology",
+  },
+  {
+    key: "cat6-key-locations",
+    title: "Cat6 Wiring to Key Locations",
+    description: "Wiring infrastructure included for the spaces that need dependable connectivity.",
+    icon: "technology",
+  },
+  {
+    key: "video-doorbell-prewire",
+    title: "Video Doorbell Prewire",
+    description: "A practical tech-ready feature included from the start.",
+    icon: "technology",
+  },
+  {
+    key: "architectural-exterior-detailing",
+    title: "More Architectural Exterior Detailing",
+    description: "More built-in elevation detail scaled to larger single-family homes.",
+    icon: "exterior",
+  },
+  {
+    key: "masonry-or-accent-materials",
+    title: "Masonry or Accent Materials Where Shown on Elevation",
+    description: "Exterior accents follow the selected elevation and plan presentation.",
+    icon: "exterior",
+  },
+  {
+    key: "larger-laundry-storage-areas",
+    title: "Larger Laundry and Storage Areas Where Plan Allows",
+    description: "Utility and storage spaces designed to work with larger family layouts.",
+    icon: "storage",
+  },
+];
+
+function pickStandards(
+  features: HardyStandardFeature[],
+  keys: string[]
+): HardyStandardFeature[] {
+  const featureMap = new Map(features.map((feature) => [feature.key, feature]));
+  return keys
+    .map((key) => featureMap.get(key))
+    .filter((feature): feature is HardyStandardFeature => Boolean(feature));
+}
+
+export const coreStandards = CORE_STANDARD_FEATURES;
+export const cottageStandards = COTTAGE_STANDARD_FEATURES;
+export const singleFamilyStandards = SINGLE_FAMILY_STANDARD_FEATURES;
+
 export const hardyStandardCopy = {
   heading: "The Hardy Standard",
   body:
-    "A Hardy Home starts with a defined standard of quality, function, and finish — so buyers understand what's included before they start choosing upgrades.",
-  action: "Learn More",
+    "Every Hardy Home begins with a thoughtfully selected standard of construction, efficiency, comfort, and finish. From there, each collection adds features designed around the size and way that home is meant to live.",
+  action: "Explore The Hardy Standard",
   note:
-    "Final specifications vary by home, site, jurisdiction, and selected options. A complete construction specification is provided before contract.",
+    "Hardy Homes standard features establish the baseline for how we build. Certain features depend on the selected floor plan, site conditions, utility availability, jurisdiction, engineering requirements, and chosen elevation. Final materials, brands, colors, allowances, and project-specific specifications are documented before construction contract.",
+  highlight:
+    "The things many builders call upgrades are simply how we build a Hardy Home.",
+  disclaimerHeading: "Built around a clear standard. Finalized for your home.",
+  optionsEyebrow: "Make It Yours",
+  optionsHeading: "Start with a better standard. Then make it yours.",
+  optionsCopy:
+    "Once you've chosen your home, available options let you personalize the spaces and features that matter most to you.",
 };
 
-export const hardyStandardHighlights = [
-  "2x6 exterior wall construction",
-  "Tankless water heater",
-  "A competitive builder-grade standard package designed to compare well with strong Utah production builders",
-] as const;
+export const hardyStandardHighlights = pickStandards(coreStandards, [
+  "2x6-exterior-walls",
+  "tankless-water-heater",
+  "low-e-windows",
+  "quartz-countertops",
+]).map((feature) => feature.title);
+
+export const hardyHomepageStandardHighlights = pickStandards(coreStandards, [
+  "2x6-exterior-walls",
+  "tankless-water-heater",
+  "quartz-countertops",
+  "low-e-windows",
+]);
+
+export const hardyCorePriorityStandards = pickStandards(coreStandards, [
+  "2x6-exterior-walls",
+  "tankless-water-heater",
+  "low-e-windows",
+  "high-efficiency-hvac",
+  "quartz-countertops",
+  "soft-close-cabinetry",
+  "lvp-main-living",
+  "smart-thermostat",
+]);
+
+export const hardyPlanCoreStandards = pickStandards(coreStandards, [
+  "2x6-exterior-walls",
+  "tankless-water-heater",
+  "low-e-windows",
+  "high-efficiency-hvac",
+  "quartz-countertops",
+  "soft-close-cabinetry",
+]);
+
+export const hardyCollectionStandards: Record<HardyCollectionSlug, HardyCollectionStandardConfig> = {
+  cottages: {
+    eyebrow: "Cottage Collection",
+    heading: "Smart use of space. Hardy quality.",
+    copy:
+      "Hardy Cottages are designed around efficiency, durability, and thoughtful use of every square foot — without stripping away the features that make the home feel finished.",
+    ctaLabel: "Explore Cottage Floor Plans",
+    features: cottageStandards,
+    planHighlights: pickStandards(cottageStandards, [
+      "efficient-compact-floor-plans",
+      "cottage-quartz-kitchen-bath",
+      "cottage-lvp-most-main-living",
+      "durable-streamlined-finish-package",
+    ]),
+    collectionCalloutHighlights: pickStandards(cottageStandards, [
+      "efficient-compact-floor-plans",
+      "8-or-9-foot-ceilings",
+      "cottage-quartz-kitchen-bath",
+      "durable-streamlined-finish-package",
+    ]),
+  },
+  "single-family": {
+    eyebrow: "Single Family Collection",
+    heading: "More space. More built in.",
+    copy:
+      "Hardy Single Family homes build on the same core Hardy Standard with expanded kitchens, garages, storage, technology, and primary-suite features designed for larger homes.",
+    ctaLabel: "Explore Single Family Floor Plans",
+    features: singleFamilyStandards,
+    planHighlights: pickStandards(singleFamilyStandards, [
+      "9-foot-main-floor-ceilings",
+      "finished-garage-drywall",
+      "larger-kitchen-layouts",
+      "more-electrical-data-locations",
+    ]),
+    collectionCalloutHighlights: pickStandards(singleFamilyStandards, [
+      "9-foot-main-floor-ceilings",
+      "finished-garage-drywall",
+      "expanded-cabinetry-storage",
+      "video-doorbell-prewire",
+    ]),
+  },
+};
 
 export const hardyCollections: HardyCollection[] = [
   {
@@ -390,4 +771,10 @@ export function getHardyCollectionForHome(home: HardyHomeConcept) {
 
 export function getHardyPlanFloorImages(home: HardyHomeConcept) {
   return home.images.filter((image) => image.key.includes("floor-plan") || image.key === "layout");
+}
+
+export function getHardyCollectionStandards(
+  slug: HardyCollectionSlug
+): HardyCollectionStandardConfig {
+  return hardyCollectionStandards[slug];
 }
