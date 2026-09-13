@@ -81,6 +81,36 @@ export function SiteStructuredData() {
   );
 }
 
+export type FaqItem = { q: string; a: string };
+
+/**
+ * FAQPage for a page that renders these exact questions and answers as visible
+ * text. Never pass a question that is not on the page.
+ *
+ * Note: since 2023 Google only surfaces FAQ rich results for well-known
+ * authoritative government and health sites, so this is not expected to produce
+ * a rich result for Hardy Homes. It stays because the markup is still valid,
+ * still parsed, and makes the Q&A machine-readable.
+ */
+export function FaqStructuredData({ faqs }: { faqs: FaqItem[] }) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
+          },
+        })),
+      }}
+    />
+  );
+}
+
 export type Crumb = { name: string; path: string };
 
 /** BreadcrumbList for nested pages. `path` values are site-relative. */

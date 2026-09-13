@@ -30,6 +30,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     getFinancingPath("standalone"),
     getAboutPath("standalone"),
     getContactPath("standalone"),
+    // Standalone-only service-area page. Intentionally a literal rather than a
+    // shared route helper: the HRE gateway has no equivalent route.
+    "/millard-county-home-builder",
   ];
   const collectionRoutes = hardyCollections.map((collection) => getCollectionPath(collection, "standalone"));
   const planRoutes = getPublicHardyHomes().map((home) => getPlanPath(home, "standalone"));

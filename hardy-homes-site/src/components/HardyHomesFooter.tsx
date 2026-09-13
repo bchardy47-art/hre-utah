@@ -34,6 +34,7 @@ export default function HardyHomesFooter() {
             <Link href="/standard-features">Standard Features</Link>
             <Link href="/options">Options &amp; Upgrades</Link>
             <Link href="/build-on-your-land">Build On Your Land</Link>
+            <Link href="/millard-county-home-builder">Millard County</Link>
             <Link href="/how-it-works">How It Works</Link>
             <Link href="/financing">Financing</Link>
           </div>
