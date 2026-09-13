@@ -24,13 +24,13 @@ export const metadata: Metadata = {
 };
 
 const Arrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="M5 12h14M13 6l6 6-6 6" />
   </svg>
 );
 
 const Check = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
     <path d="m5 13 4 4L19 7" />
   </svg>
 );
@@ -145,7 +145,7 @@ export default function MillardCountyHomeBuilderPage() {
           <div className="hardy-detail-grid">
             <div className="card hardy-standard-card plan-accent" style={{ padding: 30 }}>
               <span className="eyebrow">Water</span>
-              <h3 className="h-md">Water is usually the binding constraint</h3>
+              <h3 className="h-md">Water can be the binding constraint</h3>
               <p className="hardy-standard-inline">
                 The Utah Division of Water Rights publishes policy for each administrative area. The three areas
                 covering the populated parts of Millard County — <strong>Sevier Desert (Area 68)</strong> around Delta,{" "}
@@ -213,7 +213,7 @@ export default function MillardCountyHomeBuilderPage() {
               </p>
               <p className="hardy-standard-inline">
                 One item catches people out: Millard County&apos;s published Building Permit Requirements state that residential
-                dwellings in the unincorporated parts of the county require a <strong>Conditional Use Permit</strong>
+                dwellings in the unincorporated parts of the county require a <strong>Conditional Use Permit</strong>{" "}
                 to be recorded with the deed. If site access encroaches on a county road, an encroachment permit from the County Road Department
                 is also required.
               </p>
