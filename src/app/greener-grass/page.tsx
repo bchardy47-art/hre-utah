@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { ArrowLeft, ExternalLink, MapPin, Sprout } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Greener Grass Summer Mix | Brian Hardy',
+  title: 'Greener Grass Summer Mix',
   description:
     "The simple product mix Brian Hardy uses and recommends for homeowners who want a greener lawn — fertilizer, micronutrients, and pH tools.",
   alternates: { canonical: 'https://hre-utah.com/greener-grass' },

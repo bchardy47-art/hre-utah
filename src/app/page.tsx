@@ -5,9 +5,9 @@ import HardyHomeCard from "@/components/HardyHomeCard";
 import { getPublicHardyHomes } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
-  title: "Hardy Homes | Home Builder, Design & Real Estate in Utah",
-  description:
-    "Hardy Homes by BCHardy, LLC combines residential homebuilding, home design, real estate, and property improvement services in Utah.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 const Arrow = () => (

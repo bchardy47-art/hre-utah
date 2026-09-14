@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -14,6 +15,15 @@ import {
   PenTool,
 } from "lucide-react";
 import styles from "./links.module.css";
+
+export const metadata: Metadata = {
+  title: "Quick Links",
+  description:
+    "Quick links to Brian Hardy's real estate, home design, and handyman services, plus lawn-care resources — Hardy Real Estate.",
+  alternates: {
+    canonical: "/links",
+  },
+};
 
 const links = [
   {

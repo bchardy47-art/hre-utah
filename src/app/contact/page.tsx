@@ -2,9 +2,18 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact Brian Hardy | Hardy Homes, Design, Real Estate & Handyman",
+  title: "Contact Brian Hardy",
   description:
-    "Contact Brian Hardy about Hardy Homes, custom home design, Utah real estate, and handyman projects. Call, text, email, or send a message.",
+    "Contact Brian Hardy of Hardy Real Estate about buying or selling in Utah, residential design, handyman projects, or building a Hardy Home. Call, text, email, or send a message.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Brian Hardy | Hardy Real Estate",
+    description:
+      "Reach Brian Hardy about Utah real estate, residential design, handyman projects, or building a Hardy Home. Call, text, email, or send a message.",
+    url: "/contact",
+  },
 };
 
 const Arrow = () => (

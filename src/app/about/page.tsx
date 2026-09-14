@@ -3,9 +3,18 @@ import Image from "next/image";
 import CtaBand from "@/components/CtaBand";
 
 export const metadata: Metadata = {
-  title: "About Brian Hardy | Home Builder, Residential Designer & REALTOR®",
+  title: "About Brian Hardy | Utah REALTOR®, Residential Designer & Contractor",
   description:
-    "Meet Brian Hardy — home builder, residential designer, and Utah REALTOR® bringing construction, design, and real estate together through BCHardy, LLC and Hardy Homes.",
+    "Meet Brian Hardy — Utah REALTOR® with Boardwalk Realty & Property Management, residential designer, and licensed contractor bringing real estate, design, and construction together through Hardy Real Estate.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Brian Hardy | Hardy Real Estate",
+    description:
+      "Utah REALTOR®, residential designer, and licensed contractor bringing real estate, design, and construction together through Hardy Real Estate.",
+    url: "/about",
+  },
 };
 
 export default function About() {
@@ -52,10 +61,13 @@ export default function About() {
                 who need help finding property, designing a home, understanding construction, and
                 moving a project forward.
               </p>
-              <p style={{ marginBottom: 0 }}>
+              <p>
                 I&apos;m not an architect or engineer, and when a project requires licensed engineering,
                 stamped plans, or other regulated services, those are coordinated with the right
                 professionals.
+              </p>
+              <p style={{ marginBottom: 0 }}>
+                Real estate services are provided through Boardwalk Realty &amp; Property Management.
               </p>
             </div>
             <div className="story-brand" style={{ padding: 0 }}>

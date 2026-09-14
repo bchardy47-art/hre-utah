@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { ArrowLeft, ExternalLink, MapPin, Crosshair } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Kill Lawn Weeds Fast | Brian Hardy',
+  title: 'Kill Lawn Weeds Fast',
   description:
     'The weed-control products Brian Hardy uses and recommends: one for killing existing broadleaf weeds, one for stopping weeds before they start.',
   alternates: { canonical: 'https://hre-utah.com/kill-lawn-weeds' },

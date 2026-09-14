@@ -15,11 +15,17 @@ import {
 import LegacyHardyHomesRedirect from "./LegacyHardyHomesRedirect";
 
 export const metadata: Metadata = {
-  title: "Hardy Homes | Build-On-Your-Land Homebuilder Gateway | HRE Utah",
+  title: "Hardy Homes | Build-On-Your-Land Homebuilder Gateway",
   description:
-    "Explore Hardy Homes through HRE Utah — thoughtfully designed homes, straightforward building, and guidance from land search through construction.",
+    "Explore Hardy Homes through Hardy Real Estate — thoughtfully designed homes, straightforward building, and guidance from land search through construction.",
   alternates: {
-    canonical: "https://www.hre-utah.com/hardy-homes",
+    canonical: "/hardy-homes",
+  },
+  openGraph: {
+    title: "Hardy Homes | Hardy Real Estate",
+    description:
+      "Thoughtfully designed homes, straightforward building, and guidance from land search through construction.",
+    url: "/hardy-homes",
   },
 };
 

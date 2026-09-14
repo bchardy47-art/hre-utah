@@ -3,9 +3,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Residential Drafting & Home Design | HRE Utah",
+  title: "Residential Drafting & Home Design",
   description:
     "Concept plans, Chief Architect drafting, engineering coordination, and a clear path from idea to construction for Utah homes, additions, and major remodels.",
+  alternates: {
+    canonical: "/drafting",
+  },
+  openGraph: {
+    title: "Residential Drafting & Home Design | Hardy Real Estate",
+    description:
+      "Concept plans, Chief Architect drafting, and engineering coordination for Utah homes, additions, and major remodels.",
+    url: "/drafting",
+  },
 };
 
 const Arrow = () => (

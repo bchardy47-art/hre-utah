@@ -3,9 +3,18 @@ import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 
 export const metadata: Metadata = {
-  title: "Real Estate | Utah Buying & Selling with Builder-Minded Guidance",
+  title: "Utah Real Estate | Buying & Selling with Builder-Minded Guidance",
   description:
-    "Buy or sell in Utah with Brian Hardy — a Utah REALTOR® bringing construction awareness, market strategy, and practical advice to real estate decisions.",
+    "Buy or sell in Utah with Brian Hardy of Hardy Real Estate — a Utah REALTOR® bringing construction awareness, market strategy, and practical advice to real estate decisions.",
+  alternates: {
+    canonical: "/real-estate",
+  },
+  openGraph: {
+    title: "Utah Real Estate | Hardy Real Estate",
+    description:
+      "Buy or sell in Utah with Brian Hardy — a Utah REALTOR® bringing construction awareness and market strategy to real estate decisions.",
+    url: "/real-estate",
+  },
 };
 
 const Arrow = () => (

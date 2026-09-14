@@ -3,9 +3,18 @@ import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 
 export const metadata: Metadata = {
-  title: "Handyman — Reliable Handyman Service. No Runaround. | Hardy Real Estate",
+  title: "Handyman — Reliable Handyman Service. No Runaround.",
   description:
     "Reliable Utah handyman services from Hardy Real Estate — repairs, improvements, painting, and installs done right the first time. No runaround.",
+  alternates: {
+    canonical: "/handyman",
+  },
+  openGraph: {
+    title: "Handyman Services | Hardy Real Estate",
+    description:
+      "Reliable Utah handyman services — repairs, improvements, painting, and installs done right the first time.",
+    url: "/handyman",
+  },
 };
 
 const Arrow = () => (
