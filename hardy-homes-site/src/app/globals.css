@@ -223,3 +223,9 @@ h1,h2,h3,h4{font-family:var(--head);font-weight:700;line-height:1.04;margin:0;le
   }
 }
 
+
+/* Hardy Standard feature grid (HardyStandardFeatureGrid on plan + collection pages).
+   Restored verbatim from before 3197282, which dropped these rules while the component still uses them. */
+.hh-standard-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.hh-standard-feature-grid--compact{grid-template-columns:repeat(2,minmax(0,1fr))}.hh-standard-feature-grid--featured{grid-template-columns:repeat(4,minmax(0,1fr))}.hh-standard-feature-card{display:flex;flex-direction:column;align-items:flex-start;min-height:100%;padding:22px}.hh-standard-feature-card h3{font-size:18px;margin-bottom:8px}.hh-standard-feature-card p{color:var(--muted);font-size:14px;line-height:1.55}.hh-standard-feature-card--featured{background:linear-gradient(180deg,#fffdf9 0%,#f5ede2 100%);border-color:rgba(183,103,49,.14);box-shadow:0 18px 40px -30px rgba(24,21,17,.22)}.hh-standard-feature-card--featured h3{font-size:21px;line-height:1.05}.hh-standard-feature-card--featured p{font-size:15px}.hh-standard-feature-card--compact{padding:20px}.hh-standard-feature-card--compact h3{font-size:16px}.hh-standard-feature-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;color:var(--orange);margin-bottom:14px}.hh-standard-feature-icon svg{width:24px;height:24px}
+@media(max-width:1080px){.hh-standard-feature-grid,.hh-standard-feature-grid--featured{grid-template-columns:1fr}.hh-standard-feature-grid--compact{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.hh-standard-feature-grid,.hh-standard-feature-grid--compact,.hh-standard-feature-grid--featured{grid-template-columns:1fr !important}}

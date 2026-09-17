@@ -65,7 +65,9 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
   const hero = home.images.find((image) => image.key === "exterior" || image.key === "exterior-front") ?? home.images[0];
   const galleryImages = home.slug === "rock"
     ? home.images.filter((image) => ["kitchen-dining", "living", "primary-bath", "primary-bedroom", "exterior-rear"].includes(image.key))
-    : home.images.filter((image) => image.key !== "layout");
+    : home.slug === "onyx"
+      ? home.images.filter((image) => image.key !== "exterior-front" && !image.key.includes("floor-plan"))
+      : home.images.filter((image) => image.key !== "layout");
   const floorPlanImages = home.images.filter((image) => image.key.includes("floor-plan") || image.key === "layout");
 
   return (
@@ -123,10 +125,15 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
           <div className={`hardy-floorplan-grid${floorPlanImages.length === 1 ? " hardy-plan-card-grid--single" : ""}`}>
             {floorPlanImages.map((image) => (
               <article key={image.key} className="card hardy-floorplan-card">
-                <div className={`hardy-gallery-media ${image.key === "layout" ? "hardy-gallery-media-dollhouse" : `hardy-gallery-media-floorplan${image.key === "floor-plan-upper" ? " hardy-gallery-media-floorplan-tall" : ""}`}`}>
-                  <Image src={image.src} alt={image.alt} fill sizes={image.sizes} className="hardy-gallery-image" style={{ objectFit: image.fit, objectPosition: image.position }} />
+                <a href={image.src} target="_blank" rel="noopener" aria-label={`Open ${home.name} ${image.title} full size`} style={{ display: "block", cursor: "zoom-in" }}>
+                  <div className={`hardy-gallery-media ${image.key === "layout" ? "hardy-gallery-media-dollhouse" : `hardy-gallery-media-floorplan${image.key === "floor-plan-upper" ? " hardy-gallery-media-floorplan-tall" : ""}`}`}>
+                    <Image src={image.src} alt={image.alt} fill sizes={image.sizes} className="hardy-gallery-image" style={{ objectFit: image.fit, objectPosition: image.position }} />
+                  </div>
+                </a>
+                <div className="hardy-detail-caption" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+                  <span>{image.title}</span>
+                  <a href={image.src} target="_blank" rel="noopener" style={{ textDecoration: "underline" }}>View Full Size</a>
                 </div>
-                <div className="hardy-detail-caption">{image.title}</div>
               </article>
             ))}
           </div>
@@ -139,7 +146,7 @@ export default async function HardyPlanDetailPage({ params }: { params: Promise<
             <span className="eyebrow">Gallery</span>
             <h2 id="plan-gallery">See {home.name}.</h2>
           </div>
-          <div className={`hardy-detail-gallery ${home.slug === "brindle" ? "hardy-detail-gallery--brindle-twoup" : home.slug === "rock" ? "hardy-detail-gallery--rock" : "hardy-detail-gallery--flint"}`}>
+          <div className={`hardy-detail-gallery ${home.slug === "brindle" ? "hardy-detail-gallery--brindle-twoup" : home.slug === "rock" || home.slug === "onyx" ? "hardy-detail-gallery--rock" : "hardy-detail-gallery--flint"}`}>
             {galleryImages.map((image) => (
               <article key={image.key} className="card hardy-detail-media-card">
                 <div className={`hardy-gallery-media ${image.key.includes("exterior") || image.key === "exterior" ? "hardy-gallery-media-exterior" : image.key === "layout" ? "hardy-gallery-media-dollhouse" : "hardy-gallery-media-tall"}`}>

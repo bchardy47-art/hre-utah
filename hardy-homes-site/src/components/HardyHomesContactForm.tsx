@@ -45,7 +45,7 @@ export default function HardyHomesContactForm() {
       </div>
       <div className="hh-form-grid hh-form-grid--two">
         <div><label htmlFor="hh-property" className="label">Property / Lot</label><input id="hh-property" className="hh-field" name="property" autoComplete="off" /></div>
-        <div><label htmlFor="hh-plan" className="label">Plan of Interest</label><select id="hh-plan" name="plan" className="hh-field"><option>General</option><option>The Brindle</option><option>The Rock</option><option>The Flint</option></select></div>
+        <div><label htmlFor="hh-plan" className="label">Plan of Interest</label><select id="hh-plan" name="plan" className="hh-field"><option>General</option><option>The Brindle</option><option>The Rock</option><option>The Flint</option><option>The Onyx</option></select></div>
       </div>
       <div style={{ marginBottom: 16 }}><label htmlFor="hh-message" className="label">Message</label><textarea id="hh-message" name="message" className="hh-field hh-field--textarea" /></div>
       <div className="hardy-cta-actions">

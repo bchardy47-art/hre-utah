@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HardyHomeCard from "@/components/HardyHomeCard";
-import { getHardyCollection, getPublicHardyHomes } from "@/lib/hardyHomes";
+import { getHardyCollection, getGatewayPublicHomes } from "@/lib/hardyHomes";
 import { getHardyHomesProductionUrl } from "@/lib/hardyHomesSite";
 
 const HARDY_HOMES_CANONICAL = getHardyHomesProductionUrl();
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 const collection = getHardyCollection("cottages")!;
-const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === "cottages");
+const homes = getGatewayPublicHomes().filter((home) => home.collectionSlug === "cottages");
 
 export default function CottageCollectionPage() {
   return (

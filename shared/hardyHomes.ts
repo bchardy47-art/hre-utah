@@ -42,6 +42,11 @@ export type HardyHomeConcept = {
   publicStatus: HardyHomeStatus;
   featuredOnGateway?: boolean;
   featuredOnStandaloneHome?: boolean;
+  /**
+   * Plan exists only on the standalone Hardy Homes site. The HRE gateway has
+   * no legacy route or image copies for it, so gateway listings skip it.
+   */
+  standaloneOnly?: boolean;
 };
 
 export type HardyStandardIconKey =
@@ -613,6 +618,130 @@ export const hardyHomes: HardyHomeConcept[] = [
     ],
   },
   {
+    name: "The Onyx",
+    slug: "onyx",
+    standaloneSlug: "the-onyx",
+    collectionSlug: "single-family",
+    collection: "Single Family Collection",
+    squareFeet: 2679,
+    bedrooms: "3 Bedrooms + Optional 4th",
+    bathrooms: "2.5 Bathrooms",
+    garage: "3-Car Garage",
+    stories: "Two Story",
+    shortDescription: "A two-story home with an open-to-below great room, main-floor office, and room to grow.",
+    heroCopy:
+      "The Onyx pairs an open, spacious main level with a dramatic two-story interior and flexible upstairs living. A large kitchen and great room anchor the main floor, while the upstairs primary suite, additional bedrooms, laundry, and optional fourth bedroom provide room to grow. An unfinished basement adds even more future flexibility.",
+    ctaLabel: "Ask About The Onyx",
+    ctaCopy: "Tell us about your property and what you want to build.",
+    highlights: [
+      "3 bedrooms + optional 4th (upstairs nook)",
+      "2.5 bathrooms",
+      "3-car garage",
+      "Great room open to below",
+      "Large kitchen with pantry",
+      "Main-floor office and mudroom",
+      "Upstairs primary suite and laundry",
+      "Covered front and rear porches",
+      "Unfinished basement for future flexibility",
+    ],
+    publicStatus: "active",
+    featuredOnStandaloneHome: true,
+    standaloneOnly: true,
+    images: [
+      {
+        key: "exterior-front",
+        title: "Front Exterior",
+        alt: "Front exterior rendering of The Onyx, a two-story Hardy Homes plan with a 3-car garage",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-front-exterior.jpeg",
+        priority: true,
+        sizes: "(max-width: 980px) 100vw, 72vw",
+        fit: "contain",
+        position: "center bottom",
+      },
+      {
+        key: "rear",
+        title: "Rear Exterior",
+        alt: "Rear exterior rendering of The Onyx Hardy Homes plan with covered rear porch",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-rear-exterior-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "kitchen",
+        title: "Kitchen",
+        alt: "Kitchen rendering inside The Onyx Hardy Homes plan",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-kitchen-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "great-room",
+        title: "Great Room + Stairs",
+        alt: "Great room and staircase rendering inside The Onyx Hardy Homes plan",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-great-room-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "open-to-below",
+        title: "Open to Below",
+        alt: "View from the upper floor of The Onyx looking down into the open-to-below great room",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-open-to-below-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "primary-bath",
+        title: "Primary Bath",
+        alt: "Primary bathroom rendering inside The Onyx Hardy Homes plan",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-primary-bath-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "kitchen-dining",
+        title: "Kitchen + Dining",
+        alt: "Kitchen and dining rendering inside The Onyx Hardy Homes plan",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-kitchen-dining-web.jpg",
+        sizes: "(max-width: 980px) 100vw, 48vw",
+        fit: "cover",
+        position: "center center",
+      },
+      {
+        key: "floor-plan-main",
+        title: "Main Floor — 1,320 Sq Ft",
+        alt: "Main floor plan for The Onyx Hardy Homes plan, 1,320 square feet",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-floor-plan-main-web.png",
+        sizes: "(max-width: 980px) 100vw, 31vw",
+        fit: "contain",
+        position: "center center",
+      },
+      {
+        key: "floor-plan-upper",
+        title: "Upper Floor — 1,359 Sq Ft",
+        alt: "Upper floor plan for The Onyx Hardy Homes plan, 1,359 square feet",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-floor-plan-upper-web.png",
+        sizes: "(max-width: 980px) 100vw, 31vw",
+        fit: "contain",
+        position: "center center",
+      },
+      {
+        key: "floor-plan-basement",
+        title: "Basement — 1,284 Sq Ft Unfinished",
+        alt: "Unfinished basement plan for The Onyx Hardy Homes plan, 1,284 square feet",
+        src: "/images/hardy-homes/single-family/onyx/the-onyx-floor-plan-basement-web.png",
+        sizes: "(max-width: 980px) 100vw, 31vw",
+        fit: "contain",
+        position: "center center",
+      },
+    ],
+  },
+  {
     name: "The Rock",
     slug: "rock",
     standaloneSlug: "the-rock",
@@ -747,6 +876,10 @@ export function getHardyHomeByStandaloneSlug(slug: string) {
 
 export function getPublicHardyHomes() {
   return hardyHomes.filter((home) => home.publicStatus === "active");
+}
+
+export function getGatewayPublicHomes() {
+  return getPublicHardyHomes().filter((home) => !home.standaloneOnly);
 }
 
 export function getGatewayFeaturedHomes() {

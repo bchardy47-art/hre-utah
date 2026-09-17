@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
 import HardyHomeCard from "@/components/HardyHomeCard";
-import { getPublicHardyHomes } from "@/lib/hardyHomes";
+import { getGatewayPublicHomes } from "@/lib/hardyHomes";
 
 export const metadata: Metadata = {
   alternates: {
@@ -113,7 +113,7 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const publicHomes = getPublicHardyHomes();
+  const publicHomes = getGatewayPublicHomes();
 
   return (
     <>
