@@ -31,7 +31,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!collection) return { title: "Collections" };
   const path = getCollectionPath(collection, "standalone");
   const homes = getPublicHardyHomes().filter((home) => home.collectionSlug === collection.slug);
-  const planNames = homes.map((home) => home.name).join(" and ");
+  const names = homes.map((home) => home.name);
+  // Two plans read fine as "A and B"; three or more need a serial list.
+  const planNames =
+    names.length > 2
+      ? `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`
+      : names.join(" and ");
   const description = `${collection.description} Includes ${planNames}. Compare layouts and square footage, then build on your land in Utah.`;
   return {
     title: `${collection.title} | Utah Home Plans`,
